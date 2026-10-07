@@ -1,0 +1,117 @@
+# Daily scan of official Nepali government sources for tax-rule changes.
+# - New relevant documents  -> one rolling PR (label: rule-watch) with archived hashes, draft rule files, report
+# - Budget season / missing rules -> an issue (label: rule-alert)
+# Nothing here changes active rules: drafts go to rules/np/proposed/ and need human review.
+#
+# Optional secret ANTHROPIC_API_KEY enables reading (scanned) PDFs with Claude to propose values.
+
+name: Rule watch
+
+on:
+  schedule:
+    - cron: "15 1 * * *" # 07:00 Nepal time
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: rule-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Continue the open rule-watch PR, if any (avoids duplicate reports)
+        id: branch
+        run: |
+          open=$(gh pr list --label rule-watch --state open --json headRefName --jq '.[0].headRefName')
+          if [ -n "$open" ]; then
+            git checkout "$open"
+            echo "name=$open" >> "$GITHUB_OUTPUT"
+            echo "existing=true" >> "$GITHUB_OUTPUT"
+          else
+            name="rule-watch/$(date -u +%Y-%m-%d)"
+            git checkout -b "$name"
+            echo "name=$name" >> "$GITHUB_OUTPUT"
+            echo "existing=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Scan sources
+        id: watch
+        working-directory: backend
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          set +e
+          uv run python -m app.watcher run --report "$RUNNER_TEMP/report.md"
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Fail on scan errors
+        if: steps.watch.outputs.code != '0' && steps.watch.outputs.code != '10'
+        run: exit 1
+
+      - name: Open or update PR
+        if: steps.watch.outputs.code == '10'
+        run: |
+          git config user.name "autotax-rule-watch[bot]"
+          git config user.email "rule-watch@users.noreply.github.com"
+          git add rules/watch_state.json rules/np/proposed 2>/dev/null || git add rules/watch_state.json
+          git commit -m "Rule watch: new government documents ($(date -u +%Y-%m-%d))"
+          git push origin "${{ steps.branch.outputs.name }}"
+          gh label create rule-watch --color D93F0B --force >/dev/null
+          if [ "${{ steps.branch.outputs.existing }}" = "true" ]; then
+            gh pr comment "${{ steps.branch.outputs.name }}" --body-file "$RUNNER_TEMP/report.md"
+          else
+            gh pr create --base "${{ github.event.repository.default_branch }}" \
+              --head "${{ steps.branch.outputs.name }}" --label rule-watch \
+              --title "Rule watch: new tax documents need review" \
+              --body-file "$RUNNER_TEMP/report.md"
+          fi
+
+      # Nothing relevant: still record what was seen, so it is not re-scanned tomorrow. Goes to the
+      # open rule-watch PR if there is one, otherwise straight to the default branch (state file only;
+      # if branch protection forbids this, allow the bot or drop this step).
+      - name: Record seen documents (nothing relevant)
+        if: steps.watch.outputs.code == '0'
+        run: |
+          git config user.name "autotax-rule-watch[bot]"
+          git config user.email "rule-watch@users.noreply.github.com"
+          if ! git diff --quiet rules/watch_state.json; then
+            if [ "${{ steps.branch.outputs.existing }}" = "false" ]; then
+              git stash
+              git checkout "${{ github.event.repository.default_branch }}"
+              git stash pop
+            fi
+            git commit -m "Rule watch: record seen documents" rules/watch_state.json
+            git push origin HEAD
+          fi
+
+      - name: Rule coverage / budget season check
+        id: status
+        working-directory: backend
+        run: |
+          set +e
+          uv run python -m app.watcher status | tee "$RUNNER_TEMP/status.txt"
+          echo "code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: Open alert issue
+        if: steps.status.outputs.code != '0'
+        run: |
+          gh label create rule-alert --color B60205 --force >/dev/null
+          if [ -z "$(gh issue list --label rule-alert --state open --json number --jq '.[0].number')" ]; then
+            { echo '```'; cat "$RUNNER_TEMP/status.txt"; echo '```'; } > "$RUNNER_TEMP/issue.md"
+            gh issue create --label rule-alert --title "Tax rules need attention" --body-file "$RUNNER_TEMP/issue.md"
+          fi

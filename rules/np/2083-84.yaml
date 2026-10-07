@@ -1,0 +1,162 @@
+# Nepal salary income-tax rules — FY 2083/84 (Shrawan 1 2083 – Ashadh end 2084)
+#
+# Every parameter MUST carry: value, src (key into `sources`), ref (section/schedule), status.
+#   status: verified      -> checked against the primary government document by a reviewer
+#           corroborated  -> matches several independent secondary sources, primary not yet archived
+#           needs_review  -> carried over from previous FY or from a single source; MUST be checked
+# The loader refuses files with missing citations. Reports display the overall review status.
+
+jurisdiction: NP
+fiscal_year: "2083/84"
+version: 1
+effective_from: 2026-07-17   # 1 Shrawan 2083
+effective_to: 2027-07-16     # Ashadh end 2084
+review:
+  status: draft              # draft | ca_reviewed
+  reviewed_by: null
+  reviewed_on: null
+
+sources:
+  fa2083:
+    title: "Finance Act 2083 (आर्थिक ऐन, २०८३), Gazette 2083-03-30, Schedule 1"
+    url: "https://giwmscdnone.gov.np/media/pdf_upload/%E0%A4%86%E0%A4%B0%E0%A5%8D%E0%A4%A5%E0%A4%BF%E0%A4%95%20%E0%A4%90%E0%A4%A8%2C%20%E0%A5%A8%E0%A5%A6%E0%A5%AE%E0%A5%A9%20(%E0%A4%B0%E0%A4%BE%E0%A4%9C%E0%A4%AA%E0%A4%A4%E0%A5%8D%E0%A4%B0%E0%A4%AE%E0%A4%BE%20%E0%A4%AA%E0%A5%8D%E0%A4%B0%E0%A4%95%E0%A4%BE%E0%A4%B6%E0%A4%BF%E0%A4%A4%20%E0%A4%AE%E0%A4%BF%E0%A4%A4%E0%A4%BF%20%E0%A5%A8%E0%A5%A6%E0%A5%AE%E0%A5%A9%E0%A5%A4%E0%A5%A6%E0%A5%A9%E0%A5%A4%E0%A5%A9%E0%A5%A6)_vzvsbtv.pdf"
+    page: "https://ird.gov.np/content/13566/economic-act--2083--date-of-publication-in/"
+    sha256: c818f71779119df1c9f44d9689c2749fbf95162ae590a4938533165ea6129744  # 415-page scan
+  ita2058:
+    title: "Income Tax Act 2058 (as amended)"
+    url: "https://ird.gov.np"
+    sha256: null
+  ssf2074:
+    title: "Contribution-based Social Security Act 2074 / SSF Regulation"
+    url: "https://ssf.gov.np"
+    sha256: null
+  nrb:
+    title: "Nepal Rastra Bank official foreign exchange rates"
+    url: "https://www.nrb.org.np/api/forex/v1/rates"
+    sha256: null
+
+params:
+  # --- Resident natural persons: FA 2083 merged single/couple into one schedule ---
+  resident.slabs.single:
+    value:
+      - {width: 1000000, rate: "0.01", sst: true}
+      - {width: 500000,  rate: "0.10"}
+      - {width: 1000000, rate: "0.20"}
+      - {width: 1500000, rate: "0.27"}
+      - {width: null,    rate: "0.29"}
+    src: fa2083
+    ref: "Schedule 1, para 1(1)"
+    status: corroborated
+  resident.slabs.couple:
+    value:
+      - {width: 1000000, rate: "0.01", sst: true}
+      - {width: 500000,  rate: "0.10"}
+      - {width: 1000000, rate: "0.20"}
+      - {width: 1500000, rate: "0.27"}
+      - {width: null,    rate: "0.29"}
+    src: fa2083
+    ref: "Schedule 1, para 1(1) — single schedule for all resident individuals"
+    status: corroborated
+  resident.sst_waiver_schemes:
+    value: [ssf, approved_pension]
+    src: fa2083
+    ref: "Schedule 1, para 1 proviso — SST not levied on SSF/pension-fund contributors"
+    status: corroborated
+  resident.disability_first_slab_increase:
+    value: "0.50"
+    src: fa2083
+    ref: "Schedule 1 — natural person with disability"
+    status: needs_review
+
+  # --- Non-resident ---
+  nonresident.flat_rate:
+    value: "0.25"
+    src: fa2083
+    ref: "Schedule 1, para 1(5)"
+    status: needs_review
+
+  # --- Retirement contributions (SSF + CIT + approved retirement funds) ---
+  retirement.cap_amount:
+    value: 500000
+    src: ita2058
+    ref: "Sec 63(1)"
+    status: corroborated
+  retirement.cap_fraction:
+    value: "1/3"
+    src: ita2058
+    ref: "Sec 63(1) — one third of assessable income"
+    status: corroborated
+  ssf.employee_rate:
+    value: "0.11"
+    src: ssf2074
+    ref: "SSF contribution 31% of basic: 11% employee"
+    status: corroborated
+  ssf.employer_rate:
+    value: "0.20"
+    src: ssf2074
+    ref: "SSF contribution 31% of basic: 20% employer"
+    status: corroborated
+  ssf.employer_contribution_taxable:
+    value: true
+    src: ita2058
+    ref: "Employer contribution to retirement fund is employment income; deductible under Sec 63"
+    status: corroborated
+
+  # --- Insurance & other reliefs ---
+  insurance.life_cap:
+    value: 40000
+    src: ita2058
+    ref: "Sec 12A"
+    status: needs_review
+  insurance.health_cap:
+    value: 20000
+    src: ita2058
+    ref: "Sec 12C"
+    status: needs_review
+  insurance.building_cap:
+    value: 5000
+    src: ita2058
+    ref: "Sec 12B — private building insurance"
+    status: needs_review
+  remote_area.caps:
+    value: {A: 50000, B: 40000, C: 30000, D: 20000, E: 10000}
+    src: fa2083
+    ref: "Schedule 1 — remote area allowance by category"
+    status: needs_review
+  donation.cap_amount:
+    value: 100000
+    src: ita2058
+    ref: "Sec 12"
+    status: needs_review
+  donation.cap_fraction:
+    value: "0.05"
+    src: ita2058
+    ref: "Sec 12 — 5% of adjusted taxable income"
+    status: needs_review
+  female_rebate.rate:
+    value: "0.10"
+    src: fa2083
+    ref: "Schedule 1 — resident woman with only remuneration income"
+    status: needs_review
+  female_rebate.excluded_if_couple:
+    value: true
+    src: fa2083
+    ref: "Schedule 1 — not available on couple election (verify after FA 2083 merge)"
+    status: needs_review
+
+  # --- Foreign currency & rounding ---
+  fx.rate_type:
+    value: buying
+    src: nrb
+    ref: "Conversion of foreign-currency remuneration at NRB rate"
+    status: needs_review
+  fx.date_basis:
+    value: payment_date
+    src: ita2058
+    ref: "Sec 24 — amount derived when received/receivable"
+    status: needs_review
+  rounding.tds_places:
+    value: 2
+    src: ita2058
+    ref: "Company policy / IRD e-TDS precision"
+    status: needs_review

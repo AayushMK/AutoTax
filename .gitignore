@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.hypothesis/
+node_modules/
+.env
+rules/sources/*.pdf
+rules/sources/.download.tmp
+rule_watch_report.md

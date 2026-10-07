@@ -1,0 +1,1852 @@
+{
+ "seen": {
+  "https://ird.gov.np/content/10043/publication-170133422610/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/10043/publication-170133422610/",
+   "title": "बार्षिक प्रतिवेदन २०७९/८०",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/11791/h-s-answers-to-frequently-asked-questions-about-using/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/11791/h-s-answers-to-frequently-asked-questions-about-using/",
+   "title": "एच.एस. कोड सहितको कर बीजक प्रयोग सम्बन्धमा बारम्वार सोधिने गरेका प्रश्नहरूको जवाफ २४ साउन, २०८१",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/12282/notice-17300060947/": {
+   "source_id": "ird_financeact",
+   "url": "https://ird.gov.np/content/12282/notice-17300060947/",
+   "title": "आर्थिक ऐन, २०८१",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://ird.gov.np/content/12400/annual-report-2080-81/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/12400/annual-report-2080-81/",
+   "title": "बार्षिक प्रतिवेदन २०८०/८१",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/12514/tax-laws-17357138311/": {
+   "source_id": "ird_incometaxact",
+   "url": "https://ird.gov.np/content/12514/tax-laws-17357138311/",
+   "title": "आयकर ऐन, २०५८ (आर्थिक ऐन, २०८१ ले गरेको संशोधन सहित)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://ird.gov.np/content/12522/tax-laws-17344193069/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/12522/tax-laws-17344193069/",
+   "title": "मदिरा नियमहरू, २०३३ २ पुष, २०८१",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13089/tax-laws-17520439139/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13089/tax-laws-17520439139/",
+   "title": "आर्थिक ऐन, २०८२ को बमोजिमको सुविधा सम्बन्धी फारमहरु २५ असार, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://ird.gov.np/content/13168/tax-laws-17579361479/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13168/tax-laws-17579361479/",
+   "title": "आयकर (पन्ध्रौँ संशोधन) नियमावली, २०८१ १७ भदौ, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://ird.gov.np/content/13343/press-release/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13343/press-release/",
+   "title": "प्रेस विज्ञप्ति १७ मंसिर, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13344/official-notification-of-the-government-of-nepal-s/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13344/official-notification-of-the-government-of-nepal-s/",
+   "title": "नेपाल सरकारले मॉरिसससँगको दोहोरो कर मुक्ति सम्झौता (DTAA) खारेज गर्ने निर्णयको औपचारिक सूचना २४ मंसिर, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13346/right-to-information--shravan-azoj-2082-/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13346/right-to-information--shravan-azoj-2082-/",
+   "title": "सूचनाको हक (श्रावण -असोज २०८२) २२ मंसिर, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13350/annual-report-2081-82/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13350/annual-report-2081-82/",
+   "title": "बार्षिक प्रतिवेदन २०८१/८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13405/income-tax-act--2058--as-amended-by/": {
+   "source_id": "ird_incometaxact",
+   "url": "https://ird.gov.np/content/13405/income-tax-act--2058--as-amended-by/",
+   "title": "आयकर ऐन, २०५८ (आर्थिक ऐन,२०८२ ले गरेको संशोधन सहित)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://ird.gov.np/content/13406/liquor-act--2031--with-amendments-made-by/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13406/liquor-act--2031--with-amendments-made-by/",
+   "title": "मदिरा ऐन, २०३१ (आर्थिक ऐन,२०८२ ले गरेको संशोधन सहित) १८ पुष, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13407/value-added-tax-act--2052--as-amended/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13407/value-added-tax-act--2052--as-amended/",
+   "title": "मूल्य अभिवृद्धि कर ऐन, २०५२ (आर्थिक ऐन,२०८२ ले गरेको संशोधन सहित) १८ पुष, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13411/liquor-rules--2033--with-fourth-amendment-/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13411/liquor-rules--2033--with-fourth-amendment-/",
+   "title": "मदिरा नियमहरू, २०३३ (चौथो संशोधन सहित) १८ पुष, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13441/nepal-joined-the-oecd-global-forum-as/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13441/nepal-joined-the-oecd-global-forum-as/",
+   "title": "नेपाल १७३ औँ सदस्यका रुपमा ओईसीडी (OECD) ग्लोबल फोरममा आवद्ध। ५ चैत, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13451/right-to-information--rti-2082-083--kartik-paush/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13451/right-to-information--rti-2082-083--kartik-paush/",
+   "title": "सूचनाको हक( RTI 2082.083 ) कार्तिक-पौष २० चैत, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13480/guidance-on-monitoring-of-traders-in-precious/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13480/guidance-on-monitoring-of-traders-in-precious/",
+   "title": "बहुमूल्य धातु वा वस्तुको कारोबार गर्ने व्यवसायीहरूको अनुगमन सम्बन्धी मार्गदर्शन, २०८२ २७ चैत, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13501/press-note/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13501/press-note/",
+   "title": "प्रेस नोट १४ बैशाख, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13518/information-officer-contact-number/": {
+   "source_id": "ird_financeact",
+   "url": "https://ird.gov.np/content/13518/information-officer-contact-number/",
+   "title": "कार्यालयगत सूचना अधिकारीको सम्पर्क नम्बर",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13522/right-to-information-from-january-2082-to/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13522/right-to-information-from-january-2082-to/",
+   "title": "सूचनाको हक २०८२ माघ देखि चैत्र मसान्तसम्म २४ बैशाख, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13566/economic-act--2083--date-of-publication-in/": {
+   "source_id": "ird_financeact",
+   "url": "https://ird.gov.np/content/13566/economic-act--2083--date-of-publication-in/",
+   "title": "आर्थिक ऐन, २०८३ (राजपत्रमा प्रकाशित मिति २०८३।०३।३०)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://ird.gov.np/content/13567/economic-bill--2082/": {
+   "source_id": "ird_financeact",
+   "url": "https://ird.gov.np/content/13567/economic-bill--2082/",
+   "title": "आर्थिक विधेयक, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://ird.gov.np/content/13574/notice-regarding-issuance-of-will-invoice-/": {
+   "source_id": "ird_financeact",
+   "url": "https://ird.gov.np/content/13574/notice-regarding-issuance-of-will-invoice-/",
+   "title": "विल/बीजक जारी गर्ने सम्बन्धी सूचना।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13581/guidelines-for-collection-of-value-added-tax/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13581/guidelines-for-collection-of-value-added-tax/",
+   "title": "विद्युत सेवामा मूल्य अभिवृद्धि कर असुल गर्ने निर्देशिका, २०८३ १ साउन, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13583/accepted-application-forms-related-to-the-implementation/": {
+   "source_id": "ird_financeact",
+   "url": "https://ird.gov.np/content/13583/accepted-application-forms-related-to-the-implementation/",
+   "title": "आर्थिक ऐन २०८३ बमोजिमका छुट कार्यान्वयन सम्बन्धी स्वीकृत निवेदनका फारमहरु।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://ird.gov.np/content/13584/taxpayer-incentive-gift-program-operating-procedures--2083/": {
+   "source_id": "ird_financeact",
+   "url": "https://ird.gov.np/content/13584/taxpayer-incentive-gift-program-operating-procedures--2083/",
+   "title": "करदाता प्रोत्साहन उपहार कार्यक्रम सञ्चालन कार्यविधि, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13600/right-to-information---rti-2082-083--/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13600/right-to-information---rti-2082-083--/",
+   "title": "सूचनाको हक ( RTI 2082.083 ) वैशाख-असार १९ साउन, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13626/about-cancellation-of-purchase-process-/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13626/about-cancellation-of-purchase-process-/",
+   "title": "खरिद प्रक्रिया रद्द गरिएको बारे । १५ भदौ, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13628/aml-cft-guidance-to-dpms/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13628/aml-cft-guidance-to-dpms/",
+   "title": "AML-CFT Guidance to DPMS १७ भदौ, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13630/invitation-for-sealed-quotation/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13630/invitation-for-sealed-quotation/",
+   "title": "Invitation for Sealed Quotation for the procurement of the Printing and Supply of PAN Certificate and Cards Sealed Quotation No: IRD/SQ/G/2083-84/03 १८ भदौ, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13632/economic-act--2083---information-booklet-on/": {
+   "source_id": "ird_financeact",
+   "url": "https://ird.gov.np/content/13632/economic-act--2083---information-booklet-on/",
+   "title": "आर्थिक ऐन, २०८३ : कर छुट, सहुलियत र अन्य ब्यवस्था सम्बन्धी जानकारीमूलक पुस्तिका",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://ird.gov.np/content/13633/a-public-notice-issued-to-clarify-the/": {
+   "source_id": "ird_notice",
+   "url": "https://ird.gov.np/content/13633/a-public-notice-issued-to-clarify-the/",
+   "title": "आर्थिक ऐन, २०८३ बमोजिमका कर छुट, सहुलियत तथा सुविधा कार्यान्वयनमा देखिएका द्विविधाका विषयहरु स्पष्ट गर्न जारी गरिएको सार्वजनिक सूचना",
+   "first_seen": "2026-10-07T17:58:01+00:00",
+   "relevant": true
+  },
+  "https://ird.gov.np/content/13640/prize-winner-list-bhadra/": {
+   "source_id": "ird_notice",
+   "url": "https://ird.gov.np/content/13640/prize-winner-list-bhadra/",
+   "title": "करदाता प्रोत्साहन उपहार कार्यक्रमका विजेता उपभोक्ताहरुको नामावली (२०८३, भाद्र ०१ - ३१ गतेसम्म)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13641/notice-of-invitation-for-tenders-related-to/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13641/notice-of-invitation-for-tenders-related-to/",
+   "title": "मसलन्द तथा कार्यालय सामाग्री खरिद सम्बन्धी बोलपत्र आव्हानको सूचना । ६ असोज, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13652/luxury-duty-procedure--2083/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13652/luxury-duty-procedure--2083/",
+   "title": "विलासिता शुल्क सम्बन्धी कार्यविधि, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13653/procedures-relating-to-sip-promotion-fees--2083/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/13653/procedures-relating-to-sip-promotion-fees--2083/",
+   "title": "सिप प्रवर्द्धन शुल्क सम्बन्धी कार्यविधि, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13655/notice-regarding-invoice-entry-in-the-taxpayer/": {
+   "source_id": "ird_financeact",
+   "url": "https://ird.gov.np/content/13655/notice-regarding-invoice-entry-in-the-taxpayer/",
+   "title": "करदाता प्रोत्साहन उपहार कार्यक्रमको प्रणालीमा बीजक प्रविष्टि सम्बन्धी सूचना।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13657/notice-regarding-approval-of-sealed-bill/": {
+   "source_id": "ird_financeact",
+   "url": "https://ird.gov.np/content/13657/notice-regarding-approval-of-sealed-bill/",
+   "title": "सिलबन्दी दरभाउपत्र स्वीकृत गरिएको सम्बन्धी सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13658/prize-asoj-1-15-2083/": {
+   "source_id": "ird_financeact",
+   "url": "https://ird.gov.np/content/13658/prize-asoj-1-15-2083/",
+   "title": "करदाता प्रोत्साहन उपहार कार्यक्रमका विजेता उपभोक्ताहरुको नामावली (२०८३, असोज ०१ - १५ गतेसम्म)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/13660/-souvenir--notice-regarding-provision-of-manuscript-for/": {
+   "source_id": "ird_financeact",
+   "url": "https://ird.gov.np/content/13660/-souvenir--notice-regarding-provision-of-manuscript-for/",
+   "title": "\"स्मारिका\" प्रकाशनका लागि लेखरचना उपलब्ध गराउने सम्बन्धी सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/3613/policy-15895379782/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/3613/policy-15895379782/",
+   "title": "रणनीतिक योजना 2012/13 – 2016/17",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/3614/policy-15895387959/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/3614/policy-15895387959/",
+   "title": "दोस्रो रणनितिक योजना (2018/19- 2022/23)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/3632/reformplan201213201415/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/3632/reformplan201213201415/",
+   "title": "सुधार योजना 2012/13 - 2014/15",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/3634/reformplan201516201718/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/3634/reformplan201516201718/",
+   "title": "सुधार योजना 2015/16 – 2017/18",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/3638/taxbulletinvol1issue2sep201/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/3638/taxbulletinvol1issue2sep201/",
+   "title": "कर बुलेटिन वर्ष १, अङ्क २, २०६९ भाद्र-आश्विन",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/5556/tax-laws-159861058210/": {
+   "source_id": "ird_incometaxact",
+   "url": "https://ird.gov.np/content/5556/tax-laws-159861058210/",
+   "title": "आयकर ऐन, २०५८ (आर्थिक ऐन, २०७७ को संसोधन सहित)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://ird.gov.np/content/5659/reformplan201819202021/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/5659/reformplan201819202021/",
+   "title": "सुधार योजना 2018/19-2020/21",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/6188/annualreportfy207677/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/6188/annualreportfy207677/",
+   "title": "बार्षिक प्रतिवेदन २०७६/७७",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/7621/annualreportfy207778/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/7621/annualreportfy207778/",
+   "title": "बार्षिक प्रतिवेदन २०७७/७८",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/7792/theincometaxact20022058/": {
+   "source_id": "ird_incometaxact",
+   "url": "https://ird.gov.np/content/7792/theincometaxact20022058/",
+   "title": "The Income Tax Act, 2002 (2058)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://ird.gov.np/content/8320/tax-laws-16604606746/": {
+   "source_id": "ird_financeact",
+   "url": "https://ird.gov.np/content/8320/tax-laws-16604606746/",
+   "title": "आर्थिक ऐन, २०७९",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://ird.gov.np/content/8531/publication-16686625395/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/8531/publication-16686625395/",
+   "title": "कर बुलेटिन, बर्ष ९, अंक १ (२०७८ श्रावण-असोज)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/8535/publication-16686760616/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/8535/publication-16686760616/",
+   "title": "कर बुलेटिन, बर्ष ९, अंक ४ (२०७९ बैशाख-आषाढ)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/8560/publication-16695426137/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/8560/publication-16695426137/",
+   "title": "बार्षिक प्रतिवेदन २०७८/७९",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/8739/tax-laws-16731722976/": {
+   "source_id": "ird_incometaxact",
+   "url": "https://ird.gov.np/content/8739/tax-laws-16731722976/",
+   "title": "आयकर ऐन, २०५८ (आर्थिक ऐन, २०७९ को संशोधन सहित)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://ird.gov.np/content/9052/cbmsapitechnicaldocumentfor/": {
+   "source_id": "ird_home",
+   "url": "https://ird.gov.np/content/9052/cbmsapitechnicaldocumentfor/",
+   "title": "CBMS API Technical Document For Software Developers १६ जेठ, २०८०",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://ird.gov.np/content/9061/financialact2080/": {
+   "source_id": "ird_financeact",
+   "url": "https://ird.gov.np/content/9061/financialact2080/",
+   "title": "आर्थिक विधेयक २०८०",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://ird.gov.np/content/9310/tax-laws-16907855323/": {
+   "source_id": "ird_financeact",
+   "url": "https://ird.gov.np/content/9310/tax-laws-16907855323/",
+   "title": "आर्थिक ऐन २०८० (राजपत्र अरि १४)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://ird.gov.np/content/9618/aayakar-ain/": {
+   "source_id": "ird_incometaxact",
+   "url": "https://ird.gov.np/content/9618/aayakar-ain/",
+   "title": "आयकर ऐन, २०५८ (आर्थिक ऐन, २०८० को संशोधन सहित)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://lawcommission.gov.np/content/11069/11069-legal-maxims/": {
+   "source_id": "lawcommission_home",
+   "url": "https://lawcommission.gov.np/content/11069/11069-legal-maxims/",
+   "title": "कानूनी सूक्तिहरू",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://lawcommission.gov.np/content/13138/13138-energy-efficiency-and-protecti/": {
+   "source_id": "lawcommission_home",
+   "url": "https://lawcommission.gov.np/content/13138/13138-energy-efficiency-and-protecti/",
+   "title": "उर्जा दक्षता तथा संरक्षण विधेयक सम्बन्धमा तयार गरिएको अध्ययन प्रतिवेदन ३० चैत, २०८०",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://lawcommission.gov.np/content/13143/13143-cryptocurrency-study-report/": {
+   "source_id": "lawcommission_home",
+   "url": "https://lawcommission.gov.np/content/13143/13143-cryptocurrency-study-report/",
+   "title": "क्रिप्टोकरेन्सी सम्बन्धी अध्ययन",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://lawcommission.gov.np/content/13150/13150-study-report-on-overlapping-cl/": {
+   "source_id": "lawcommission_home",
+   "url": "https://lawcommission.gov.np/content/13150/13150-study-report-on-overlapping-cl/",
+   "title": "प्रचलित कानूनमा रहेको दोहोरोपना सम्बन्धी अध्ययन प्रतिवेदन, २०८० २१ मंसिर, २०८०",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://lawcommission.gov.np/content/13488/concept-of-the-drafting-method-of-preparing/": {
+   "source_id": "lawcommission_home",
+   "url": "https://lawcommission.gov.np/content/13488/concept-of-the-drafting-method-of-preparing/",
+   "title": "नयाँ ऐनको मस्यौदा तयार गर्ने विधि सम्बन्धी अवधारणापत्र २६ कात्तिक, २०८१",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://lawcommission.gov.np/content/13504/economic-procedures-and-financial-responsibility-act--2076/": {
+   "source_id": "lawcommission_home",
+   "url": "https://lawcommission.gov.np/content/13504/economic-procedures-and-financial-responsibility-act--2076/",
+   "title": "आर्थिक कार्यविधि तथा वित्तीय उत्तरदायित्व ऐन, २०७६ लाई संशोधन गर्न बनेको अध्यादेश",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://lawcommission.gov.np/content/13505/ordinance-made-to-amend-some-nepal-acts-related-to-good-governance-promotion-and-public-service-delivery/": {
+   "source_id": "lawcommission_home",
+   "url": "https://lawcommission.gov.np/content/13505/ordinance-made-to-amend-some-nepal-acts-related-to-good-governance-promotion-and-public-service-delivery/",
+   "title": "सुशासन प्रवर्धन तथा सार्वजनिक सेवा प्रवाह सम्बन्धी केही नेपाल ऐनलाई संशोधन गर्न बनेको अध्यादेश",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://lawcommission.gov.np/content/13506/ordinance-made-to-amend-some-nepal-acts-related-to-financial-and-corporate-environment-reform-and-improvement/": {
+   "source_id": "lawcommission_home",
+   "url": "https://lawcommission.gov.np/content/13506/ordinance-made-to-amend-some-nepal-acts-related-to-financial-and-corporate-environment-reform-and-improvement/",
+   "title": "आर्थिक तथा व्यावसायिक वातावरण सुधार र लगानी अभिवृद्धि सम्बन्धी केही नेपाल ऐन संशोधन गर्ने अध्यादेश",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://lawcommission.gov.np/content/13529/law-dictionary/": {
+   "source_id": "lawcommission_home",
+   "url": "https://lawcommission.gov.np/content/13529/law-dictionary/",
+   "title": "कानूनी शब्दकोश",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://lawcommission.gov.np/content/13541/feedback-on-legal-dictionary/": {
+   "source_id": "lawcommission_home",
+   "url": "https://lawcommission.gov.np/content/13541/feedback-on-legal-dictionary/",
+   "title": "कानूनी शब्दकोश उपर सुझाव सम्बन्धमा ।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://lawcommission.gov.np/content/13542/annual-report-fy-2081-082/": {
+   "source_id": "lawcommission_home",
+   "url": "https://lawcommission.gov.np/content/13542/annual-report-fy-2081-082/",
+   "title": "वार्षिक प्रतिवेदन आ.व. २०८१-०८२ २० भदौ, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://lawcommission.gov.np/content/13543/annual-report-fy-2080-081/": {
+   "source_id": "lawcommission_home",
+   "url": "https://lawcommission.gov.np/content/13543/annual-report-fy-2080-081/",
+   "title": "वार्षिक प्रतिवेदन आ.व. २०८०-०८१ २४ भदौ, २०८१",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://lawcommission.gov.np/content/13546/office-relocated/": {
+   "source_id": "lawcommission_home",
+   "url": "https://lawcommission.gov.np/content/13546/office-relocated/",
+   "title": "कार्यालय स्थानान्तरण भएको सूचना ।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://lawcommission.gov.np/content/13582/notice-regarding-registration-of-existing-list--/": {
+   "source_id": "lawcommission_home",
+   "url": "https://lawcommission.gov.np/content/13582/notice-regarding-registration-of-existing-list--/",
+   "title": "मौजुदा सूची दर्ता गर्ने सम्बन्धी सूचना - आ.व. २०८३-८४ ६ साउन, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://lawcommission.gov.np/content/13583/guidance-on-lawmaking/": {
+   "source_id": "lawcommission_home",
+   "url": "https://lawcommission.gov.np/content/13583/guidance-on-lawmaking/",
+   "title": "कानून तर्जुमा दिगदर्शन",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://lawcommission.gov.np/content/13592/annual-report-2082-83/": {
+   "source_id": "lawcommission_home",
+   "url": "https://lawcommission.gov.np/content/13592/annual-report-2082-83/",
+   "title": "वार्षिक प्रतिवेदन आ.व. २०८२।८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://lawcommission.gov.np/content/13630/jhapadistrictorder/": {
+   "source_id": "lawcommission_home",
+   "url": "https://lawcommission.gov.np/content/13630/jhapadistrictorder/",
+   "title": "झापा जिल्ला, गौरादय नगरपालिका वडा नं. 4 र 5 अन्तर्गतको जग्गा दर्ता सम्बन्धी आदेश, 2083",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://lawcommission.gov.np/content/13631/details-made-public-as-per-the-right/": {
+   "source_id": "lawcommission_home",
+   "url": "https://lawcommission.gov.np/content/13631/details-made-public-as-per-the-right/",
+   "title": "सूचनाको हक बमोजिम सार्वजनिक गरिएको विवरण- २०८३ वैशाख देखि भाद्र मसान्तसम्म",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1156/56464/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1156/56464/",
+   "title": "व्यय अनुमानको विवरण २०७७/७८ १५ जेठ, २०७७",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1157/old-electri--electronics-and-furniture-goods-assessment/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1157/old-electri--electronics-and-furniture-goods-assessment/",
+   "title": "पुराना इलेक्ट्रि, इलेक्ट्रोनिक्स तथा फर्निचर सामान लिलाम बिक्री आह्ववानको सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1158/assignment-committee-for-appointment-for-appointment-for/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1158/assignment-committee-for-appointment-for-appointment-for/",
+   "title": "नेपाल स्टक एक्स्चेन्ज लिमिटेड (नेप्से) को प्रमुख कार्यकारी अधिकृत पदमा नियुक्तिका लागि गठित सिफारिस समिति",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1160/invitation-for-e-bid/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1160/invitation-for-e-bid/",
+   "title": "Invitation for E-Bids",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1257/information-of-the-liaison-office-for-nepal/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1257/information-of-the-liaison-office-for-nepal/",
+   "title": "GCF को Liaison Officer for Nepal/Local Expert सम्बन्धी विज्ञापनको सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1480/old-electronic--the-electronics-and-furniture-goods/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1480/old-electronic--the-electronics-and-furniture-goods/",
+   "title": "पुराना इलेक्ट्रक, इलेक्ट्रोनिक्स तथा फर्निचर सामान लिलाम बिक्री आह्वानको पुन: सूचना गरिएको",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1486/an-estimated-details-of-the-revenue-distribution/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1486/an-estimated-details-of-the-revenue-distribution/",
+   "title": "नेपाल सरकारले प्रदेश र स्थानीय तहको लागि आर्थिक वर्ष २०८२/८३ को लागि प्रदान गर्ने राजस्व बाँटफाँट र वित्तीय समानीकरण अनुदान रकमको अनुमानित विवरण",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1487/committee-for-applaying-authority-of-officials-association/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1487/committee-for-applaying-authority-of-officials-association/",
+   "title": "अर्थ मन्त्रालय सम्बद्ध पदाधिकारी नियुक्ती सम्बन्धी मापदण्ड-२०७३ दोश्रो संशोधन सहित",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1488/notice-to-provide-suggestions-for-the-budget/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1488/notice-to-provide-suggestions-for-the-budget/",
+   "title": "आर्थिक वर्ष २०८२/८३ को बजेट तथा कार्यक्रमको लागि सुझाव उपलब्ध गराउने सम्बन्धी सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1497/report-of-high-level-economic-correction-provisions/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1497/report-of-high-level-economic-correction-provisions/",
+   "title": "उच्चस्तरीय आर्थिक सुधार सुझाव आयोगको प्रतिवेदन",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1504/invitation-for-bid/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1504/invitation-for-bid/",
+   "title": "Invitation for E-bid",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1505/national-journalism-day-2082-slogan-base-of/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1505/national-journalism-day-2082-slogan-base-of/",
+   "title": "राष्ट्रिय पत्रकारिता दिवस २०८२ को नारा \"विश्वसनीय सूचनाको आधार: जवाफदेही पत्रकारिता र सुरक्षित पत्रकार\"",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1508/foreign-assistance-operations-policy--2082-neew/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1508/foreign-assistance-operations-policy--2082-neew/",
+   "title": "वैदेशिक सहायता परिचालन नीति, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1509/notice-of-intent-to-accept-bids/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1509/notice-of-intent-to-accept-bids/",
+   "title": "बोलपत्र स्वीकृत गर्ने आशयको सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1519/minutes-of-pre-bidding-response-to-pre-bid-queries/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1519/minutes-of-pre-bidding-response-to-pre-bid-queries/",
+   "title": "Minutes of Pre-Bidding/Response to Pre-bid queries",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1520/economic-survey-2081-82/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1520/economic-survey-2081-82/",
+   "title": "आर्थिक सर्वेक्षण २०८१/८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1521/3242184298429874/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1521/3242184298429874/",
+   "title": "सार्वजनिक संस्थानको वार्षिक स्थिति समीक्षा २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1522/budget-statement-2082-83/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1522/budget-statement-2082-83/",
+   "title": "बजेट वक्तव्य २०८२/८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://mof.gov.np/content/1523/budget-speech-2082-83/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1523/budget-speech-2082-83/",
+   "title": "बजेट वक्तव्य २०८२/८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://mof.gov.np/content/1525/economic-bill-2062/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1525/economic-bill-2062/",
+   "title": "आर्थिक विधेयक २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://mof.gov.np/content/1526/inter-government-financial-transfer-208-83/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1526/inter-government-financial-transfer-208-83/",
+   "title": "अन्तर सरकारी वित्तीय हस्तान्तरण २०८२/८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1527/expenditure-estimates--red-book--208-83/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1527/expenditure-estimates--red-book--208-83/",
+   "title": "व्यय अनुमानको विवरण (रातो किताब) २०८२-८३ १९ जेठ, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1528/source-book--white-book-fy-2025-26/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1528/source-book--white-book-fy-2025-26/",
+   "title": "Source Book: White Book FY 2025-26 १९ जेठ, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1531/appropriation-act--2082-83/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1531/appropriation-act--2082-83/",
+   "title": "विनियोजन ऐन, २०८२/८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1532/notice-for-expression-of-interest--eoi-/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1532/notice-for-expression-of-interest--eoi-/",
+   "title": "Notice for Expression of Interest (EOI)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1533/public-finance-management-correction-directory-directory--2082/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1533/public-finance-management-correction-directory-directory--2082/",
+   "title": "सार्वजनिक वित्तिय व्यवस्थापन सुधार कार्य सञ्‍चालन निर्देशिका, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://mof.gov.np/content/1534/notice-for-expression-of-interest--o--kanakpur-churot/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1534/notice-for-expression-of-interest--o--kanakpur-churot/",
+   "title": "Notice for Expression of Interest (EOI)-Janakpur Churot Karkhana",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1535/re-notice-for-expression-of-interest--eoi-/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1535/re-notice-for-expression-of-interest--eoi-/",
+   "title": "Re-Notice for Expression of Interest (EOI)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1540/regarding-participation-in-participation-in-the-35-day/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1540/regarding-participation-in-participation-in-the-35-day/",
+   "title": "३५ दिने सेवाकालिन प्रशिक्षण कार्यक्रममा सहभागी मनोनयन सम्बन्धमा",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1541/regarding-the-implementation-of-the-social-security/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1541/regarding-the-implementation-of-the-social-security/",
+   "title": "योगदानमा आधारित सामजिक सुरक्षा प्रणाली लागू गर्ने सम्बन्धमा",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1542/foreign-assistance-warrier-assessment-custation-checklist--redines/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1542/foreign-assistance-warrier-assessment-custation-checklist--redines/",
+   "title": "वैदेशिक सहायता परिचालन तत्परता मूल्याङ्कन चेकलिष्ट (रेडिनेस फिल्टर) ,२०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1545/government-of-nepal-and-governement-of-japan-jica/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1545/government-of-nepal-and-governement-of-japan-jica/",
+   "title": "Government of Nepal and Government of Japan/JICA Sign of Exchange of Notes on The Project for Human Resource Development Scholarships: Press Release",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1547/a-w-unified-reports-regarding-tax-expenditure-of-2080-81/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1547/a-w-unified-reports-regarding-tax-expenditure-of-2080-81/",
+   "title": "आ.व. २०८०/८१ को कर खर्च सम्बन्धी एकिकृत प्रतिवेदन",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1548/budget-speech--english--2025-26/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1548/budget-speech--english--2025-26/",
+   "title": "Budget Speech (English) 2025/26",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://mof.gov.np/content/1551/returning-payment-faculty-procedure--2082/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1551/returning-payment-faculty-procedure--2082/",
+   "title": "निवृत्तभरण भुक्तानी व्यवथापन कार्यविधि, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1554/notice-for-opening-of-financial-bid/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1554/notice-for-opening-of-financial-bid/",
+   "title": "Notice for Opening of Financial Bid",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1556/this-ministry-and-under-the-project-staff/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1556/this-ministry-and-under-the-project-staff/",
+   "title": "यस मन्त्रालय र अन्तर्गतका कर्मचारीले मिति 2082/04/07 गते भित्र सरुवाको लागि भर्नु पर्ने निवेदन सम्बन्धी फारामको लिंक सम्बन्धित कार्यालयको इमेल ठेगानामा पठाइएको व्यहोरा जानकारी गराइन्छ।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1557/guidance-on-the-execution-of-budget-2082-83/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1557/guidance-on-the-execution-of-budget-2082-83/",
+   "title": "आर्थिक वर्ष २०८२/८३ को बजेट कार्यान्वयन सम्बन्धी मार्गदर्शन।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1560/information-about-sending-opinions-to-opinion-in/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1560/information-about-sending-opinions-to-opinion-in/",
+   "title": "कर्मचारी सञ्चय कोष ऐन, २०१९ लाई संशोधन गर्न बनेको विधेयकको मसौदामा राय सुझाव पठाउने सम्बन्धी सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1561/notice-of-sending-to-opinion-opinion-in/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1561/notice-of-sending-to-opinion-opinion-in/",
+   "title": "नागरिक लगानी कोष ऐन, २०४७ लाई संशोधन गर्न बनेको विधेयकको मसौदामा राय सुझाव पठाउने सम्बन्धी सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://mof.gov.np/content/1562/date-of-intent-to-accept-bids--2082-04-22/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1562/date-of-intent-to-accept-bids--2082-04-22/",
+   "title": "बोलपत्र स्वीकृत गर्ने आशयको सूचना मिति: २०८२/०४/१२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1563/press-expressing---mcc/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1563/press-expressing---mcc/",
+   "title": "प्रेस विज्ञप्ती - एमसीसी",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1565/foreign-aid-mobilization-policy--2025/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1565/foreign-aid-mobilization-policy--2025/",
+   "title": "Foreign Aid Mobilization Policy, 2025",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1566/percentage-of-the-electrical-bid--e-bidding-/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1566/percentage-of-the-electrical-bid--e-bidding-/",
+   "title": "स्टेशनरी तथा कार्यालयको मसलन्द सामग्री खरिदको लागि विद्युतीय बोलपत्र (E Bidding) आह्वानको सूचना (प्रथम पटक प्रकाशित मिति: २०८२।०४।१४)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1576/the-procurement-of-supply-and-delivery-of/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1576/the-procurement-of-supply-and-delivery-of/",
+   "title": "The Procurement of Supply and Delivery of Printer Cartridge and Toner 2082/04/20",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1577/notice-for-shorlisted-company-for-procurement-of/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1577/notice-for-shorlisted-company-for-procurement-of/",
+   "title": "Notice for shortlisting of Firms/JV for Procurement of Consulting Service for the valuation of Butwal Dhago Karkhana Ltd.",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1578/notice-for-shortlisted-company-for-procurement-of/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1578/notice-for-shortlisted-company-for-procurement-of/",
+   "title": "Notice for shortlisting of Firms/JV for Procurement of Consulting Service for the Valuation of Janakpur Churot Karkhana Ltd.",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1579/nepal-orind-magnesite-pvt-ltd--rfp-notice/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1579/nepal-orind-magnesite-pvt-ltd--rfp-notice/",
+   "title": "Notice for shortlisting of Firms/JV for Procurement of Consulting Service for the valuation of Nepal Orind Magnesite Pvt Ltd.",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1580/notice-for-shortlisting-of-firms-jv-for-procurement/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1580/notice-for-shortlisting-of-firms-jv-for-procurement/",
+   "title": "Notice for shortlisting of Firms/JV for Procurement of Consulting Service for the valuation of Nepal Metal Company Ltd.",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1581/information--argument-to-suggest-opinions-in-the/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1581/information--argument-to-suggest-opinions-in-the/",
+   "title": "सूचना : जलवायु वित्त परिचालन कार्यविधि, २०८२ को मस्यौदामा राय सुझाव आह्वान ।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1582/readiness-filter-2082-1/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1582/readiness-filter-2082-1/",
+   "title": "वैदेशिक सहायता परिचालन तत्परता मूल्याङ्कन चेकलिष्ट (रेडिनेस फिल्टर) ,२०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1585/in-relation-to-the-property-details-and/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1585/in-relation-to-the-property-details-and/",
+   "title": "सम्पत्ति विवरण भरी/भराई अनलाईन प्रविष्ट समेत गर्ने सम्बन्धमा",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1586/press-release-on-the-signing-of-the/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1586/press-release-on-the-signing-of-the/",
+   "title": "Press Release on the Signing of the Grant Memorandum of Understanding between Nepal and the Republic of Korea for Infrastructure Development of the Gandaki Institute of Technology under GTEVTA, Nepal",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1592/meaning-bulletin-june/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1592/meaning-bulletin-june/",
+   "title": "अर्थ बुलेटिन जेठ",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1595/jkjhkljhklj/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1595/jkjhkljhklj/",
+   "title": "नेपाल बीमा प्राधिकरणको सञ्चालक समितिको अध्यक्ष नियुक्तिको लागि नेपाल सरकार समक्ष नाम सिफारिस समितिको कार्यविधि, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1596/ghgjkjh/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1596/ghgjkjh/",
+   "title": "नेपाल बीमा प्राधिकरणको सञ्चालक समितिको अध्यक्ष पदमा नियुक्तिको लागि गठित सिफारिस समितिको पदपूर्तिसम्बन्धी सूचना २०८२-०५-१४",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1597/notice-of-the-drafting-of-payments-and/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1597/notice-of-the-drafting-of-payments-and/",
+   "title": "भुक्तानी तथा फर्स्यौट (पहिलो संशोधन) ऐन, २०८२\" को मस्यौदामा राय सुझाव पठाउने सम्बन्धी सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1599/information-of-recommendation-committee-for-the-appointment/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1599/information-of-recommendation-committee-for-the-appointment/",
+   "title": "नेपाल बीमा प्राधिकरणको सञ्चालक समितिको अध्यक्ष पदमा नियुक्तिको लागि गठित सिफारिस समितिको सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1600/press-victims-208-059/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1600/press-victims-208-059/",
+   "title": "प्रेस विज्ञप्ती २०८२।०५।२९",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1601/press-experts-208-05-31/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1601/press-experts-208-05-31/",
+   "title": "प्रेस विज्ञप्ती २०८२।०५।३१",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1602/press-expressive---regarding-the-formation-formed/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1602/press-expressive---regarding-the-formation-formed/",
+   "title": "प्रेस विज्ञप्ती - कार्यदल गठन सम्बन्धमा",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1603/relations-of-press-pregnant-concessional-loans-/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1603/relations-of-press-pregnant-concessional-loans-/",
+   "title": "प्रेस विज्ञप्ती-सहुलियतपूर्ण कर्जाको ब्याज अनुदान निकासा सम्बन्धमा।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1606/dg/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1606/dg/",
+   "title": "गुनासो व्यवस्थापन सम्बन्धी जानकारी",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1607/press-experts-208-06-07/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1607/press-experts-208-06-07/",
+   "title": "प्रेस विज्ञप्ती २०८२।०६।०७",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1608/government-of-nepal--trade--trade--commemorate--commemoration/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1608/government-of-nepal--trade--trade--commemorate--commemoration/",
+   "title": "जेनजी आन्दोलनबाट प्रभावित उद्योग, व्यापार, व्यावसायिक प्रतिष्ठान तथा आर्थिक गतिविधिलाई राहत, कर छुट, सहुलियत तथा सुविधाहरू प्रदान गर्ने सम्बन्धमा नेपाल सरकार, मन्त्रिपरिषद्को मिति 2082/06/05 को निर्णयसम्बन्धी जानकारी।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1609/press-district---finance-minister-meets-the/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1609/press-district---finance-minister-meets-the/",
+   "title": "प्रेस विज्ञप्ती- अर्थमन्त्रीसँग भारत र चीनका राजदूतहरुको शिष्टाचार भेट।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1610/press-expert--in-connection-with-expenses-and/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1610/press-expert--in-connection-with-expenses-and/",
+   "title": "प्रेस विज्ञप्ती- खर्च कटौती र मितव्ययिता कायम गर्ने सम्बन्धमा ,२०८२।०६।०७",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1611/in-public-information-regarding-public-information-related/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1611/in-public-information-regarding-public-information-related/",
+   "title": "अर्थमन्त्रीको सामाजिक सत्र्जाल प्रयोग सम्बन्धी सार्वजनिक जानकारी सम्बन्धमा.",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1612/press-expressing---physical-inclusive-committee--formation-/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1612/press-expressing---physical-inclusive-committee--formation-/",
+   "title": "प्रेस विज्ञप्ती- भौतिक पूर्वाधार पुनर्निर्माण समिति (गठन) आदेश, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1615/ministry-press-press-release--which-is-released/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1615/ministry-press-press-release--which-is-released/",
+   "title": "अर्थ मन्त्रालय प्रेस विज्ञप्ति २०८२/०६/०८",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1616/the-government-of-nepal-request-208-06-08/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1616/the-government-of-nepal-request-208-06-08/",
+   "title": "नेपाल सरकारको अनुरोध २०८२/०६/०८",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1617/report-of-perspect-market-provising-contemplat/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1617/report-of-perspect-market-provising-contemplat/",
+   "title": "पुँजी बजार सुधार सुझाव कार्यदलको प्रतिवेदन",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1618/press-release--discussion-and-intends-with-local/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1618/press-release--discussion-and-intends-with-local/",
+   "title": "प्रेस विज्ञप्ति : स्थानीय विकास साझेदारहरुसँगको छलफल तथा अन्तर्किया",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1619/press-report--in-relation-to-unioneering-costs/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1619/press-report--in-relation-to-unioneering-costs/",
+   "title": "प्रेस विज्ञप्ति : अनुत्पादक खर्च कटौती तथा मितव्ययिता कायम गर्ने सम्बन्धमा",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1621/loi/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1621/loi/",
+   "title": "बोलपत्र स्वीकृत गर्ने आशयको सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1622/letter-of-meetings/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1622/letter-of-meetings/",
+   "title": "भेटघाट सम्बन्धी सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1623/press-release--economy-minority-between-the-eastern/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1623/press-release--economy-minority-between-the-eastern/",
+   "title": "प्रेस विज्ञप्ति (अर्थ मन्त्री र जापानका राजदुत बीच शीष्टाचार भेट)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1624/press-release--nepal-infrant-bank-limited--assisting/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1624/press-release--nepal-infrant-bank-limited--assisting/",
+   "title": "प्रेस विज्ञप्ति : नेपाल इन्फ्रास्ट्रक्चर बैंक लिमिटेडबाट भौतिक पूर्वाधार पुनर्निर्माण कोषमा सहयोग प्रदान ।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1625/press-report--meaning-of-economies-between-economic/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1625/press-report--meaning-of-economies-between-economic/",
+   "title": "प्रेस विज्ञप्ति: अर्थमन्त्री र विभिन्न मुलुकका राजदुतहरु बीच शिष्टाचार भेट",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1626/press-reportion--in-the-business-relationships-in/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1626/press-reportion--in-the-business-relationships-in/",
+   "title": "प्रेस विज्ञप्ति: नगदमा कारोबार सम्बन्धमा",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1627/information-related-to-irregible-vehicles-and-other/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1627/information-related-to-irregible-vehicles-and-other/",
+   "title": "आगलागी तथा तोडफोडबाट काम नलाग्ने सवारी तथा अन्य साधान र भौतिक सम्पत्ति मिनाहा एवं पत्रु मूल्यमा बिक्री गर्ने सम्बन्धी सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1628/information-in-the-transactions-in-cash/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1628/information-in-the-transactions-in-cash/",
+   "title": "नगदमा कारोबार सम्बन्धमा सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1629/the-request-of-the-ministry-of-economy/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1629/the-request-of-the-ministry-of-economy/",
+   "title": "अर्थ मन्त्रालयको अनुरोध",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1630/the-third-public-financial-management-improve-national/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1630/the-third-public-financial-management-improve-national/",
+   "title": "तेस्रो सार्वजनिक वित्तीय व्यवस्थापन सुधार राष्ट्रिय रणनीति २०८२-२०८७",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1631/press-reports--signing-for-agreements-related-to/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1631/press-reports--signing-for-agreements-related-to/",
+   "title": "प्रेस विज्ञप्ती (नेपाल सरकार र जर्मन सरकारबीच वित्तीय र प्राविधिक सहयोग सम्बन्धी सम्झौताहरुमा हस्ताक्षर)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1632/in-relation-to-providing-details-for-the/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1632/in-relation-to-providing-details-for-the/",
+   "title": "सवारी सुबिधा पाउने पदाधिकारी तथा कर्मचारीहरूलाई सवारी सुबिधा व्यवस्थापन सम्बन्धी मापदण्ड तर्जुमा गर्ने प्रयोजनका लागि विवरण उपलब्ध गराउने सम्बन्धमा।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1633/meaning-bulletin--based-on-annuals-of-fy/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1633/meaning-bulletin--based-on-annuals-of-fy/",
+   "title": "अर्थ बुलेटिन (आर्थिक वर्ष 2081/82 को वार्षिक तथ्याङ्कमा आधारित)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1634/press-release--meeting-of-finance-minister-s-world/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1634/press-release--meeting-of-finance-minister-s-world/",
+   "title": "प्रेस विज्ञप्ति (अर्थमन्त्रीको विश्व बैंक र अन्तर्राष्ट्रिय मुद्रा कोषका उच्च अधिकारीसँग भेटवार्ता सम्पन्न )",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1635/annual-report--2081-82/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1635/annual-report--2081-82/",
+   "title": "वार्षिक प्रतिवेदन, २०८१/८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1636/press-release--the-finance-minister-discussing-american/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1636/press-release--the-finance-minister-discussing-american/",
+   "title": "प्रेस विज्ञप्ति (अर्थमन्त्रीद्वारा अमेरिकी उच्च पदस्थ अधिकारी र विभिन्न दातृनिकायसँग छलफल )",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1639/press-release-vp-highway-flooding/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1639/press-release-vp-highway-flooding/",
+   "title": "प्रेस विज्ञप्ती विपी राजमार्गको बाढी",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1640/press-release--v-p-signing-of-a-grant-agreement/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1640/press-release--v-p-signing-of-a-grant-agreement/",
+   "title": "प्रेस विज्ञप्ति: वि.पी. राजमार्गको बाढी प्रभावित भागको पुनर्निर्माण तथा मर्मतसम्भारका लागि नेपाल सरकार र जापान सरकारबीच अनुदान सम्झौतामा हस्ताक्षर",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1641/regarding-the-implementation-of-the-decision-made/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1641/regarding-the-implementation-of-the-decision-made/",
+   "title": "नेपाल सरकार मन्त्रिपरिषद् बाट मिति २०८२/०६/५ मा भएको निर्णय कार्यान्वयन गर्ने/गराउने सम्बन्धमा ।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1642/regarding-the-implementation-of-the-decision-dated/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1642/regarding-the-implementation-of-the-decision-dated/",
+   "title": "नेपाल सरकार मन्त्रिपरिषद्‌बाट मिति २०८२/०६/०५ गतेको निर्णय कार्यान्वयन गर्ने /गराउने सम्बन्धमा ।(सबै प्रदेश )",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1643/economic-budget-cut/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1643/economic-budget-cut/",
+   "title": "नेपाल सरकार मन्त्रिपरिषद्‌बाट मिति २०८२/०६/०५ गतेको निर्णय कार्यान्वयन गर्ने /गराउने सम्बन्धमा ।(सबै महानगर/उप महानगर/नगर/गाउँ कार्यापालिकाको कार्यालय)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1646/courtesy-meeting-of-the-ambassador-of-the/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1646/courtesy-meeting-of-the-ambassador-of-the/",
+   "title": "अर्थमन्त्रीसंग कोरिया गणतन्त्रका राजदूतको शिष्टाचार भेट।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1647/notice-about-submission-of-project-proposal-for/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1647/notice-about-submission-of-project-proposal-for/",
+   "title": "विश्व वातावरण सुविधा (Global Environment Facility) को लागि परियोजना प्रस्ताव पेश गर्ने बारेको सूचना ।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1649/dfdgf/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1649/dfdgf/",
+   "title": "मिति २०८२/७/३० को निर्णयानुसार सरुवा भएका उपसचिवहरुको विवरण",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1650/report-of-the-working-group-on-recommendations/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1650/report-of-the-working-group-on-recommendations/",
+   "title": "राज्यकोषबाट लगानी भएका नियामक निकाय, प्रतिष्ठान बोर्ड, समिति तथा सार्वजनिक संस्थान लगायत निकायका पदाधिकारी र कर्मचारीको पारिश्रमिक तथा सेवा सुविधामा एकरुपता कायम गर्ने सम्बन्धी सुझाव कार्यदलको प्रतिवेदन",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://mof.gov.np/content/1652/transfer-details-of-third-category-employees-gazetted/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1652/transfer-details-of-third-category-employees-gazetted/",
+   "title": "यस मन्त्रालयको मिति २०८२/८/५ को निर्णयानुसार राजपत्रांकित तृतीय श्रेणीका कर्मचारीहरुको सरुवा विवरण",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1653/transfer-details-of-gazetted-first-class-employees/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1653/transfer-details-of-gazetted-first-class-employees/",
+   "title": "यस मन्त्रालयको मिति २०८२/८/९ को निर्णयानुसार राजपत्र अनंकित प्रथम श्रेणीका कर्मचारीहरुको सरुवा विवरण",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1656/press-release-2082-08-14/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1656/press-release-2082-08-14/",
+   "title": "प्रेस विज्ञप्ती २०८२।०८।१४",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1665/notice/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1665/notice/",
+   "title": "आर्थिक प्रस्ताव छनौटको जानकारी एवं वार्तामा आउने सम्बन्धी सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1666/regarding-accumulation-fund-exemption-payment-account-reconciliation/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1666/regarding-accumulation-fund-exemption-payment-account-reconciliation/",
+   "title": "संचय कोष छुट भुक्तानी/हिसाव मिलान सम्बन्धमा",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1667/project-readiness-filter-english/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1667/project-readiness-filter-english/",
+   "title": "Project Readiness Filter English",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1669/criteria-for-resource-consent-for-multi-year-projects-/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1669/criteria-for-resource-consent-for-multi-year-projects-/",
+   "title": "बहुवर्षीय आयोजनाको स्रोत सहमति सम्बन्धी मापदण्ड, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1673/consolidated-financial-statements--union--state-and-local/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1673/consolidated-financial-statements--union--state-and-local/",
+   "title": "एकीकृत वित्तीय विवरण (संघ, प्रदेश र स्थानीय सरकारहरु) आ.व. २०८१/८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1675/hulak-ticket/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1675/hulak-ticket/",
+   "title": "सार्वजनिक सेवा प्रवाहमा हुलाक टिकटको प्रयोग आवश्यक नपर्ने सम्वन्धी सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1681/self-published-kartik-poush/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1681/self-published-kartik-poush/",
+   "title": "सूचनाको हक सम्बन्धी ऐन, २०६४ को दफा ५ को उपदफा (३) तथा सूचनाको हक सम्बन्धी नियमावली, २०६५ को नियम ३ को प्रयोजनार्थ (२०८२ कार्तिक महिनादेखि २०८२ पौषमसान्तसम्म)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1686/courtesy-meeting-of-ambassador-of-india-with/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1686/courtesy-meeting-of-ambassador-of-india-with/",
+   "title": "अर्थमन्त्रीसँग भारतका राजदूतको शिष्टाचार भेट",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1688/notice-regarding-auction-sale-of-property-and/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1688/notice-regarding-auction-sale-of-property-and/",
+   "title": "सम्पत्ति तथा मालसामानको लिलाम बिक्री सम्बन्धी सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1689/notice-regarding-sending-opinions-and-suggestions-on/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1689/notice-regarding-sending-opinions-and-suggestions-on/",
+   "title": "नेपाल राष्ट्र बैंक ऐन, २०५८ लाई संशोधन गर्न बनेको विधेयकको मस्यौदामा राय सुझाव पठाउने सम्बन्धी सूचना (सूचना प्रकाशित मिति: २०८२/११/१)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1692/earth-bulletin--november-issue-5--2082-/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1692/earth-bulletin--november-issue-5--2082-/",
+   "title": "अर्थ बुलेटिन,मंसिर अंक ५ (२०८२)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1693/earth-bulletin--november-issue-5--2082-mangsir5/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1693/earth-bulletin--november-issue-5--2082-mangsir5/",
+   "title": "अर्थ बुलेटिन,मंसिर अंक ५ (२०८२)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1694/public-notice-to-the-revenue-consultative-committee-/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1694/public-notice-to-the-revenue-consultative-committee-/",
+   "title": "राजस्व परामर्श समिति, २०८२ को सार्वजनिक सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1699/finance--federal-affairs-and-general-administration-minister/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1699/finance--federal-affairs-and-general-administration-minister/",
+   "title": "अर्थ, संघीय मामिला तथा सामान्य प्रशासन मन्त्री रामेश्वरप्रसाद खनालको कार्यकाल समाप्ति संक्षिप्त प्रतिवेदन।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1709/foreign-aid-mobilization-policy--2082/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1709/foreign-aid-mobilization-policy--2082/",
+   "title": "वैदेशिक सहायता परिचालन नीति, २०८२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1713/draft-tenth-amendment-of-employees-provident-fund/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1713/draft-tenth-amendment-of-employees-provident-fund/",
+   "title": "कर्मचारी सञ्चय कोष ऐन, २०१९ को दशौँ संशोधनको मस्यौदा",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1716/press-release--concluding-meeting-of-intergovernmental-finance/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1716/press-release--concluding-meeting-of-intergovernmental-finance/",
+   "title": "प्रेस विज्ञप्ति (अन्तर-सरकारी वित्त परिषद् र बिषयगत समितिको वैठक सम्मप्न)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1717/ministry-of-finance-employees-code-of-conduct-/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1717/ministry-of-finance-employees-code-of-conduct-/",
+   "title": "अर्थ मन्त्रालय कर्मचारी आचारसंहिता, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1719/current-economic-status-of-nepal--april-2083/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1719/current-economic-status-of-nepal--april-2083/",
+   "title": "नेपालको वर्तमान आर्थिक स्थितिपत्र, वैशाख २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1720/climate-change-financial-blueprint--revised-edition--2024-/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1720/climate-change-financial-blueprint--revised-edition--2024-/",
+   "title": "जलवायु परिवर्तन वित्तीय खाका (संशोधित संस्करण , २०२४)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1721/press-release--nepal-government-and-adb-sign/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1721/press-release--nepal-government-and-adb-sign/",
+   "title": "प्रेस विज्ञप्ति (डिजिटल रुपान्तरणलाई अगाडि बढाउन नेपाल सरकार र एडबीबिच ऋण सम्झौतामा हस्ताक्षर)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1722/notice-regarding-submission-of-personal-details-of/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1722/notice-regarding-submission-of-personal-details-of/",
+   "title": "नेपाल धितोपत्र बोर्डको अध्यक्ष पदमा नियुक्तिको लागि नाम सिफारिस गर्न गठित सिफारिस समितिको व्यक्तिगत विवरण पेश गर्ने सम्बन्धी सूचना (प्रकाशित मितिः- 2083/1/15)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1727/tourist-vehicles-coming-to-nepal-by-land1/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1727/tourist-vehicles-coming-to-nepal-by-land1/",
+   "title": "स्थलमार्गबाट नेपाल आउने पर्यटकवाहक सवारी साधन अब अनलाइनबाटै दर्ता गर्न सकिने",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1728/report-of-beruzu-fersiot-monitoring-committee-for/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1728/report-of-beruzu-fersiot-monitoring-committee-for/",
+   "title": "बेरुजु फर्स्यौट अनुगमन समितिको आर्थिक वर्ष २०८१/८२ को प्रतिवेदन",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1729/notice-regarding-submission-of-comments-on-the/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1729/notice-regarding-submission-of-comments-on-the/",
+   "title": "मस्यौदामा राय सुझाव पठाउने सम्बन्धी सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1730/supplementary-grants--second-amendment--rules--2083/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1730/supplementary-grants--second-amendment--rules--2083/",
+   "title": "समपूरक अनुदान सम्बन्धी (दोश्रो संशोधन) कार्यविधि, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1731/special-grants--second-amendment--rules--2083/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1731/special-grants--second-amendment--rules--2083/",
+   "title": "विशेष अनुदान सम्बन्धी(दोश्रो संशोधन) कार्यविधि, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1732/press-release--revenue-consultative-committee-report-submitted/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1732/press-release--revenue-consultative-committee-report-submitted/",
+   "title": "प्रेस विज्ञप्ति (राजस्व परामर्श समितिको प्रतिवेदन मा.अर्थमन्त्री समक्ष पेश)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1733/information-regarding-publication-of-short-list-/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1733/information-regarding-publication-of-short-list-/",
+   "title": "संक्षिप्त सूचि प्रकाशन सम्बन्धी सूचना।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1735/notice-of-the-recommendation-committee-formed-to/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1735/notice-of-the-recommendation-committee-formed-to/",
+   "title": "नेपाल बीमा प्राधिकरणको सञ्चालक समितिको अध्यक्ष पदमा नियुक्तिको लागि नाम सिफारिस गर्न गठित सिफारिस समितिको सूचना।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1736/fasfdasdfasdfasdf/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1736/fasfdasdfasdfasdf/",
+   "title": "नेपाल सरकार र स्विट्जरल्याण्ड सरकारबीच वेपत्ता पारिएका व्यक्तिहरुको छानवि, सत्य निरुपण तथा मेलमिलाप कोषमा स्वीटजरल्याण्डको योगदान सम्बन्धमा हस्ताक्षर",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1738/economic-survey-2082-83/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1738/economic-survey-2082-83/",
+   "title": "आर्थिक सर्वेक्षण २०८२/८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1739/annual-status-review-of-public-institutions-2083/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1739/annual-status-review-of-public-institutions-2083/",
+   "title": "सार्वजनिक संस्थानको वार्षिक स्थिति समीक्षा २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1741/budget8384/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1741/budget8384/",
+   "title": "आर्थिक वर्ष २०८३/८४ को बजेट वक्तव्य",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://mof.gov.np/content/1742/economic-bill--2083/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1742/economic-bill--2083/",
+   "title": "आर्थिक विधेयक, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://mof.gov.np/content/1745/statement-of-expenditure-estimates--red-book-2083-84/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1745/statement-of-expenditure-estimates--red-book-2083-84/",
+   "title": "व्यय अनुमानको विवरण (रातो किताब ) आ.व. २०८३-८४ १८ जेठ, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1749/annual-report-of-the-beruzu-fersiot-monitoring/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1749/annual-report-of-the-beruzu-fersiot-monitoring/",
+   "title": "बेरुजु फर्स्यौट अनुगमन समितिको आर्थिक वर्ष २०८१/८२ को वार्षिक प्रतिवेदन",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1751/intergovernmental-financial-transfer-2083-84/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1751/intergovernmental-financial-transfer-2083-84/",
+   "title": "अन्तर सरकारी वित्तीय हस्तान्तरण २०८३-८४",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1754/budget-speech--english--2026-27/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1754/budget-speech--english--2026-27/",
+   "title": "Budget Speech (English) 2026/27",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://mof.gov.np/content/1755/nepal-and-germany-conclude-negotiations-on-development/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1755/nepal-and-germany-conclude-negotiations-on-development/",
+   "title": "Nepal and Germany Conclude Negotiations on Development Cooperation for 2026-27",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1765/signing-of-a-concessional-loan-agreement-between/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1765/signing-of-a-concessional-loan-agreement-between/",
+   "title": "नेपाल सरकार र एसियाली विकास बैकबीच सहुलियतपूर्ण ऋण सम्झौतामा हस्ताक्षर",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1768/notice-regarding-submission-of-opinions-and-suggestions-on-the-draft/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1768/notice-regarding-submission-of-opinions-and-suggestions-on-the-draft/",
+   "title": "मस्यौदामा राय सुझाव पठाउने सम्बन्धी सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1770/a-w-guidance-on-budget-implementation-for-2083-84-/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1770/a-w-guidance-on-budget-implementation-for-2083-84-/",
+   "title": "आ.व. २०८३/८४ को बजेट कार्यान्वयन सम्बन्धी मार्गदर्शन।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1771/interest-subsidy-on-concessional-loans--first-amendment-/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1771/interest-subsidy-on-concessional-loans--first-amendment-/",
+   "title": "सहुलियतपूर्ण कर्जाका लागि ब्याज अनुदानसम्बन्धी (पहिलो संशोधन) कार्यविधि, २०८3",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1772/appropriation-act--2083/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1772/appropriation-act--2083/",
+   "title": "विनियोजन ऐन, २०८३ ७ साउन, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1780/taxpayer-incentive-gift-program-operating-procedures--2083/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1780/taxpayer-incentive-gift-program-operating-procedures--2083/",
+   "title": "करदाता प्रोत्साहन उपहार कार्यक्रम सञ्चालन कार्यविधि,२०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1789/salary-of-national-service-employees-effective-from/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1789/salary-of-national-service-employees-effective-from/",
+   "title": "संवत् २०८३ साल साउन १ गते देखि लागु हुने राष्ट्रसेवक कर्मचारीहरूको तलबमान।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1793/interest-subsidy-on-concessional-loans--second-amendment-/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1793/interest-subsidy-on-concessional-loans--second-amendment-/",
+   "title": "सहुलियतपूर्ण कर्जाका लागि ब्याज अनुदानसम्बन्धी (दोस्रो संशोधन) कार्यविधि, २०८3",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1795/inff-financing-strategy-for-pro-employment-economic-growth-2083/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1795/inff-financing-strategy-for-pro-employment-economic-growth-2083/",
+   "title": "INFF Financing Strategy for Pro-Employment Economic Growth",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1798/climate-finance-mobilization-procedure-2082/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1798/climate-finance-mobilization-procedure-2082/",
+   "title": "Climate Finance Mobilization Procedure 2082.pdf",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1802/source-book--white-book-fy-2026-27/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1802/source-book--white-book-fy-2026-27/",
+   "title": "Source Book: White Book FY 2026-27",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1803/economic-survey/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1803/economic-survey/",
+   "title": "आर्थिक सर्वेक्षण 2025/26",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1806/notice-of-cancellation-of-tender/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1806/notice-of-cancellation-of-tender/",
+   "title": "बोलपत्र रद्द गरिएको सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1810/a-meeting-of-development-partners-was-held/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1810/a-meeting-of-development-partners-was-held/",
+   "title": "विपद्पछिको पुनरुत्थान र आवश्यकता आकलनबारे अर्थ मन्त्रालयमा विकास साझेदारहरूको बैठक सम्पन्न",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1814/notice-of-intention-to-accept-bid/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1814/notice-of-intention-to-accept-bid/",
+   "title": "बोलपत्र स्वीकृत गर्ने आशयको सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1815/annual-report-in-accordance-with-section-41/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1815/annual-report-in-accordance-with-section-41/",
+   "title": "सुशासन (व्यवस्थापन तथा सञ्चालन) ऐन, २०६४ को दफा ४१ तथा आर्थिक कार्यविधि तथा वित्तीय उत्तरदायित्व ऐन, २०७६ को दफा २३ को उपदफा (४) बमोजिमको वार्षिक प्रतिवेदन, २०८२/८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1816/press-release--honorable-finance-minister-dr-swarnim-wagle-s/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1816/press-release--honorable-finance-minister-dr-swarnim-wagle-s/",
+   "title": "प्रेस विज्ञप्ति: माननीय अर्थमन्त्री डा. स्वर्णिम वाग्लेको औपचारिक भारत भ्रमण सम्पन्न",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1818/press-release--finance-minister-dr-meeting-between-swarnim/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1818/press-release--finance-minister-dr-meeting-between-swarnim/",
+   "title": "प्रेस विज्ञप्ति: अर्थमन्त्री डा. स्वर्णिम वाग्ले र एसियाली पूर्वाधार लगानी बैंक (एआईआईबी) की अध्यक्ष जोउ जियायीबीच भेटवार्ता",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1819/nepal-was-elected-as-the-vice-chairman-of/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1819/nepal-was-elected-as-the-vice-chairman-of/",
+   "title": "नेपाल एसियाली पूर्वाधार लगानी बैंक (एआईआईबी) को उप-सभापतिमा निर्वाचित",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1820/aiib-elected/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1820/aiib-elected/",
+   "title": "नेपाल एसियाली पूर्वाधार लगानी बैंक (एआईआईबी) को उप-सभापतिमा निर्वाचित",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1821/asian-infrastructure-investment-bank--aiib--participated-in/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1821/asian-infrastructure-investment-bank--aiib--participated-in/",
+   "title": "एसियाली पूर्वाधार लगानी बैंक (एआईआईबी)११औँ वार्षिक बैठकमा सहभागी भई अर्थमन्त्री डा. स्वर्णिम वाग्ले स्वदेश फिर्ता",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1822/aiib-11-annual-meeting-swarnim-wagle/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1822/aiib-11-annual-meeting-swarnim-wagle/",
+   "title": "एसियाली पूर्वाधार लगानी बैंक (एआईआईबी)११औँ वार्षिक बैठकमा सहभागी भई अर्थमन्त्री डा. स्वर्णिम वाग्ले स्वदेश फिर्ता",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1823/notice-regarding-the-call-for-applications-to/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1823/notice-regarding-the-call-for-applications-to/",
+   "title": "वैकल्पिक विकास वित्त कोषको प्रमुख कार्यकारी अधिकृत पदमा नियुक्तिका लागि नाम सिफारिस गर्न दरखास्त आव्हान सम्बन्धी सूचना। (प्रथम पटक प्रकाशित मिति: २०८३/०६/१६)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1824/notice-inviting-applications-to-recommend-candidate-for/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1824/notice-inviting-applications-to-recommend-candidate-for/",
+   "title": "Notice Inviting Applications To Recommend candidate for the position of the Chief Executive Officer of the Alternative Development Finance Fund (First published on 2026/10/02)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1825/procedure-for-selection-of-candidates-for-recommending/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1825/procedure-for-selection-of-candidates-for-recommending/",
+   "title": "वैकल्पिक विकास वित्त कोषको प्रमुख कार्यकारी अधिकृत पदमा नियुक्तिका लागि नाम सिफारिस गर्न उम्मेदवार छनोट सम्बन्धी कार्यविधि, २०८३",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1826/procedure-for-selecting-candidates-to-recommend-for/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1826/procedure-for-selecting-candidates-to-recommend-for/",
+   "title": "Procedure for Selecting Candidates to Recommend for Appointment to the post of the Chief Executive Officer of the Alternative Development Finance Fund, 2083(2026)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1827/press-release--hon-ble-finance-minister-washington-d-c-/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1827/press-release--hon-ble-finance-minister-washington-d-c-/",
+   "title": "प्रेस विज्ञप्ति :दुई दिने भ्रमण कार्यक्रमका लागि माननीय अर्थमन्त्री वासिङ्टन डी.सी. प्रस्थान",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1828/notice-regarding-the-chief-executive-officer-of/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1828/notice-regarding-the-chief-executive-officer-of/",
+   "title": "नेपाल स्टक एक्स्चेञ्ज लिमिटेडको प्रमुख कार्यकारी अधिकृत छनौट तथा सिफारिश समितिको अन्तर्वार्ता र प्रस्तुतीकरणको लागि उपस्थित हुने सम्बन्धी सूचना।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/1829/press-release--hon-finance-minister-dr-bilateral-meeting-between/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/1829/press-release--hon-finance-minister-dr-bilateral-meeting-between/",
+   "title": "प्रेश विज्ञप्ति : मा. अर्थमन्त्री डा. वाग्ले र विश्व बैंकका अध्यक्षबीच द्विपक्षीय भेटवार्ता",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/208/appropriation-act--2070--ordnance-/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/208/appropriation-act--2070--ordnance-/",
+   "title": "विनियोजन ऐन, २०७० (अध्यादेश) १४ असोज, २०७०",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": true
+  },
+  "https://mof.gov.np/content/209/appropriation-bill--2078--replacement-/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/209/appropriation-bill--2078--replacement-/",
+   "title": "विनियोजन विधेयक, २०७८ (प्रतिस्थापन) २४ भदौ, २०७८",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/279/chairman-of-the-sension-committee-for-appointment/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/279/chairman-of-the-sension-committee-for-appointment/",
+   "title": "नेपाल बीमा प्राधिकरणको सञ्चालक समितिको अध्यक्ष पदमा नियुक्तिको लागि गठित सिफारिस समितिको पदपूर्तिसम्बन्धी सूचना।(प्रथम पटक प्रकाशित मिति: २०८१/०९/२६)",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/280/public-financial-management-improvement-improvement-improvement-improvement/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/280/public-financial-management-improvement-improvement-improvement-improvement/",
+   "title": "संघ,प्रदेश र स्थानीय तहमा लागू हुने गरी तयार गर्न लागिएको सार्वजनिक वित्तीय व्यवस्थापन सुधार राष्ट्रिय रणनीति ( National PFM reform strategy) उपर केही राय, सुझाव भए ffcd@mof.gov.np मा उपलब्ध गराईदिनुहुन अनुरोध छ ।",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/285/complementary-grants--2081/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/285/complementary-grants--2081/",
+   "title": "समपूरक अनुदान सम्बन्धी कार्यविधि, २०८१",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/286/procedure-for-special-grants--2081/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/286/procedure-for-special-grants--2081/",
+   "title": "विशेष अनुदान सम्बन्धी कार्यविधि, २०८१",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/290/information-related-to-the-country-pipeline-update/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/290/information-related-to-the-country-pipeline-update/",
+   "title": "GCF को Country Pipeline Update सम्बन्धी सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/296/chairman-of-the-board-of-board-of/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/296/chairman-of-the-board-of-board-of/",
+   "title": "नेपाल बीमा प्राधिकरणको सञ्चालक समितिको अध्यक्ष पदको व्यावसायिक कार्ययोजनाको प्रस्तुतिकरण र अन्तरवार्ता सम्बन्धि सूचना।२०८१/११/०५",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/355/the-procedure-of-chief-executive-officer-of/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/355/the-procedure-of-chief-executive-officer-of/",
+   "title": "नेपाल स्टक एक्सचेन्ज लिमिटेड (नेप्से) को प्रमुख कार्यकारी अधिकृतको छनौट तथा सिफारिस सम्बन्धी कार्यविधि, २०८१",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/364/notifications-of-personal-committee-for-appointment-for/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/364/notifications-of-personal-committee-for-appointment-for/",
+   "title": "नेपाल स्टक एक्सचेन्ज लिमिटेडको प्रमुख कार्यकारी अधिकृत पदमा नियुक्तिको लागि गठित सिफारिस समितिको पदपूर्ति सम्बन्धी सूचना। मिति २०८१-११-१२",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/388/information-of-rajaja-advisory-committee--2081/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/388/information-of-rajaja-advisory-committee--2081/",
+   "title": "राजश्व परामर्श समिति, २०८१ को सूचना",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/455/details-of-expenditure-general-2060-61/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/455/details-of-expenditure-general-2060-61/",
+   "title": "व्यय अनुमानको विवरण २०६०/६१ १३ असोज, २०६०",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/457/source-book--white-book-fy-2021-22/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/457/source-book--white-book-fy-2021-22/",
+   "title": "Source Book: White Book FY 2021-22 १५ जेठ, २०७८",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  },
+  "https://mof.gov.np/content/549/additional-notification-date-2081-18-to-apply-in/": {
+   "source_id": "mof_home",
+   "url": "https://mof.gov.np/content/549/additional-notification-date-2081-18-to-apply-in/",
+   "title": "नेप्सेको प्रमुख कार्यकारी अधिकृतको पदमा आवेदन दिने म्याद थप सम्बन्धी सूचना मिति २०८१-११-१८",
+   "first_seen": "2026-10-07T17:57:51+00:00",
+   "relevant": false
+  }
+ }
+}

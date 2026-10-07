@@ -1,0 +1,78 @@
+# Official pages the rule watcher scans daily for new documents.
+# item_pattern: regex an <a href> must match to count as a document entry.
+# All of these sites run the same government CMS (/content/<id>/<slug>/ entries, PDFs on giwmscdnone.gov.np).
+
+sources:
+  - id: ird_financeact
+    name: "IRD — Finance Acts (आर्थिक ऐन)"
+    url: "https://ird.gov.np/category/financeact/"
+    item_pattern: "/content/\\d+/"
+  - id: ird_incometaxact
+    name: "IRD — Income Tax Act (आयकर ऐन)"
+    url: "https://ird.gov.np/category/incometaxact/"
+    item_pattern: "/content/\\d+/"
+  - id: ird_notice
+    name: "IRD — Notices (सूचना)"
+    url: "https://ird.gov.np/category/notice/"
+    item_pattern: "/content/\\d+/"
+  - id: ird_home
+    name: "IRD — Home page (circulars, booklets, directives)"
+    url: "https://ird.gov.np/"
+    item_pattern: "/content/\\d+/"
+  - id: mof_home
+    name: "Ministry of Finance — budget speech, Finance Bill"
+    url: "https://mof.gov.np/"
+    item_pattern: "/content/\\d+/"
+  - id: lawcommission_home
+    name: "Nepal Law Commission — Acts and ordinances"
+    url: "https://lawcommission.gov.np/"
+    item_pattern: "/content/\\d+/"
+  - id: ssf_acts
+    name: "Social Security Fund — Acts and regulations"
+    url: "https://ssf.gov.np/list/act_regulation"
+    item_pattern: "(/content/\\d+/|/detail/|\\.pdf$)"
+
+# A title must contain at least one of these (case-insensitive) to be treated as relevant.
+# Everything else is still recorded in the state file (so it is not re-reported) but not flagged.
+relevant_keywords:
+  - आर्थिक ऐन
+  - आर्थिक विधेयक
+  - आयकर
+  - पारिश्रमिक
+  - कर कट्टी
+  - अग्रिम कर
+  - सामाजिक सुरक्षा
+  - नागरिक लगानी
+  - अवकाश कोष
+  - बजेट वक्तव्य
+  - अध्यादेश
+  - परिपत्र
+  - निर्देशिका
+  - finance act
+  - economic act
+  - finance bill
+  - economic bill
+  - income tax
+  - budget speech
+  - ordinance
+  - remuneration
+  - tds
+  - social security
+  - circular
+  - directive
+
+# Titles containing any of these are never relevant (tenders, prize lists, vacancies...).
+ignore_keywords:
+  - बोलपत्र
+  - दरभाउपत्र
+  - उपहार कार्यक्रमका विजेता
+  - नामावली
+  - पदपूर्ति
+  - सूचनाको हक
+  - मूल्य अभिवृद्धि कर
+  - मदिरा
+  - अन्त:शुल्क
+  - भन्सार
+  - tender
+  - quotation
+  - vacancy

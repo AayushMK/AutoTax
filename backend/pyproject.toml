@@ -1,0 +1,26 @@
+[project]
+name = "autotax-backend"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.12"
+dependencies = [
+    "anthropic>=1.11.0",
+    "beautifulsoup4>=4.15.0",
+    "httpx>=0.28.1",
+    "nepali-datetime>=1.0.8.5",
+    "pydantic>=2.13.5",
+    "pypdf>=6.19.0",
+    "pyyaml>=6.0.3",
+    "ruamel-yaml>=0.19.1",
+]
+
+[dependency-groups]
+dev = [
+    "hypothesis>=6.168.5",
+    "pytest>=9.1.1",
+    "respx>=0.23.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

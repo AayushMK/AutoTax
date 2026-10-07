@@ -1,0 +1,107 @@
+# Golden annual cases. Each expected figure is hand-computed from the rule file; the
+# working is shown so a CA can check it. Add IRD-calculator cross-checks here (cross_checked: true).
+#
+# Fields: rules (file stem), profile (EmployeeProfile kwargs), figures (AnnualFigures kwargs),
+#         reliefs (AnnualReliefs kwargs), expect (AnnualTaxResult fields).
+
+- name: "2083/84 single, no SSF, 12 lakh"
+  rules: "2083-84"
+  working: "10L×1% = 10,000; 2L×10% = 20,000"
+  figures: {gross_income: 1200000, basic: 1200000}
+  expect: {taxable_income: 1200000, sst: 10000, total_tax: 30000}
+
+- name: "2083/84 SSF member: employer SSF taxable, SST waived"
+  rules: "2083-84"
+  working: >
+    assessable = 1,500,000 + 240,000 (20% of 12L basic) = 1,740,000;
+    retirement = min(132,000+240,000=372,000; 580,000; 500,000) = 372,000;
+    taxable 1,368,000; SST waived; 368,000×10% = 36,800
+  profile: {ssf_enrolled: true}
+  figures: {gross_income: 1500000, basic: 1200000, ssf_employee: 132000, ssf_employer: 240000}
+  expect: {assessable_income: 1740000, retirement_deduction: 372000, taxable_income: 1368000, sst: 0, total_tax: 36800}
+
+- name: "2083/84 retirement 5 lakh cap hit, top slab"
+  rules: "2083-84"
+  working: >
+    taxable 6,000,000 − 500,000 = 5,500,000;
+    10,000 + 50,000 + 200,000 + 405,000 + 1,500,000×29% = 435,000 → 1,100,000
+  figures: {gross_income: 6000000, basic: 4000000, cit: 600000}
+  expect: {retirement_deduction: 500000, taxable_income: 5500000, total_tax: 1100000}
+
+- name: "2083/84 one-third cap hit"
+  rules: "2083-84"
+  working: "min(400,000; 900,000/3 = 300,000; 500,000) = 300,000; taxable 600,000 × 1% = 6,000"
+  figures: {gross_income: 900000, basic: 900000, cit: 400000}
+  expect: {retirement_deduction: 300000, taxable_income: 600000, total_tax: 6000}
+
+- name: "2083/84 one-third of non-round income (exact fraction)"
+  rules: "2083-84"
+  working: "1,000,000/3 = 333,333.33; taxable 666,666.67 × 1% = 6,666.67"
+  figures: {gross_income: 1000000, basic: 1000000, cit: 400000}
+  expect: {retirement_deduction: "333333.33", taxable_income: "666666.67", total_tax: "6666.67"}
+
+- name: "2083/84 female single rebate"
+  rules: "2083-84"
+  working: "10,000 + 50,000 + 500,000×20% = 160,000; rebate 16,000 → 144,000"
+  profile: {gender: female}
+  figures: {gross_income: 2000000, basic: 2000000}
+  expect: {rebate: 16000, total_tax: 144000}
+
+- name: "2083/84 female with non-employment income: no rebate"
+  rules: "2083-84"
+  profile: {gender: female, income_only_from_employment: false}
+  figures: {gross_income: 2000000, basic: 2000000}
+  expect: {rebate: 0, total_tax: 160000}
+
+- name: "2083/84 non-resident flat 25%"
+  rules: "2083-84"
+  profile: {resident: false}
+  figures: {gross_income: 3000000, basic: 3000000, cit: 300000}
+  expect: {retirement_deduction: 0, total_tax: 750000}
+
+- name: "2083/84 insurance caps"
+  rules: "2083-84"
+  working: "life min(50,000; 40,000) + health min(25,000; 20,000) = 60,000; taxable 1,440,000 → 10,000 + 44,000"
+  figures: {gross_income: 1500000, basic: 1500000}
+  reliefs: {life_insurance_premium: 50000, health_insurance_premium: 25000}
+  expect: {insurance_deduction: 60000, taxable_income: 1440000, total_tax: 54000}
+
+- name: "2083/84 remote area A"
+  rules: "2083-84"
+  working: "1,100,000 − 50,000 = 1,050,000 → 10,000 + 5,000"
+  profile: {remote_area: A}
+  figures: {gross_income: 1100000, basic: 1100000}
+  expect: {remote_area_deduction: 50000, total_tax: 15000}
+
+- name: "2083/84 disability widens first slab by 50%"
+  rules: "2083-84"
+  working: "first slab 1,500,000 @1% = 15,000; next 100,000 @10% = 10,000"
+  profile: {disabled: true}
+  figures: {gross_income: 1600000, basic: 1600000}
+  expect: {sst: 15000, total_tax: 25000}
+
+- name: "2083/84 donation capped at 5% of adjusted income"
+  rules: "2083-84"
+  working: "5% of 1,200,000 = 60,000 < 100,000 cap; taxable 1,140,000 → 10,000 + 14,000"
+  figures: {gross_income: 1200000, basic: 1200000}
+  reliefs: {donation: 80000}
+  expect: {donation_deduction: 60000, total_tax: 24000}
+
+- name: "2082/83 single 12 lakh"
+  rules: "2082-83"
+  working: "5,000 + 20,000 + 60,000 + 200,000×30% = 145,000"
+  figures: {gross_income: 1200000, basic: 1200000}
+  expect: {total_tax: 145000}
+
+- name: "2082/83 couple 12 lakh"
+  rules: "2082-83"
+  working: "6,000 + 20,000 + 60,000 + 100,000×30% = 116,000"
+  profile: {filing: couple}
+  figures: {gross_income: 1200000, basic: 1200000}
+  expect: {total_tax: 116000}
+
+- name: "2082/83 couple female: no rebate on couple filing"
+  rules: "2082-83"
+  profile: {filing: couple, gender: female}
+  figures: {gross_income: 1200000, basic: 1200000}
+  expect: {rebate: 0, total_tax: 116000}
