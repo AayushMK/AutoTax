@@ -1,0 +1,50 @@
+.headline { display: flex; gap: 2rem; margin: 0; }
+.headline div { display: grid; justify-items: end; }
+.headline dt { font-size: var(--step--1); color: var(--ink-soft); font-weight: 600; }
+.headline dd { margin: 0; font-size: var(--step-2); font-weight: 600; }
+
+.block + .block { margin-top: 1.75rem; }
+.block h3 { margin-bottom: 0.25rem; }
+
+/* A worked ledger: label and figure on one line, the working underneath,
+   the authority in the margin. */
+.ledger { list-style: none; margin: 0.6rem 0 0; padding: 0; }
+.ledger li { padding: 0.55rem 0; border-bottom: 1px solid var(--rule); }
+
+.line { display: flex; justify-content: space-between; gap: 1.5rem; align-items: baseline; }
+.label { font-weight: 500; }
+.amount { white-space: nowrap; }
+
+.working {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(12rem, 18rem);
+  gap: 0.25rem 1.5rem;
+  margin-top: 0.2rem;
+  font-size: var(--step--1);
+}
+.detail { color: var(--ink-soft); font-family: var(--font-figures); font-size: 0.95em; overflow-wrap: anywhere; }
+
+.cite {
+  grid-column: 2;
+  font-style: normal;
+  display: grid;
+  padding-left: 0.6rem;
+  border-left: 2px solid var(--c, var(--ink-faint));
+  color: var(--ink);
+  font-weight: 600;
+}
+.cite span { font-weight: 400; color: var(--ink-faint); }
+.verified { --c: var(--moss); }
+.corroborated { --c: var(--amber); }
+.needs_review { --c: var(--seal); }
+.needs_review span:last-child, .corroborated span:last-child { color: var(--c); }
+
+.total { border-bottom: 3px double var(--ink) !important; }
+.total .label, .total .amount { font-weight: 700; }
+.total { border-top: 1.5px solid var(--ink); margin-top: -1px; }
+
+@media (max-width: 760px) {
+  .working { grid-template-columns: 1fr; }
+  .cite { grid-column: 1; }
+  .headline { gap: 1.25rem; }
+}

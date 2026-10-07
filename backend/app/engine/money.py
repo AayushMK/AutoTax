@@ -32,4 +32,14 @@ def round_money(amount: Decimal, places: int = 2) -> Decimal:
 
 
 def fmt(amount: Decimal) -> str:
-    return f"{amount:,.2f}"
+    """Nepali grouping (lakh/crore), as accountants write it: 12,34,567.89."""
+    sign = "-" if amount < 0 else ""
+    whole, frac = f"{abs(amount):.2f}".split(".")
+    head, tail = whole[:-3], whole[-3:]
+    groups = []
+    while len(head) > 2:
+        groups.insert(0, head[-2:])
+        head = head[:-2]
+    if head:
+        groups.insert(0, head)
+    return sign + ",".join(groups + [tail]) + "." + frac

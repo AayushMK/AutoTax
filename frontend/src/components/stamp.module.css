@@ -1,0 +1,39 @@
+.stamp {
+  --c: var(--ink);
+  display: inline-grid;
+  gap: 0.1rem;
+  padding: 0.45rem 0.85rem 0.5rem;
+  color: var(--c);
+  border: 2.5px solid var(--c);
+  outline: 1px solid var(--c);
+  outline-offset: 3px;
+  border-radius: 4px;
+  transform: rotate(-2deg);
+  transform-origin: left center;
+  margin: 5px 6px;
+  line-height: 1.1;
+  /* worn ink: a faint speckle so it reads as pressed, not printed */
+  mask-image: radial-gradient(circle at 30% 40%, #000 72%, rgb(0 0 0 / 0.86) 100%);
+  animation: press 380ms cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+
+.seal { --c: var(--seal); }
+.moss { --c: var(--moss); }
+.ink { --c: var(--ink); }
+
+.title {
+  font-weight: 750;
+  font-size: 1.05rem;
+  font-stretch: 80%;
+  letter-spacing: 0.02em;
+}
+
+.note {
+  font-size: var(--step--1);
+  font-weight: 500;
+}
+
+@keyframes press {
+  from { transform: rotate(-2deg) scale(1.25); opacity: 0; }
+  to { transform: rotate(-2deg) scale(1); opacity: 1; }
+}
