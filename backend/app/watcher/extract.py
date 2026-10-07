@@ -1,70 +1,25 @@
-"""Optional: read a (possibly scanned) government PDF with Claude and propose rule-file changes.
+"""Optional: read a (possibly scanned) government PDF with an AI model and propose rule changes.
 
 Nothing here edits active rules. Output is a list of *proposals* with page numbers and verbatim
-quotes, which a reviewer checks against the PDF. Requires Anthropic credentials
-(ANTHROPIC_API_KEY or an `ant auth login` profile); without them the watcher skips this step.
+quotes, which a reviewer checks against the PDF. The model is pluggable (see providers.py:
+Gemini free tier or Claude); without any API key the watcher skips this step.
 """
 
 from __future__ import annotations
 
-import base64
 import io
 import json
-import os
 from dataclasses import dataclass, field
 from pathlib import Path
 
-import anthropic
-from pydantic import BaseModel, Field
 from pypdf import PdfReader, PdfWriter
 
 from app.engine.rules import RuleSet
 
-MODEL = "claude-opus-5-5"
-PAGES_PER_CHUNK = 60
-MAX_CHUNK_BYTES = 22 * 1024 * 1024  # request limit is 32 MB after base64 (+33%)
+from .providers import ChunkFailed, Provider, get_provider
+from .schema import ChunkFindings, Confirmation, ProposedChange
 
-SYSTEM = """You are a Nepal tax-law analyst helping keep a payroll system's tax rules exact.
-You read official government documents (Finance Act / आर्थिक ऐन, Income Tax Act / आयकर ऐन,
-ordinances / अध्यादेश, IRD circulars, SSF regulations). Many are scanned Nepali text.
-
-Only report provisions that affect salary (employment income) tax computation for individuals:
-tax slabs and rates, the 1% social security tax and its waivers, retirement-contribution
-deductions (SSF, CIT, EPF, approved funds), insurance premium deductions, remote-area deductions,
-women's rebate, disability provisions, non-resident rates, donations, foreign-currency conversion,
-and TDS rounding.
-
-Rules:
-- Every item must cite the page number (in the FULL document's numbering) and a verbatim quote
-  copied from that page in its original language. Never invent or paraphrase a quote.
-- Map each provision onto the existing parameter keys given to you. Use `changes` only when the
-  document's value differs from the current value; use `confirmations` when it matches.
-- Encode proposed values as JSON in exactly the same shape as the current value
-  (e.g. slabs are a list of {"width": number|null, "rate": "decimal string", "sst": bool}).
-- Provisions that matter for salary tax but don't fit any key go in `unmapped_findings`.
-- If this part of the document has nothing relevant, return empty lists."""
-
-
-class ProposedChange(BaseModel):
-    param: str = Field(description="Existing parameter key, e.g. insurance.life_cap")
-    proposed_value_json: str = Field(description="New value as JSON, same shape as the current value")
-    page: int
-    quote: str = Field(description="Verbatim supporting text from that page, original language")
-    explanation: str
-
-
-class Confirmation(BaseModel):
-    param: str
-    page: int
-    quote: str
-
-
-class ChunkFindings(BaseModel):
-    document_title: str | None = None
-    effective_from_bs: str | None = Field(default=None, description="BS date YYYY-MM-DD if stated")
-    changes: list[ProposedChange]
-    confirmations: list[Confirmation]
-    unmapped_findings: list[str]
+__all__ = ["ChunkFindings", "Confirmation", "Extraction", "ProposedChange", "extract", "merge", "split_pdf"]
 
 
 @dataclass
@@ -76,17 +31,11 @@ class Extraction:
     unmapped_findings: list[str] = field(default_factory=list)
     rejected: list[str] = field(default_factory=list)  # proposals that failed validation
     chunks: int = 0
+    provider: str = ""
 
 
-def credentials_available() -> bool:
-    """API key, auth token, federation env, or an `ant auth login` profile (the SDK resolves lazily)."""
-    if any(os.environ.get(v) for v in ("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN", "ANTHROPIC_FEDERATION_RULE_ID")):
-        return True
-    return (Path.home() / ".config" / "anthropic").is_dir()
-
-
-def split_pdf(path: Path, pages_per_chunk: int = PAGES_PER_CHUNK) -> list[tuple[int, int, bytes]]:
-    """Return (first_page, last_page, pdf_bytes) chunks, 1-indexed, each under MAX_CHUNK_BYTES."""
+def split_pdf(path: Path, pages_per_chunk: int, max_bytes: int) -> list[tuple[int, int, bytes]]:
+    """Return (first_page, last_page, pdf_bytes) chunks, 1-indexed, each under max_bytes."""
     reader = PdfReader(str(path))
     out: list[tuple[int, int, bytes]] = []
 
@@ -97,7 +46,7 @@ def split_pdf(path: Path, pages_per_chunk: int = PAGES_PER_CHUNK) -> list[tuple[
         buf = io.BytesIO()
         w.write(buf)
         data = buf.getvalue()
-        if len(data) > MAX_CHUNK_BYTES and end - start > 1:
+        if len(data) > max_bytes and end - start > 1:
             mid = (start + end) // 2
             emit(start, mid)
             emit(mid, end)
@@ -117,45 +66,25 @@ def _current_params(rules: RuleSet) -> str:
     )
 
 
-def extract(path: Path, rules: RuleSet, client: anthropic.Anthropic | None = None, log=print) -> Extraction:
-    client = client or anthropic.Anthropic()
-    result = Extraction()
+def extract(path: Path, rules: RuleSet, provider: Provider | None = None, log=print) -> Extraction:
+    provider = provider or get_provider()
+    if provider is None:
+        raise RuntimeError("no extraction provider: set GEMINI_API_KEY (free) or ANTHROPIC_API_KEY")
+    result = Extraction(provider=f"{provider.name}:{provider.model}")
     params = _current_params(rules)
-    for first, last, data in split_pdf(path):
+    for first, last, data in split_pdf(path, provider.pages_per_chunk, provider.max_chunk_bytes):
         result.chunks += 1
-        log(f"  extracting pages {first}-{last} ({len(data) // 1024} KB)…")
-        response = client.beta.messages.parse(
-            model=MODEL,
-            max_tokens=16000,
-            betas=["server-side-fallback-2026-07-01"],
-            fallbacks="default",
-            output_config={"effort": "high"},
-            system=SYSTEM,
-            messages=[{
-                "role": "user",
-                "content": [
-                    {
-                        "type": "document",
-                        "source": {"type": "base64", "media_type": "application/pdf", "data": base64.standard_b64encode(data).decode()},
-                    },
-                    {
-                        "type": "text",
-                        "text": (
-                            f"This is pages {first}-{last} of the full document. Report page numbers in full-document numbering.\n\n"
-                            f"Current rule parameters ({rules.version_id}):\n{params}"
-                        ),
-                    },
-                ],
-            }],
-            output_format=ChunkFindings,
+        log(f"  [{provider.name}] reading pages {first}-{last} ({len(data) // 1024} KB)…")
+        prompt = (
+            f"This is pages {first}-{last} of the full document. Report page numbers in full-document numbering.\n\n"
+            f"Current rule parameters ({rules.version_id}):\n{params}"
         )
-        if response.stop_reason == "refusal":
-            result.rejected.append(f"pages {first}-{last}: model declined ({getattr(response.stop_details, 'category', None)})")
+        try:
+            found = provider.read_chunk(data, prompt)
+        except ChunkFailed as e:
+            result.rejected.append(f"pages {first}-{last}: {e}")
             continue
-        if response.stop_reason == "max_tokens" or response.parsed_output is None:
-            result.rejected.append(f"pages {first}-{last}: incomplete response ({response.stop_reason})")
-            continue
-        merge(result, response.parsed_output, rules, first, last)
+        merge(result, found, rules, first, last)
     return result
 
 

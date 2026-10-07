@@ -19,7 +19,7 @@ from pathlib import Path
 from app.engine.gate import budget_season_alert, check_payroll_allowed
 from app.engine.rules import RULES_DIR, load_all, rules_for_date, verify_source_hashes
 
-from . import documents, extract, impact, propose, report, sources
+from . import documents, extract, impact, propose, providers, report, sources
 
 FOUND = 10
 
@@ -48,7 +48,7 @@ def cmd_run(args) -> int:
         return 2
     cfg = sources.load_config()
     state = sources.load_state()
-    use_claude = not args.no_extract and extract.credentials_available()
+    provider = None if args.no_extract else providers.get_provider(args.provider)
     current = rules_for_date(args.today) if _covered(args.today) else load_all()[-1]
 
     with sources.http_client() as client:
@@ -58,7 +58,7 @@ def cmd_run(args) -> int:
             return 2
         new = sources.diff_new(items, state)
         relevant_items = [i for i in new if cfg.is_relevant(i.title)][: args.limit]
-        findings = [_process(i, client, current, use_claude) for i in relevant_items]
+        findings = [_process(i, client, current, provider) for i in relevant_items]
 
     relevant_urls = {i.url for i in relevant_items}
     alert = budget_season_alert(args.today)
@@ -71,14 +71,14 @@ def cmd_run(args) -> int:
     if not findings:
         return 0
     text = report.render(findings, other, [alert] if alert else [], errors)
-    if not use_claude:
-        text += "\n_Automatic extraction skipped (no Anthropic credentials or `--no-extract`). Review documents manually._\n"
+    if provider is None:
+        text += "\n_Automatic extraction skipped (no GEMINI_API_KEY / ANTHROPIC_API_KEY, or `--no-extract`). Review documents manually._\n"
     Path(args.report).write_text(text, encoding="utf-8")
     print(f"Report: {args.report}")
     return FOUND
 
 
-def _process(item, client, current, use_claude) -> report.DocFinding:
+def _process(item, client, current, provider) -> report.DocFinding:
     f = report.DocFinding(item)
     try:
         f.docs = documents.archive_from_page(item.url, client)
@@ -87,9 +87,9 @@ def _process(item, client, current, use_claude) -> report.DocFinding:
         return f
     if not f.docs:
         f.note = "No PDF attached to this page — read the notice text directly."
-    for doc in f.docs if use_claude else []:
+    for doc in f.docs if provider else []:
         try:
-            x = extract.extract(doc.path, current)
+            x = extract.extract(doc.path, current, provider)
         except Exception as e:  # keep going; the document is still archived and reported
             f.error = f"extraction failed for {doc.filename}: {e}"
             continue
@@ -137,7 +137,7 @@ def cmd_status(args) -> int:
 
 def cmd_extract(args) -> int:
     rules = rules_for_date(args.today)
-    x = extract.extract(Path(args.pdf), rules)
+    x = extract.extract(Path(args.pdf), rules, providers.get_provider(args.provider))
     item = sources.Item("manual", str(args.pdf), Path(args.pdf).name)
     f = report.DocFinding(item, extraction=x)
     if x.changes:
@@ -172,6 +172,7 @@ def cmd_fetch_sources(args) -> int:
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(prog="python -m app.watcher")
     p.add_argument("--today", type=date.fromisoformat, default=date.today())
+    p.add_argument("--provider", choices=["gemini", "claude"], help="AI used to read PDFs (default: AUTOTAX_EXTRACTOR or first with a key)")
     sub = p.add_subparsers(dest="cmd", required=True)
     sub.add_parser("init").set_defaults(fn=cmd_init)
     r = sub.add_parser("run")

@@ -3,7 +3,10 @@
 # - Budget season / missing rules -> an issue (label: rule-alert)
 # Nothing here changes active rules: drafts go to rules/np/proposed/ and need human review.
 #
-# Optional secret ANTHROPIC_API_KEY enables reading (scanned) PDFs with Claude to propose values.
+# Optional secrets enable reading (scanned) PDFs with AI to propose values:
+#   GEMINI_API_KEY    (free tier, https://aistudio.google.com/apikey) — used first if set
+#   ANTHROPIC_API_KEY (Claude)
+# Optional repository variables: AUTOTAX_EXTRACTOR=gemini|claude, GEMINI_MODEL=<model id>.
 
 name: Rule watch
 
@@ -53,7 +56,10 @@ jobs:
         id: watch
         working-directory: backend
         env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          AUTOTAX_EXTRACTOR: ${{ vars.AUTOTAX_EXTRACTOR }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
         run: |
           set +e
           uv run python -m app.watcher run --report "$RUNNER_TEMP/report.md"

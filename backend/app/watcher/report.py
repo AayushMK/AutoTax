@@ -46,7 +46,7 @@ def render(findings: list[DocFinding], other_new: list[Item], alerts: list[str],
             out += ["", f.note]
         x = f.extraction
         if x:
-            out += ["", f"### Proposed changes ({len(x.changes)})"]
+            out += ["", f"### Proposed changes ({len(x.changes)}) — read by `{x.provider}`, {x.chunks} chunk(s)"]
             if x.effective_from_bs:
                 out.append(f"Effective from (BS): **{x.effective_from_bs}**")
             if x.changes:

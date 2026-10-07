@@ -38,7 +38,7 @@ uv run python -m app.watcher fetch-sources  # re-download archived source PDFs a
   MoF, Law Commission (ordinances), SSF. Relevance by title keywords (Nepali + English).
 - **Documents** are archived as `rules/sources/<sha256[:16]>.pdf` (git-ignored; hashes live in
   the rule files). Most are scans with no usable text layer.
-- **Proposals** (optional, needs Anthropic credentials): Claude reads the PDF pages and maps provisions
+- **Proposals** (optional, needs an AI key): the model reads the PDF pages and maps provisions
   onto existing rule parameters, each with page number + verbatim quote. Output is validated (known
   param, page in range, value passes the rule-file schema) and written as a DRAFT to
   `rules/np/proposed/` — never loaded. The report shows the tax impact on the golden sample employees.
@@ -50,7 +50,10 @@ uv run python -m app.watcher fetch-sources  # re-download archived source PDFs a
   when rules are unverified. Budget-season alert from Jestha 15 until next FY's rules exist.
 - **Automation** (`.github/workflows/rule-watch.yml`): daily at 07:00 NPT; opens/updates one rolling
   PR labelled `rule-watch`, and an issue labelled `rule-alert` for coverage/budget-season alerts.
-  Add repository secret `ANTHROPIC_API_KEY` to enable proposals.
+  Add repository secret `GEMINI_API_KEY` (free tier) or `ANTHROPIC_API_KEY` to enable proposals.
+- **AI providers** (`app/watcher/providers.py`): Gemini (free tier; newest stable Flash model is
+  auto-selected, override with `GEMINI_MODEL`) or Claude. Pick with `--provider` / `AUTOTAX_EXTRACTOR`;
+  default is the first with a key, Gemini first. Free-tier rate limits are retried with back-off.
 
 ## ⚠️ Before using for real tax payments
 Rule file review status is `draft`. The official Finance Act 2083 (Gazette 2083-03-30, 415-page scan)
