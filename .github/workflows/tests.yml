@@ -8,9 +8,19 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: autotax
+          POSTGRES_PASSWORD: autotax
+          POSTGRES_DB: autotax_test
+        ports: ["5434:5432"]
+        options: >-
+          --health-cmd "pg_isready -U autotax" --health-interval 2s --health-timeout 3s --health-retries 30
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
-      - name: Validate rule files and run engine tests
+      - name: Validate rule files, run engine + API tests
         working-directory: backend
         run: uv run pytest -q

@@ -1,3 +1,9 @@
+import os
+
+# Tests use their own database and never call NRB live; set before app.db is imported.
+os.environ.setdefault("DATABASE_URL", "postgresql+psycopg://autotax:autotax@localhost:5434/autotax_test")
+os.environ["FETCH_FX"] = "0"
+
 from pathlib import Path
 
 import pytest

@@ -38,8 +38,8 @@ class Provider(Protocol):
 GEMINI_FLASH = re.compile(r"^models/gemini-(\d+(?:\.\d+)?)-flash(-lite)?$")
 
 
-def pick_gemini_model(names: list[str]) -> str:
-    """Newest stable 'flash' model (falls back to 'flash-lite'). Override with GEMINI_MODEL."""
+def rank_gemini_models(names: list[str]) -> list[str]:
+    """Stable 'flash' models, newest first, then 'flash-lite' models newest first."""
     ranked = []
     for n in names:
         m = GEMINI_FLASH.match(n)
@@ -47,22 +47,36 @@ def pick_gemini_model(names: list[str]) -> str:
             ranked.append((m.group(2) is None, float(m.group(1)), n.removeprefix("models/")))
     if not ranked:
         raise RuntimeError("no Gemini flash model available for this key; set GEMINI_MODEL")
-    return max(ranked)[2]
+    return [r[2] for r in sorted(ranked, reverse=True)]
+
+
+def pick_gemini_model(names: list[str]) -> str:
+    return rank_gemini_models(names)[0]
 
 
 class GeminiProvider:
     name = "gemini"
     pages_per_chunk = 30
     max_chunk_bytes = 14 * 1024 * 1024  # inline request limit is 20 MB after base64 (+33%)
-    max_attempts = 6
+    max_attempts = 4  # per model, before falling back to the next one
+    max_models = 3
 
     def __init__(self, model: str | None = None, client=None):
         from google import genai
 
         self.client = client or genai.Client(api_key=_gemini_key())
-        self.model = model or os.environ.get("GEMINI_MODEL") or pick_gemini_model(
-            [m.name for m in self.client.models.list() if "generateContent" in (m.supported_actions or [])]
-        )
+        pinned = model or os.environ.get("GEMINI_MODEL")
+        if pinned:
+            self.models = [pinned]
+        else:
+            self.models = rank_gemini_models(
+                [m.name for m in self.client.models.list() if "generateContent" in (m.supported_actions or [])]
+            )[: self.max_models]
+        self.used: set[str] = set()
+
+    @property
+    def model(self) -> str:
+        return "+".join(m for m in self.models if m in self.used) or self.models[0]
 
     def read_chunk(self, pdf: bytes, prompt: str) -> ChunkFindings:
         from google.genai import errors, types
@@ -73,18 +87,25 @@ class GeminiProvider:
             response_schema=ChunkFindings,
         )
         contents = [types.Part.from_bytes(data=pdf, mime_type="application/pdf"), prompt]
-        for attempt in range(1, self.max_attempts + 1):
-            try:
-                resp = self.client.models.generate_content(model=self.model, contents=contents, config=config)
-                break
-            except errors.APIError as e:
-                # Free tier: 429 = per-minute/day quota, 503 = overloaded. Back off and retry.
-                if e.code in (429, 500, 503) and attempt < self.max_attempts:
+        resp, failures = None, []
+        for model in self.models:
+            for attempt in range(1, self.max_attempts + 1):
+                try:
+                    resp = self.client.models.generate_content(model=model, contents=contents, config=config)
+                    break
+                except errors.APIError as e:
+                    # Free tier: 429 = quota, 500/503 = overloaded. Back off, then try the next model.
+                    if e.code not in (429, 500, 503):
+                        raise
+                    if attempt == self.max_attempts or (e.code == 429 and "per day" in str(e).lower()):
+                        failures.append(f"{model}: {e.code}")
+                        break
                     time.sleep(_retry_delay(e, attempt))
-                    continue
-                if e.code == 429:
-                    raise ChunkFailed(f"Gemini quota exhausted ({self.model}); try tomorrow or set GEMINI_MODEL") from e
-                raise
+            if resp is not None:
+                self.used.add(model)
+                break
+        if resp is None:
+            raise ChunkFailed(f"Gemini unavailable or out of quota ({', '.join(failures)}); try again later")
         cand = (resp.candidates or [None])[0]
         reason = getattr(getattr(cand, "finish_reason", None), "name", None)
         if reason not in (None, "STOP"):

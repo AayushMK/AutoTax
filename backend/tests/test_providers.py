@@ -46,9 +46,11 @@ def ok_response(parsed, reason="STOP"):
     return SimpleNamespace(candidates=[SimpleNamespace(finish_reason=SimpleNamespace(name=reason))], parsed=parsed)
 
 
-def gemini(outcomes):
+def gemini(outcomes, models=("gemini-test",)):
     fake = SimpleNamespace(models=FakeModels(outcomes))
-    return providers.GeminiProvider(model="gemini-test", client=fake), fake.models
+    p = providers.GeminiProvider(model=models[0], client=fake)
+    p.models = list(models)
+    return p, fake.models
 
 
 def quota_error():
@@ -63,11 +65,28 @@ def test_gemini_retries_rate_limits(monkeypatch):
     assert models.calls == 3 and len(sleeps) == 2 and all(s <= 120 for s in sleeps)
 
 
-def test_gemini_quota_exhausted_becomes_chunk_failure(monkeypatch):
+def overloaded():
+    return errors.APIError(503, {"error": {"code": 503, "message": "high demand", "status": "UNAVAILABLE"}})
+
+
+def test_gemini_exhausted_becomes_chunk_failure(monkeypatch):
     monkeypatch.setattr(providers.time, "sleep", lambda s: None)
-    p, _ = gemini([quota_error()] * providers.GeminiProvider.max_attempts)
-    with pytest.raises(providers.ChunkFailed, match="quota"):
+    p, _ = gemini([overloaded()] * providers.GeminiProvider.max_attempts)
+    with pytest.raises(providers.ChunkFailed, match="unavailable or out of quota"):
         p.read_chunk(b"%PDF", "prompt")
+
+
+def test_gemini_falls_back_to_next_model_when_overloaded(monkeypatch):
+    monkeypatch.setattr(providers.time, "sleep", lambda s: None)
+    n = providers.GeminiProvider.max_attempts
+    p, models = gemini([overloaded()] * n + [ok_response(findings(document_title="FA"))], models=("g-3.8-flash", "g-3.7-flash"))
+    assert p.read_chunk(b"%PDF", "prompt").document_title == "FA"
+    assert models.calls == n + 1 and p.model == "g-3.7-flash"
+
+
+def test_rank_models():
+    names = ["models/gemini-3.8-flash", "models/gemini-3.7-flash", "models/gemini-3.5-flash-lite", "models/gemini-3.6-flash"]
+    assert providers.rank_gemini_models(names) == ["gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.6-flash", "gemini-3.5-flash-lite"]
 
 
 @pytest.mark.parametrize("resp,msg", [(ok_response(None, "MAX_TOKENS"), "MAX_TOKENS"), (ok_response(None), "no parsable")])
