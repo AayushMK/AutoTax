@@ -7,9 +7,21 @@ Plan: see `~/.claude/plans/i-want-to-work-lovely-bachman.md`.
 - [x] Phase 1 — tax engine + versioned rule files + golden/property tests
 - [x] Phase 2 (partial) — NRB forex client, FX conversion with fallback & manual override
 - [x] Rule watcher — official-source monitoring, archived hashes, draft proposals, payroll gate
-- [ ] Phase 3 — Postgres models, FastAPI, payroll-run lifecycle, audit log
-- [ ] Phase 4 — Next.js frontend
+- [x] Phase 3 — Postgres models, FastAPI, payroll-run lifecycle, audit log
+- [x] Phase 4 — Next.js frontend
 - [ ] Phase 5 — IRD e-TDS / SSF / CIT exports, payslips
+
+## Running locally
+```
+docker compose up -d db                                   # Postgres 17 on localhost:5434
+cd backend && uv run alembic upgrade head
+uv run uvicorn app.main:app --port 8010 --reload          # API at http://localhost:8010/docs
+cd ../frontend && npm install
+BACKEND_URL=http://localhost:8010 npm run dev             # app at http://localhost:3000
+```
+Tests: `cd backend && uv run pytest` (needs the `autotax_test` database:
+`docker compose exec db psql -U autotax -c "create database autotax_test"`).
+Set `JWT_SECRET` to a long random value for any shared deployment.
 
 ## How it works
 - `rules/np/<FY>.yaml` is the **only** place rates, caps and slabs live. Every parameter cites a
