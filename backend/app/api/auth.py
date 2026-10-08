@@ -39,5 +39,8 @@ def me(user: User = Depends(current_user), db: Session = Depends(get_db)):
     ms = db.scalars(select(Membership).where(Membership.user_id == user.id)).all()
     return MeOut(
         id=user.id, email=user.email, name=user.name,
-        memberships=[MembershipOut(company_id=m.company_id, company_name=m.company.name, role=m.role) for m in ms],
+        memberships=[
+            MembershipOut(company_id=m.company_id, company_name=m.company.name, role=m.role, employee_id=m.employee_id)
+            for m in ms
+        ],
     )

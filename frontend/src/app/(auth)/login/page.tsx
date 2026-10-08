@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { ErrorNotice, Field } from "@/components/bits";
 import { api, setToken } from "@/lib/api";
+import { homeFor } from "@/lib/home";
 import type { Me } from "@/lib/types";
 
 import styles from "../auth.module.css";
@@ -25,7 +26,7 @@ export default function Login() {
       const { token } = await api<{ token: string }>("/auth/login", { method: "POST", json: Object.fromEntries(f) });
       setToken(token);
       const me = await api<Me>("/auth/me");
-      router.replace(me.memberships.length ? `/c/${me.memberships[0].company_id}` : "/signup");
+      router.replace(homeFor(me));
     } catch (err) {
       setError(err);
       setBusy(false);

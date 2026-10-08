@@ -5,6 +5,7 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import { createContext, useContext, useEffect } from "react";
 
 import { getToken, setToken } from "@/lib/api";
+import { ROLE_LABEL } from "@/lib/format";
 import type { Me, Role } from "@/lib/types";
 import { useData } from "@/lib/use-data";
 
@@ -27,13 +28,25 @@ export function useCompany(): CompanyCtx {
   return c;
 }
 
-const NAV = [
+type NavItem = { href: string; label: string };
+
+const HR_NAV: NavItem[] = [
   { href: "", label: "Overview" },
   { href: "/employees", label: "Employees" },
   { href: "/payroll", label: "Payroll" },
+  { href: "/contributions", label: "SSF & CIT" },
   { href: "/fx", label: "Exchange rates" },
   { href: "/audit", label: "Activity" },
 ];
+
+function navFor(role: Role | null, hasOwnRecord: boolean): NavItem[] {
+  if (role === null) return [];
+  if (role === "employee") return [{ href: "/my", label: "My pay" }];
+  const items = [...HR_NAV];
+  if (role === "admin") items.splice(items.length - 1, 0, { href: "/team", label: "Logins" });
+  if (hasOwnRecord) items.push({ href: "/my", label: "My pay" });
+  return items;
+}
 
 export function Shell({ children }: { children: React.ReactNode }) {
   const { cid } = useParams<{ cid: string }>();
@@ -44,6 +57,13 @@ export function Shell({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!getToken()) router.replace("/login");
   }, [router]);
+
+  const isEmployee = me?.memberships.find((m) => m.company_id === Number(cid))?.role === "employee";
+  const onOwnPages = pathname.startsWith(`/c/${cid}/my`);
+  useEffect(() => {
+    // Employees only ever see their own pay; send them there from any HR page.
+    if (isEmployee && !onOwnPages) router.replace(`/c/${cid}/my`);
+  }, [isEmployee, onOwnPages, cid, router]);
 
   // The frame and the page render immediately; account details fill in when they arrive.
   const companyId = Number(cid);
@@ -62,7 +82,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
     <Ctx.Provider value={ctx}>
       <div className={styles.frame}>
         <aside className={styles.side}>
-          <Link href={base} className={styles.brand}>
+          <Link href={isEmployee ? `${base}/my` : base} className={styles.brand}>
             AutoTax
             <span className={styles.brandDeva} lang="ne">कर हिसाब</span>
           </Link>
@@ -81,7 +101,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
             <p className={styles.companyName}>{membership?.company_name ?? "\u00a0"}</p>
           )}
           <nav aria-label="Sections">
-            {NAV.map((n) => {
+            {navFor(membership?.role ?? null, Boolean(membership?.employee_id)).map((n) => {
               const href = base + n.href;
               const active = n.href === "" ? pathname === base : pathname.startsWith(href);
               return (
@@ -93,7 +113,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
           </nav>
           <div className={styles.me}>
             <span>{me?.name}</span>
-            <span className="faint small">{membership?.role}</span>
+            <span className="faint small">{membership ? ROLE_LABEL[membership.role] : ""}</span>
             <button
               className="btn quiet small"
               onClick={() => {
@@ -108,7 +128,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <main className={styles.main}>
           {error ? (
             <p className="notice block">Couldn’t load your account: {error.message}</p>
-          ) : noAccess ? (
+          ) : isEmployee && !onOwnPages ? null : noAccess ? (
             <div className="empty">
               <p>You don’t have access to this company.</p>
               <Link className="btn" href="/">Go to your companies</Link>

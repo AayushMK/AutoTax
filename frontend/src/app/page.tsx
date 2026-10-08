@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 import { api, getToken } from "@/lib/api";
+import { homeFor } from "@/lib/home";
 import type { Me } from "@/lib/types";
 
 export default function Home() {
@@ -14,7 +15,7 @@ export default function Home() {
       return;
     }
     api<Me>("/auth/me")
-      .then((me) => router.replace(me.memberships.length ? `/c/${me.memberships[0].company_id}` : "/signup"))
+      .then((me) => router.replace(homeFor(me)))
       .catch(() => router.replace("/login"));
   }, [router]);
   return null;

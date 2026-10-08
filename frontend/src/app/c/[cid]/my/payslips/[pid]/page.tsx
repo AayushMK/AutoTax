@@ -7,26 +7,28 @@ import { Suspense } from "react";
 import { ErrorNotice, Loading } from "@/components/bits";
 import { PayslipView } from "@/components/payslip-view";
 import { useCompany } from "@/components/shell";
-import type { PayslipDetail, Run } from "@/lib/types";
+import type { PayslipDetail } from "@/lib/types";
 import { useData } from "@/lib/use-data";
 
 export default function Page() {
   return (
     <Suspense fallback={<Loading what="payslip" />}>
-      <PayslipPage />
+      <MyPayslip />
     </Suspense>
   );
 }
 
-function PayslipPage() {
-  const { rid, pid } = useParams<{ rid: string; pid: string }>();
+function MyPayslip() {
+  const { pid } = useParams<{ pid: string }>();
   const { companyId } = useCompany();
-  const base = `/companies/${companyId}/payroll-runs/${rid}`;
-  const { data: p, error } = useData<PayslipDetail>(`${base}/payslips/${pid}`);
-  const { data: run } = useData<Run>(base);
-
+  const { data: p, error } = useData<PayslipDetail & { inputs: { month_label?: string } }>(`/companies/${companyId}/me/payslips/${pid}`);
   if (error) return <ErrorNotice error={error} />;
   if (!p) return <Loading what="payslip" />;
-  const label = run?.month_label ?? `month ${p.month}`;
-  return <PayslipView p={p} monthLabel={label} back={<Link href={`/c/${companyId}/payroll/${rid}`}>{label}</Link>} />;
+  return (
+    <PayslipView
+      p={p}
+      monthLabel={p.inputs.month_label ?? `month ${p.month}`}
+      back={<Link href={`/c/${companyId}/my`}>My pay</Link>}
+    />
+  );
 }

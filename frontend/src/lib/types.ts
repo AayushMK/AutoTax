@@ -1,12 +1,12 @@
 // Money and rates arrive as decimal strings from the API and are never converted to floats.
 export type Money = string;
-export type Role = "admin" | "accountant" | "viewer";
+export type Role = "admin" | "accountant" | "viewer" | "employee";
 
 export interface Me {
   id: number;
   email: string;
   name: string;
-  memberships: { company_id: number; company_name: string; role: Role }[];
+  memberships: { company_id: number; company_name: string; role: Role; employee_id: number | null }[];
 }
 
 export interface Employee {
@@ -156,4 +156,58 @@ export interface AuditEntry {
   entity_id: number | null;
   data: Record<string, unknown>;
   at: string;
+}
+
+export interface StatementMonth {
+  month: number;
+  month_label: string;
+  status: "draft" | "finalized" | null;
+  payment_date?: string;
+  payslip_id?: number;
+  run_id?: number;
+  gross?: Money;
+  ssf_employee?: Money;
+  ssf_employer?: Money;
+  cit?: Money;
+  other_retirement?: Money;
+  tds?: Money;
+  net_pay?: Money;
+}
+
+export interface AnnualStatement {
+  employee: { id: number; code: string; name: string; pan: string | null };
+  fiscal_year: string;
+  months: StatementMonth[];
+  totals: Record<"gross" | "ssf_employee" | "ssf_employer" | "ssf_total" | "cit" | "other_retirement" | "tds" | "net_pay", Money>;
+  months_paid: number;
+  projected_annual_tax: Money | null;
+  tds_remaining: Money | null;
+}
+
+type Contribution = Record<"ssf_employee" | "ssf_employer" | "cit", Money>;
+
+export interface ContributionsReport {
+  fiscal_year: string;
+  months: ({ month: number; month_label: string; status: "draft" | "finalized" | null } & Contribution)[];
+  employees: { employee_id: number; code: string; name: string; months: Record<string, Contribution>; totals: Contribution }[];
+  totals: Contribution & { ssf_total: Money };
+}
+
+export interface Member {
+  user_id: number;
+  email: string;
+  name: string;
+  role: Role;
+  employee_id: number | null;
+  employee_name: string | null;
+}
+
+export interface Invite {
+  id: number;
+  email: string;
+  role: Role;
+  employee_id: number | null;
+  employee_name: string | null;
+  expires_at: string;
+  token?: string | null;
 }

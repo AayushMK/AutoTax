@@ -8,7 +8,9 @@ import { ErrorNotice, Field, Loading, Num } from "@/components/bits";
 import { useCompany } from "@/components/shell";
 import { api } from "@/lib/api";
 import { date, KIND_LABEL } from "@/lib/format";
-import type { Component, EmployeeDetail, IncomeKind, RulesStatus, TaxProfile } from "@/lib/types";
+import { InviteLink } from "@/components/invite-link";
+import { YearFigures, YearTable } from "@/components/year-table";
+import type { AnnualStatement, Component, EmployeeDetail, IncomeKind, Invite, Member, RulesStatus, TaxProfile } from "@/lib/types";
 import { useData } from "@/lib/use-data";
 
 export default function Page() {
@@ -63,7 +65,79 @@ function EmployeePage() {
       )}
 
       <Structures emp={emp} path={path} onChange={reload} />
+
+      {activeFy && <EmployeeYear employeeId={emp.id} fy={activeFy} />}
+
+      <PortalAccess emp={emp} />
     </div>
+  );
+}
+
+function EmployeeYear({ employeeId, fy }: { employeeId: number; fy: string }) {
+  const { companyId } = useCompany();
+  const { data: st, error } = useData<AnnualStatement>(`/companies/${companyId}/employees/${employeeId}/annual/${fy.replace("/", "-")}`);
+  return (
+    <section className="sheet">
+      <h2>FY {fy}: SSF, CIT and tax by month</h2>
+      <ErrorNotice error={error} />
+      {st && (
+        <>
+          <div style={{ margin: "0.9rem 0 1.25rem" }}><YearFigures st={st} /></div>
+          {st.months_paid === 0 ? (
+            <p className="muted">No payroll for this employee in FY {fy} yet.</p>
+          ) : (
+            <YearTable st={st} payslipHref={(pid, rid) => `/c/${companyId}/payroll/${rid}/payslips/${pid}`} />
+          )}
+        </>
+      )}
+    </section>
+  );
+}
+
+function PortalAccess({ emp }: { emp: EmployeeDetail }) {
+  const { companyId, role } = useCompany();
+  const members = useData<Member[]>(`/companies/${companyId}/members`);
+  const invites = useData<Invite[]>(role === "admin" ? `/companies/${companyId}/invites` : null);
+  const [created, setCreated] = useState<Invite | null>(null);
+  const [error, setError] = useState<unknown>(null);
+  const login = members.data?.find((m) => m.employee_id === emp.id);
+  const pending = invites.data?.find((i) => i.employee_id === emp.id);
+
+  async function invite(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const email = new FormData(e.currentTarget).get("email");
+    try {
+      setCreated(await api<Invite>(`/companies/${companyId}/invites`, {
+        method: "POST", json: { email, role: "employee", employee_id: emp.id },
+      }));
+      setError(null);
+      invites.reload();
+    } catch (err) {
+      setError(err);
+    }
+  }
+
+  return (
+    <section className="sheet">
+      <h2>Login</h2>
+      <p className="small muted" style={{ margin: "0.3rem 0 0.9rem" }}>
+        With a login, {emp.name} can see their own finalized payslips, SSF and CIT, and nobody else’s.
+      </p>
+      <ErrorNotice error={error} />
+      {created && <InviteLink invite={created} />}
+      {login ? (
+        <p>Has a login: <strong>{login.email}</strong>.</p>
+      ) : pending && !created ? (
+        <p>Invite sent to <strong>{pending.email}</strong>, waiting to be accepted (expires {date(pending.expires_at)}).</p>
+      ) : role === "admin" && !created ? (
+        <form className="row" style={{ alignItems: "flex-end" }} onSubmit={invite}>
+          <Field label="Their email"><input name="email" type="email" required defaultValue={emp.email ?? ""} /></Field>
+          <button className="btn quiet">Create invite link</button>
+        </form>
+      ) : !created ? (
+        <p className="muted">No login yet. An HR admin can invite them.</p>
+      ) : null}
+    </section>
   );
 }
 

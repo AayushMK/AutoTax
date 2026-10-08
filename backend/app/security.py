@@ -11,7 +11,8 @@ from .config import settings
 from .db import get_db
 from .models import Membership, Role, User
 
-ROLE_RANK = {Role.VIEWER: 0, Role.ACCOUNTANT: 1, Role.ADMIN: 2}
+# EMPLOYEE ranks below VIEWER: an employee login never passes any HR check (no one else's pay).
+ROLE_RANK = {Role.EMPLOYEE: -1, Role.VIEWER: 0, Role.ACCOUNTANT: 1, Role.ADMIN: 2}
 bearer = HTTPBearer(auto_error=False)
 
 
@@ -53,6 +54,16 @@ def require_role(min_role: Role):
         return m
 
     return dep
+
+
+def self_service(company_id: int, user: User = Depends(current_user), db: Session = Depends(get_db)) -> Membership:
+    """Any member whose login is linked to an employee record; scopes "My pay" to that record."""
+    m = db.scalar(select(Membership).where(Membership.user_id == user.id, Membership.company_id == company_id))
+    if m is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "company not found")
+    if m.employee_id is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "your login isn't linked to an employee record")
+    return m
 
 
 viewer = require_role(Role.VIEWER)

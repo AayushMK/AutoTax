@@ -31,9 +31,10 @@ def utcnow() -> datetime:
 
 
 class Role(StrEnum):
-    ADMIN = "admin"  # manage members, employees, finalize payroll
-    ACCOUNTANT = "accountant"  # employees, compute & finalize payroll
-    VIEWER = "viewer"  # read only
+    ADMIN = "admin"  # HR admin: everything, including who can log in
+    ACCOUNTANT = "accountant"  # HR / payroll: employees, compute & finalize payroll
+    VIEWER = "viewer"  # auditor: reads every salary, changes nothing
+    EMPLOYEE = "employee"  # self-service: only their own finalized pay
 
 
 class RunStatus(StrEnum):
@@ -66,8 +67,31 @@ class Membership(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
     company_id: Mapped[int] = mapped_column(ForeignKey("companies.id", ondelete="CASCADE"), index=True)
     role: Mapped[Role] = mapped_column(Enum(Role, native_enum=False, length=20))
+    # The employee record this login belongs to: required for EMPLOYEE, optional for HR staff
+    # who are also on the payroll (gives them "My pay").
+    employee_id: Mapped[int | None] = mapped_column(ForeignKey("employees.id", ondelete="CASCADE"), unique=True)
     user: Mapped[User] = relationship(back_populates="memberships")
     company: Mapped[Company] = relationship()
+    employee: Mapped[Employee | None] = relationship()
+
+
+class Invite(Base):
+    """A one-time link that lets someone set their own password and join a company."""
+
+    __tablename__ = "invites"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    company_id: Mapped[int] = mapped_column(ForeignKey("companies.id", ondelete="CASCADE"), index=True)
+    email: Mapped[str] = mapped_column(String(255))
+    role: Mapped[Role] = mapped_column(Enum(Role, native_enum=False, length=20))
+    employee_id: Mapped[int | None] = mapped_column(ForeignKey("employees.id", ondelete="CASCADE"))
+    token_hash: Mapped[str] = mapped_column(String(64), unique=True)  # sha256; the token itself is never stored
+    created_by: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    accepted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    accepted_by: Mapped[int | None] = mapped_column(ForeignKey("users.id"))
+    company: Mapped[Company] = relationship()
+    employee: Mapped[Employee | None] = relationship()
 
 
 class Employee(Base):

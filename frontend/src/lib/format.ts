@@ -27,6 +27,29 @@ export function dateTime(d: string | null | undefined): string {
   return new Date(d).toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
 }
 
+export const ROLE_LABEL: Record<string, string> = {
+  admin: "HR admin",
+  accountant: "HR / payroll",
+  viewer: "Auditor (read only)",
+  employee: "Employee",
+};
+
+/** Add two decimal strings exactly (2 places). */
+export function addMoney(a: string | undefined, b: string | undefined): string {
+  const cents = (v?: string) => {
+    if (!v) return BigInt(0);
+    const neg = v.startsWith("-");
+    const [i, f = ""] = v.replace(/^[-+]/, "").split(".");
+    const n = BigInt(i || "0") * BigInt(100) + BigInt((f + "00").slice(0, 2));
+    return neg ? -n : n;
+  };
+  const t = cents(a) + cents(b);
+  const neg = t < BigInt(0);
+  const abs = neg ? -t : t;
+  const s = `${abs / BigInt(100)}.${(abs % BigInt(100)).toString().padStart(2, "0")}`;
+  return neg ? `-${s}` : s;
+}
+
 export const KIND_LABEL: Record<string, string> = {
   basic: "Basic salary",
   allowance: "Allowance",

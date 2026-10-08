@@ -39,6 +39,7 @@ class MembershipOut(ORM):
     company_id: int
     company_name: str
     role: Role
+    employee_id: int | None = None
 
 
 class MeOut(BaseModel):
@@ -70,6 +71,38 @@ class MemberOut(BaseModel):
     email: str
     name: str
     role: Role
+    employee_id: int | None = None
+    employee_name: str | None = None
+
+
+class InviteIn(BaseModel):
+    email: EmailStr
+    role: Role
+    employee_id: int | None = None
+
+
+class InviteOut(BaseModel):
+    id: int
+    email: str
+    role: Role
+    employee_id: int | None
+    employee_name: str | None
+    expires_at: datetime
+    token: str | None = None  # only returned once, when the invite is created
+
+
+class InviteInfo(BaseModel):
+    company_id: int
+    company_name: str
+    email: str
+    role: Role
+    employee_name: str | None
+    has_account: bool
+
+
+class AcceptInviteIn(BaseModel):
+    name: str = Field(default="", max_length=200)
+    password: str = Field(min_length=8)
 
 
 # --- employees ---
