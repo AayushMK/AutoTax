@@ -19,6 +19,10 @@ uv run uvicorn app.main:app --port 8010 --reload          # API at http://localh
 cd ../frontend && npm install
 BACKEND_URL=http://localhost:8010 npm run dev             # app at http://localhost:3000
 ```
+Demo data (12 employees, all of FY 2082/83 finalized, FY 2083/84 Shrawan finalized + Bhadra draft):
+`cd backend && uv run python scripts/seed_demo.py --reset` (wipes the local dev database first).
+Logins: `demo@example.com` / `demo-pass-1` (HR admin), `bikash@example.com` / `bikash-pass-1` (employee).
+
 Tests: `cd backend && uv run pytest` (needs the `autotax_test` database:
 `docker compose exec db psql -U autotax -c "create database autotax_test"`).
 Set `JWT_SECRET` to a long random value for any shared deployment.
