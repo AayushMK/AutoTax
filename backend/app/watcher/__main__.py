@@ -137,7 +137,8 @@ def cmd_status(args) -> int:
 
 def cmd_extract(args) -> int:
     rules = rules_for_date(args.today)
-    x = extract.extract(Path(args.pdf), rules, providers.get_provider(args.provider))
+    pages = tuple(int(n) for n in args.pages.split("-")) if args.pages else None
+    x = extract.extract(Path(args.pdf), rules, providers.get_provider(args.provider), pages=pages)
     item = sources.Item("manual", str(args.pdf), Path(args.pdf).name)
     f = report.DocFinding(item, extraction=x)
     if x.changes:
@@ -184,6 +185,7 @@ def main(argv=None) -> int:
     sub.add_parser("status").set_defaults(fn=cmd_status)
     e = sub.add_parser("extract")
     e.add_argument("pdf")
+    e.add_argument("--pages", help="only read this page range, e.g. 211-240")
     e.set_defaults(fn=cmd_extract)
     sub.add_parser("fetch-sources").set_defaults(fn=cmd_fetch_sources)
     args = p.parse_args(argv)

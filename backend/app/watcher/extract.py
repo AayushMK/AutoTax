@@ -35,8 +35,12 @@ class Extraction:
     provider: str = ""
 
 
-def split_pdf(path: Path, pages_per_chunk: int, max_bytes: int) -> list[tuple[int, int, bytes]]:
-    """Return (first_page, last_page, pdf_bytes) chunks, 1-indexed, each under max_bytes."""
+def split_pdf(path: Path, pages_per_chunk: int, max_bytes: int,
+              pages: tuple[int, int] | None = None) -> list[tuple[int, int, bytes]]:
+    """Return (first_page, last_page, pdf_bytes) chunks, 1-indexed, each under max_bytes.
+
+    pages: optional 1-indexed inclusive range to read (e.g. to retry a failed section).
+    """
     reader = PdfReader(str(path))
     out: list[tuple[int, int, bytes]] = []
 
@@ -54,8 +58,9 @@ def split_pdf(path: Path, pages_per_chunk: int, max_bytes: int) -> list[tuple[in
         else:
             out.append((start + 1, end, data))
 
-    for s in range(0, len(reader.pages), pages_per_chunk):
-        emit(s, min(s + pages_per_chunk, len(reader.pages)))
+    lo, hi = (pages[0] - 1, min(pages[1], len(reader.pages))) if pages else (0, len(reader.pages))
+    for s in range(lo, hi, pages_per_chunk):
+        emit(s, min(s + pages_per_chunk, hi))
     return out
 
 
@@ -71,13 +76,14 @@ def _progress(msg: str) -> None:
     print(msg, file=sys.stderr, flush=True)
 
 
-def extract(path: Path, rules: RuleSet, provider: Provider | None = None, log=_progress) -> Extraction:
+def extract(path: Path, rules: RuleSet, provider: Provider | None = None, log=_progress,
+            pages: tuple[int, int] | None = None) -> Extraction:
     provider = provider or get_provider()
     if provider is None:
         raise RuntimeError("no extraction provider: set GEMINI_API_KEY (free) or ANTHROPIC_API_KEY")
     result = Extraction(provider=f"{provider.name}:{provider.model}")
     params = _current_params(rules)
-    for first, last, data in split_pdf(path, provider.pages_per_chunk, provider.max_chunk_bytes):
+    for first, last, data in split_pdf(path, provider.pages_per_chunk, provider.max_chunk_bytes, pages):
         result.chunks += 1
         log(f"  [{provider.name}] reading pages {first}-{last} ({len(data) // 1024} KB)…")
         prompt = (
