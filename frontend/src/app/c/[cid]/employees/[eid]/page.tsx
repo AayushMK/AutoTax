@@ -175,6 +175,9 @@ function TaxProfileForm({ fy, fiscalYears, onFy, path, existing, onSaved }: {
           health_insurance_premium: dec("health_insurance_premium"),
           building_insurance_premium: dec("building_insurance_premium"),
           donation: dec("donation"),
+          prior_income: dec("prior_income"),
+          prior_retirement: dec("prior_retirement"),
+          prior_tds: dec("prior_tds"),
         },
       });
       setError(null);
@@ -240,6 +243,16 @@ function TaxProfileForm({ fy, fiscalYears, onFy, path, existing, onSaved }: {
           <Field label="Building insurance (NPR)"><input name="building_insurance_premium" inputMode="decimal" defaultValue={p?.building_insurance_premium ?? "0"} /></Field>
           <Field label="Donations (NPR)"><input name="donation" inputMode="decimal" defaultValue={p?.donation ?? "0"} /></Field>
         </div>
+        <h3 style={{ margin: "1.25rem 0 0.6rem" }}>Previous employer this fiscal year</h3>
+        <p className="small muted" style={{ marginBottom: "0.75rem" }}>
+          If they joined mid-year, copy these from the previous employer’s salary certificate. Their income is taxed together
+          with yours for {fy}, and the tax they already withheld is credited.
+        </p>
+        <div className="form-grid">
+          <Field label="Income there (NPR)" hint="Including that employer’s SSF/fund contributions"><input name="prior_income" inputMode="decimal" defaultValue={p?.prior_income ?? "0"} /></Field>
+          <Field label="SSF, CIT and funds there (NPR)"><input name="prior_retirement" inputMode="decimal" defaultValue={p?.prior_retirement ?? "0"} /></Field>
+          <Field label="TDS withheld there (NPR)"><input name="prior_tds" inputMode="decimal" defaultValue={p?.prior_tds ?? "0"} /></Field>
+        </div>
         {canEdit && (
           <div className="form-actions">
             <button className="btn">Save tax profile</button>
@@ -257,6 +270,7 @@ function Structures({ emp, path, onChange }: { emp: EmployeeDetail; path: string
   const { canEdit } = useCompany();
   const [adding, setAdding] = useState(emp.salary_structures.length === 0);
   const [rows, setRows] = useState<Component[]>([{ kind: "basic", amount: "", currency: "NPR", description: "" }]);
+  const [citMode, setCitMode] = useState<"fixed" | "fill_cap">("fixed");
   const [error, setError] = useState<unknown>(null);
   const structures = [...emp.salary_structures].reverse();
 
@@ -269,7 +283,8 @@ function Structures({ emp, path, onChange }: { emp: EmployeeDetail; path: string
         json: {
           effective_from: f.get("effective_from"),
           components: rows.map((r) => ({ ...r, amount: r.amount.replace(/,/g, "") })),
-          cit_monthly: String(f.get("cit_monthly") || "0").replace(/,/g, ""),
+          cit_mode: citMode,
+          cit_monthly: citMode === "fixed" ? String(f.get("cit_monthly") || "0").replace(/,/g, "") : "0",
           other_retirement_monthly: String(f.get("other_retirement_monthly") || "0").replace(/,/g, ""),
         },
       });
@@ -308,7 +323,13 @@ function Structures({ emp, path, onChange }: { emp: EmployeeDetail; path: string
         <form onSubmit={save} className="stack" style={{ marginBottom: "1.5rem" }}>
           <div className="form-grid">
             <Field label="Effective from"><input type="date" name="effective_from" required defaultValue={emp.salary_structures.length ? "" : emp.joined_on} /></Field>
-            <Field label="CIT per month (NPR)"><input name="cit_monthly" inputMode="decimal" defaultValue="0" /></Field>
+            <Field label="CIT" hint={citMode === "fill_cap" ? "CIT tops up SSF and other funds to the retirement deduction limit (5 lakh or a third of income), spread over the year." : undefined}>
+              <select value={citMode} onChange={(e) => setCitMode(e.target.value as "fixed" | "fill_cap")}>
+                <option value="fixed">A fixed amount each month</option>
+                <option value="fill_cap">Fill up to the deduction limit</option>
+              </select>
+            </Field>
+            {citMode === "fixed" && <Field label="CIT per month (NPR)"><input name="cit_monthly" inputMode="decimal" defaultValue="0" /></Field>}
             <Field label="Other retirement fund per month (NPR)"><input name="other_retirement_monthly" inputMode="decimal" defaultValue="0" /></Field>
           </div>
           <table className="ledger">
@@ -358,7 +379,9 @@ function Structures({ emp, path, onChange }: { emp: EmployeeDetail; path: string
                   <td className="num">{c.currency} <Num v={c.amount} /></td>
                 </tr>
               ))}
-              {s.cit_monthly !== "0.00" && <tr><td>CIT contribution</td><td className="num">NPR <Num v={s.cit_monthly} /></td></tr>}
+              {s.cit_mode === "fill_cap" ? (
+                <tr><td>CIT contribution</td><td className="num small">Fills up to the deduction limit</td></tr>
+              ) : s.cit_monthly !== "0.00" && <tr><td>CIT contribution</td><td className="num">NPR <Num v={s.cit_monthly} /></td></tr>}
               {s.other_retirement_monthly !== "0.00" && <tr><td>Other retirement fund</td><td className="num">NPR <Num v={s.other_retirement_monthly} /></td></tr>}
             </tbody>
           </table>

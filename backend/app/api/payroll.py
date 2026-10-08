@@ -7,17 +7,19 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.db import get_db
-from app.models import Membership, Payslip, PayrollRun, RunAdjustment, RunStatus
+from app.models import Company, Membership, Payslip, PayrollRun, RunAdjustment, RunStatus
 from app.security import accountant, viewer
 from app.services import audit, payroll
-from app.services.calendar import month_label
+from app.services.calendar import period, periods
 
 from .employees import get_employee
 from .schemas import (
     AdjustmentIn,
     AdjustmentOut,
     FinalizeIn,
+    ImportIn,
     PayslipDetail,
+    PeriodOut,
     PayslipSummary,
     RunDetail,
     RunIn,
@@ -44,9 +46,11 @@ def _payroll_error(e: payroll.PayrollError) -> HTTPException:
     return HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, detail)
 
 
-def run_out(r: PayrollRun) -> dict:
+def run_out(r: PayrollRun, cal: str) -> dict:
+    p = period(r.fiscal_year, r.month, cal)
     return {
-        "id": r.id, "fiscal_year": r.fiscal_year, "month": r.month, "month_label": month_label(r.fiscal_year, r.month),
+        "id": r.id, "fiscal_year": r.fiscal_year, "month": r.month, "month_label": p.label,
+        "period_start": p.start, "period_end": p.end, "source": r.source,
         "payment_date": r.payment_date, "status": r.status, "rule_set": r.rule_set, "rule_review_status": r.rule_review_status,
         "warnings": r.warnings or [], "acknowledged_unverified": r.acknowledged_unverified or [],
         "computed_at": r.computed_at, "finalized_at": r.finalized_at,
@@ -58,14 +62,16 @@ def summary(p: Payslip) -> dict:
         "id": p.id, "employee_id": p.employee_id, "employee_code": p.employee.code, "employee_name": p.employee.name,
         "gross": p.gross, "ssf_employee": p.ssf_employee, "ssf_employer": p.ssf_employer, "cit": p.cit, "tds": p.tds,
         "net_pay": p.net_pay, "projected_annual_tax": p.projected_annual_tax,
+        "share": f"{p.share_num}/{p.share_den}" if p.share_den != 1 else None,
+        "projected_tax_without_cit": p.projected_tax_without_cit,
     }
 
 
-def run_detail(r: PayrollRun) -> RunDetail:
+def run_detail(r: PayrollRun, cal: str) -> RunDetail:
     slips = sorted(r.payslips, key=lambda p: p.employee.code)
     tot = lambda f: sum((getattr(p, f) for p in slips), Decimal("0.00"))  # noqa: E731
     return RunDetail(
-        **run_out(r),
+        **run_out(r, cal),
         payslips=[PayslipSummary(**summary(p)) for p in slips],
         adjustments=[AdjustmentOut.model_validate(a) for a in r.adjustments],
         totals=Totals(gross=tot("gross"), ssf_employee=tot("ssf_employee"), ssf_employer=tot("ssf_employer"),
@@ -73,26 +79,63 @@ def run_detail(r: PayrollRun) -> RunDetail:
     )
 
 
+def cal_of(db: Session, company_id: int) -> str:
+    return db.get(Company, company_id).pay_calendar
+
+
 @router.get("", response_model=list[RunOut])
 def list_runs(company_id: int, _: Membership = Depends(viewer), db: Session = Depends(get_db)):
+    cal = cal_of(db, company_id)
     runs = db.scalars(select(PayrollRun).where(PayrollRun.company_id == company_id)
                       .order_by(PayrollRun.fiscal_year.desc(), PayrollRun.month.desc())).all()
-    return [run_out(r) for r in runs]
+    return [run_out(r, cal) for r in runs]
+
+
+@router.get("/periods/{fy}", response_model=list[PeriodOut])
+def list_periods(company_id: int, fy: str, _: Membership = Depends(viewer), db: Session = Depends(get_db)):
+    """The fiscal year's pay periods in the company's calendar, with any run already started."""
+    fiscal_year = fy.replace("-", "/")
+    runs = {r.month: r for r in db.scalars(select(PayrollRun).where(
+        PayrollRun.company_id == company_id, PayrollRun.fiscal_year == fiscal_year))}
+    try:
+        ps = periods(fiscal_year, cal_of(db, company_id))
+    except Exception:
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, "fiscal year must look like 2083-84")
+    return [PeriodOut(index=p.index, label=p.label, start=p.start, end=p.end,
+                      run_id=runs[p.index].id if p.index in runs else None,
+                      status=runs[p.index].status if p.index in runs else None,
+                      source=runs[p.index].source if p.index in runs else None) for p in ps]
 
 
 @router.post("", response_model=RunDetail, status_code=201)
 def create_run(company_id: int, body: RunIn, m: Membership = Depends(accountant), db: Session = Depends(get_db)):
+    company = db.get(Company, company_id)
     try:
-        r = payroll.create_run(db, company_id, body.payment_date, m.user_id)
+        r = payroll.create_run(db, company, body.payment_date, m.user_id,
+                               fiscal_year=body.fiscal_year.replace("-", "/") if body.fiscal_year else None,
+                               period_index=body.period)
     except payroll.PayrollError as e:
         raise _payroll_error(e)
     db.commit()
-    return run_detail(r)
+    return run_detail(r, company.pay_calendar)
 
 
 @router.get("/{run_id}", response_model=RunDetail)
 def get_run_detail(company_id: int, run_id: int, _: Membership = Depends(viewer), db: Session = Depends(get_db)):
-    return run_detail(get_run(db, company_id, run_id))
+    return run_detail(get_run(db, company_id, run_id), cal_of(db, company_id))
+
+
+@router.put("/{run_id}/import", response_model=RunDetail)
+def import_figures(company_id: int, run_id: int, body: ImportIn, m: Membership = Depends(accountant),
+                   db: Session = Depends(get_db)):
+    """Enter a month that was paid before the company used AutoTax."""
+    r = get_run(db, company_id, run_id)
+    try:
+        payroll.import_run(db, r, [row.model_dump() for row in body.rows], body.gross_includes_employer_ssf, m.user_id)
+    except payroll.PayrollError as e:
+        raise _payroll_error(e)
+    db.commit()
+    return run_detail(r, cal_of(db, company_id))
 
 
 @router.delete("/{run_id}", status_code=204)
@@ -149,7 +192,7 @@ def compute(company_id: int, run_id: int, m: Membership = Depends(accountant), d
     except payroll.PayrollError as e:
         raise _payroll_error(e)
     db.commit()
-    return run_detail(r)
+    return run_detail(r, cal_of(db, company_id))
 
 
 @router.post("/{run_id}/finalize", response_model=RunDetail)
@@ -161,7 +204,7 @@ def finalize(company_id: int, run_id: int, body: FinalizeIn, m: Membership = Dep
     except payroll.PayrollError as e:
         raise _payroll_error(e)
     db.commit()
-    return run_detail(r)
+    return run_detail(r, cal_of(db, company_id))
 
 
 @router.get("/{run_id}/payslips/{payslip_id}", response_model=PayslipDetail)

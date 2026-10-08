@@ -34,7 +34,7 @@ const HR_NAV: NavItem[] = [
   { href: "", label: "Overview" },
   { href: "/employees", label: "Employees" },
   { href: "/payroll", label: "Payroll" },
-  { href: "/contributions", label: "SSF & CIT" },
+  { href: "/contributions", label: "SSF, CIT & TDS" },
   { href: "/fx", label: "Exchange rates" },
   { href: "/audit", label: "Activity" },
 ];
@@ -43,7 +43,7 @@ function navFor(role: Role | null, hasOwnRecord: boolean): NavItem[] {
   if (role === null) return [];
   if (role === "employee") return [{ href: "/my", label: "My pay" }];
   const items = [...HR_NAV];
-  if (role === "admin") items.splice(items.length - 1, 0, { href: "/team", label: "Logins" });
+  if (role === "admin") items.splice(items.length - 1, 0, { href: "/team", label: "Logins" }, { href: "/settings", label: "Company" });
   if (hasOwnRecord) items.push({ href: "/my", label: "My pay" });
   return items;
 }

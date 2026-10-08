@@ -29,6 +29,9 @@ export interface TaxProfile {
   approved_pension: boolean;
   remote_area: "A" | "B" | "C" | "D" | "E" | null;
   income_only_from_employment: boolean;
+  prior_income: Money;
+  prior_retirement: Money;
+  prior_tds: Money;
   life_insurance_premium: Money;
   health_insurance_premium: Money;
   building_insurance_premium: Money;
@@ -48,6 +51,7 @@ export interface SalaryStructure {
   id: number;
   effective_from: string;
   components: Component[];
+  cit_mode: "fixed" | "fill_cap";
   cit_monthly: Money;
   other_retirement_monthly: Money;
 }
@@ -62,8 +66,11 @@ export interface Run {
   fiscal_year: string;
   month: number;
   month_label: string;
+  period_start: string;
+  period_end: string;
   payment_date: string;
   status: "draft" | "finalized";
+  source: "computed" | "imported";
   rule_set: string | null;
   rule_review_status: string | null;
   warnings: string[];
@@ -84,6 +91,8 @@ export interface PayslipSummary {
   tds: Money;
   net_pay: Money;
   projected_annual_tax: Money;
+  share: string | null;
+  projected_tax_without_cit: Money;
 }
 
 export interface Adjustment {
@@ -114,7 +123,9 @@ export interface PayslipDetail extends PayslipSummary {
   other_retirement: Money;
   projected_taxable_income: Money;
   inputs: {
-    rule_set: string;
+    rule_set: string | null;
+    period?: { label: string; start: string; end: string; days_paid: number; month_days: number };
+    imported?: boolean;
     lines: { kind: string; amount: Money; currency: string; recurring: boolean; description: string }[];
     fx: Record<string, { on: string; buy: string; sell: string; unit: number; source: string; override_reason: string | null }>;
     profile: Record<string, unknown>;
@@ -158,10 +169,29 @@ export interface AuditEntry {
   at: string;
 }
 
+export interface Company {
+  id: number;
+  name: string;
+  pan: string | null;
+  pay_calendar: "bs" | "ad";
+}
+
+export interface Period {
+  index: number;
+  label: string;
+  start: string;
+  end: string;
+  run_id: number | null;
+  status: "draft" | "finalized" | null;
+  source: "computed" | "imported" | null;
+}
+
 export interface StatementMonth {
   month: number;
   month_label: string;
   status: "draft" | "finalized" | null;
+  source?: "computed" | "imported";
+  share?: string | null;
   payment_date?: string;
   payslip_id?: number;
   run_id?: number;
@@ -182,14 +212,16 @@ export interface AnnualStatement {
   months_paid: number;
   projected_annual_tax: Money | null;
   tds_remaining: Money | null;
+  projected_tax_without_cit: Money | null;
+  cit_tax_saving: Money | null;
 }
 
-type Contribution = Record<"ssf_employee" | "ssf_employer" | "cit", Money>;
+type Contribution = Record<"gross" | "ssf_employee" | "ssf_employer" | "cit" | "tds", Money>;
 
 export interface ContributionsReport {
   fiscal_year: string;
   months: ({ month: number; month_label: string; status: "draft" | "finalized" | null } & Contribution)[];
-  employees: { employee_id: number; code: string; name: string; months: Record<string, Contribution>; totals: Contribution }[];
+  employees: { employee_id: number; code: string; name: string; pan: string | null; months: Record<string, Contribution>; totals: Contribution }[];
   totals: Contribution & { ssf_total: Money };
 }
 

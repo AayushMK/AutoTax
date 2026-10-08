@@ -1,7 +1,12 @@
-"""Build the demo company with dummy payroll: all of FY 2082/83, plus FY 2083/84 so far.
+"""Build demo companies with dummy payroll.
 
-    cd backend && uv run python scripts/seed_demo.py --reset   # wipe the LOCAL dev database first
-    cd backend && uv run python scripts/seed_demo.py           # into an empty database
+  Himal Software (Nepali months): all of FY 2082/83, plus FY 2083/84 so far.
+  Everest Digital (English months): FY 2082/83 in 13 periods with July split between fiscal years;
+    July–September imported from "old payroll" with no TDS withheld, then calculated so tax catches up;
+    CIT filled to the 5-lakh limit; a mid-month joiner with income from a previous employer.
+
+    cd backend && uv run python scripts/seed_demo.py --reset   # wipe the LOCAL dev database, build everything
+    cd backend && uv run python scripts/seed_demo.py           # add whichever demo company is missing
 
 Everything goes through the real API in-process (same validation, tax engine and audit log as the
 app). Foreign-currency pay uses the real NRB rates for each payment date, fetched live.
@@ -16,6 +21,7 @@ from __future__ import annotations
 import argparse
 import sys
 from datetime import date, timedelta
+from decimal import Decimal
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -126,10 +132,23 @@ def main() -> None:
     c = TestClient(app)
     r = c.post("/api/auth/signup", json={**HR, **COMPANY})
     if r.status_code == 409:
-        sys.exit("The demo account already exists. Run with --reset to rebuild it.")
+        r = c.post("/api/auth/login", json={"email": HR["email"], "password": HR["password"]})
+        r.raise_for_status()
+        c.headers["Authorization"] = f"Bearer {r.json()['token']}"
+        names = {m["company_name"] for m in c.get("/api/auth/me").json()["memberships"]}
+        if EVEREST["name"] not in names:
+            seed_everest(c)
+        else:
+            print("Both demo companies already exist. Run with --reset to rebuild them.")
+        return
     r.raise_for_status()
     c.headers["Authorization"] = f"Bearer {r.json()['token']}"
     cid = c.get("/api/auth/me").json()["memberships"][0]["company_id"]
+    seed_himal(c, cid)
+    seed_everest(c)
+
+
+def seed_himal(c, cid: int) -> None:
     api = f"/api/companies/{cid}"
 
     ids: dict[str, int] = {}
@@ -198,6 +217,83 @@ def main() -> None:
     rep = c.get(f"{api}/reports/contributions/2082-83").json()["totals"]
     print(f"FY 2082/83 SSF {rep['ssf_total']} (11% {rep['ssf_employee']}, 20% {rep['ssf_employer']}), CIT {rep['cit']}")
     print(f"Logins: {HR['email']} / {HR['password']} (HR admin), {email} / {password} (employee)")
+
+
+# --- English-month company -------------------------------------------------------------------
+
+EVEREST = {"name": "Everest Digital Pvt. Ltd.", "pan": "601122334", "pay_calendar": "ad"}
+EV_EMPLOYEES = [
+    # code, name, pan, joined, profile, components, cit_mode, cit_monthly
+    ("EV-01", "Prakash Shrestha", "401234567", date(2021, 4, 1),
+     {"ssf_enrolled": True, "life_insurance_premium": "40000"},
+     [comp("basic", "750", "USD"), comp("allowance", "1350", "USD")], "fill_cap", "0"),  # SSF under 5L: CIT tops it up
+    ("EV-02", "Sabina Karki", "402345678", date(2022, 9, 5),
+     {"gender": "female", "ssf_enrolled": True, "health_insurance_premium": "20000"},
+     [comp("basic", "180000"), comp("allowance", "40000")], "fill_cap", "0"),
+    ("EV-03", "Arjun Lama", "403456789", date(2023, 3, 1),
+     {}, [comp("basic", "140000"), comp("allowance", "10000")], "fixed", "10000"),
+    ("EV-04", "Nisha Rana", "404567890", date(2025, 11, 10),  # joins mid-November from another employer
+     {"gender": "female", "ssf_enrolled": True,
+      "prior_income": "450000", "prior_retirement": "45000", "prior_tds": "22000"},
+     [comp("basic", "160000"), comp("allowance", "20000")], "fill_cap", "0"),
+]
+IMPORTED_USD_RATE = Decimal("140.25")  # rate the old payroll used; computed months use NRB rates
+
+
+def seed_everest(c) -> None:
+    r = c.post("/api/companies", json=EVEREST)
+    r.raise_for_status()
+    cid = r.json()["id"]
+    api = f"/api/companies/{cid}"
+    ids = {}
+    for code, name, pan, joined, profile, comps, cit_mode, cit in EV_EMPLOYEES:
+        e = c.post(f"{api}/employees", json={"code": code, "name": name, "pan": pan, "joined_on": str(joined),
+                                             "email": f"{name.split()[0].lower()}@example.com"})
+        e.raise_for_status()
+        ids[code] = e.json()["id"]
+        c.put(f"{api}/employees/{ids[code]}/tax-profiles/2082-83", json=profile).raise_for_status()
+        c.post(f"{api}/employees/{ids[code]}/salary-structures", json={
+            "effective_from": str(joined), "components": comps, "cit_mode": cit_mode, "cit_monthly": cit}).raise_for_status()
+
+    periods = c.get(f"{api}/payroll-runs/periods/2082-83").json()
+    print(f"{EVEREST['name']} (English months): {len(periods)} periods in FY 2082/83")
+
+    def paid_on(p) -> str:  # salary is paid on the last day of the English month
+        end = date.fromisoformat(p["end"])
+        nxt = date(end.year + (end.month == 12), end.month % 12 + 1, 1)
+        return str(nxt - timedelta(days=1))
+
+    for p in periods:
+        run = c.post(f"{api}/payroll-runs", json={"payment_date": paid_on(p), "fiscal_year": "2082-83", "period": p["index"]})
+        run.raise_for_status()
+        rid = run.json()["id"]
+        if p["index"] <= 3:  # July–September: paid in the old payroll, no TDS withheld
+            share = Decimal(15) / Decimal(31) if p["index"] == 1 else Decimal(1)
+            rows = []
+            for code, _, _, joined, profile, comps, cit_mode, _ in EV_EMPLOYEES:
+                if joined > date.fromisoformat(p["end"]):
+                    continue
+                npr = lambda x: Decimal(x["amount"]) * (IMPORTED_USD_RATE if x["currency"] == "USD" else 1)  # noqa: E731
+                gross = sum(npr(x) for x in comps) * share
+                basic = sum(npr(x) for x in comps if x["kind"] == "basic") * share
+                ssf = basic * Decimal("0.31") if profile.get("ssf_enrolled") else Decimal(0)
+                ctc = gross + (basic * Decimal("0.20") if profile.get("ssf_enrolled") else 0)  # sheet-style gross
+                cit = Decimal(7000) * share if cit_mode == "fill_cap" else Decimal(10000) * share
+                rows.append({"employee_id": ids[code], "gross": f"{ctc:.2f}", "basic": f"{basic:.2f}",
+                             "ssf_total": f"{ssf:.2f}", "cit": f"{cit:.2f}", "tds": "0"})
+            c.put(f"{api}/payroll-runs/{rid}/import", json={"gross_includes_employer_ssf": True, "rows": rows}).raise_for_status()
+        elif p["index"] == 4:  # October: Dashain
+            for code, _, _, joined, _, comps, _, _ in EV_EMPLOYEES:
+                basic = next(x for x in comps if x["kind"] == "basic")
+                if joined <= date(2025, 10, 1):
+                    c.post(f"{api}/payroll-runs/{rid}/adjustments", json={"employee_id": ids[code], **comp(
+                        "dashain", basic["amount"], basic["currency"], "Dashain 2082")}).raise_for_status()
+        fin = c.post(f"{api}/payroll-runs/{rid}/finalize", json={"acknowledge_unverified": True})
+        if fin.status_code != 200:
+            sys.exit(f"{p['label']}: {fin.status_code} {fin.text}")
+        d = fin.json()
+        print(f"  {d['month_label']:<20} {d['source']:<9} {len(d['payslips'])} payslips  TDS {d['totals']['tds']:>11}  "
+              f"CIT {d['totals']['cit']:>10}")
 
 
 if __name__ == "__main__":

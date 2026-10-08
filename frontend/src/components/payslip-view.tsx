@@ -36,6 +36,14 @@ export function PayslipView({ p, monthLabel, back }: { p: PayslipDetail; monthLa
           <div><dt>TDS</dt><dd><Num v={p.tds} /></dd></div>
         </dl>
       </header>
+      {(p.share || (p.projected_tax_without_cit && p.projected_annual_tax !== "0.00" && p.projected_tax_without_cit !== p.projected_annual_tax)) && (
+        <p className="notice small">
+          {p.share && <>Paid for {p.inputs.period?.days_paid} of {p.inputs.period?.month_days} days of the month. </>}
+          {p.projected_tax_without_cit !== p.projected_annual_tax && p.projected_annual_tax !== "0.00" && (
+            <>Without CIT, this year’s tax would be {money(p.projected_tax_without_cit)} instead of {money(p.projected_annual_tax)}.</>
+          )}
+        </p>
+      )}
 
       <section className="sheet">
         <h2>Pay this month</h2>

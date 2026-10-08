@@ -10,15 +10,17 @@ import { addMoney } from "@/lib/format";
 import type { ContributionsReport, RulesStatus } from "@/lib/types";
 import { useData } from "@/lib/use-data";
 
-type View = "ssf_total" | "ssf_employee" | "ssf_employer" | "cit";
+type View = "ssf_total" | "ssf_employee" | "ssf_employer" | "cit" | "tds" | "gross";
 const VIEWS: { key: View; label: string }[] = [
   { key: "ssf_total", label: "SSF 31%" },
   { key: "ssf_employee", label: "SSF 11% employee" },
   { key: "ssf_employer", label: "SSF 20% employer" },
   { key: "cit", label: "CIT" },
+  { key: "tds", label: "TDS" },
+  { key: "gross", label: "Gross pay" },
 ];
 
-type Cell = Record<"ssf_employee" | "ssf_employer" | "cit", string>;
+type Cell = Record<"gross" | "ssf_employee" | "ssf_employer" | "cit" | "tds", string>;
 const pick = (c: Cell | undefined, v: View) =>
   !c ? undefined : v === "ssf_total" ? addMoney(c.ssf_employee, c.ssf_employer) : c[v];
 
@@ -38,13 +40,18 @@ export default function Contributions() {
     <div className="stack">
       <header className="page-head">
         <div>
-          <h1>SSF & CIT</h1>
-          <p>Contributions for each employee, month by month and for the whole year. Use the CSV for SSF and CIT remittance.</p>
+          <h1>SSF, CIT & TDS</h1>
+          <p>For each employee, month by month and for the whole year. Download for SSF and CIT remittance, or the TDS sheet in IRD’s layout.</p>
         </div>
         {fy && (
-          <button className="btn quiet" onClick={() => download(`${path}.csv?include_drafts=${drafts}`, `ssf-cit-${fy.replace("/", "-")}.csv`)}>
-            Download CSV
-          </button>
+          <div className="row">
+            <button className="btn quiet" onClick={() => download(`${path}.csv?include_drafts=${drafts}`, `ssf-cit-${fy.replace("/", "-")}.csv`)}>
+              SSF & CIT (CSV)
+            </button>
+            <button className="btn quiet" onClick={() => download(`/companies/${companyId}/reports/tds/${fy.replace("/", "-")}.csv?include_drafts=${drafts}`, `tds-ird-${fy.replace("/", "-")}.csv`)}>
+              TDS detail for IRD (CSV)
+            </button>
+          </div>
         )}
       </header>
 
@@ -72,6 +79,7 @@ export default function Contributions() {
             <div><dt>Deducted from employees (11%)</dt><dd><Num v={r.totals.ssf_employee} /></dd></div>
             <div><dt>Paid by the company (20%)</dt><dd><Num v={r.totals.ssf_employer} /></dd></div>
             <div><dt>CIT for the year</dt><dd><Num v={r.totals.cit} /></dd></div>
+            <div><dt>TDS for the year</dt><dd><Num v={r.totals.tds} /></dd></div>
           </dl>
         )}
 
@@ -88,7 +96,7 @@ export default function Contributions() {
                   <th>Employee</th>
                   {paidMonths.map((m) => (
                     <th key={m.month} className="num">
-                      {m.month_label.split(" ")[0]}
+                      {m.month_label.replace(/ \d{4}/, "")}
                       {m.status === "draft" && <span className="faint"> (draft)</span>}
                     </th>
                   ))}

@@ -7,7 +7,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.db import get_db
-from app.models import Employee, Membership, Payslip, PayrollRun, RunStatus
+from app.models import Company, Employee, Membership, Payslip, PayrollRun, RunStatus
 from app.security import self_service
 from app.services.calendar import fiscal_year_of, month_label
 from app.services.statements import annual_statement, money_json
@@ -50,5 +50,8 @@ def my_payslip(company_id: int, payslip_id: int, m: Membership = Depends(self_se
         gross=p.gross, ssf_employee=p.ssf_employee, ssf_employer=p.ssf_employer, cit=p.cit, tds=p.tds,
         net_pay=p.net_pay, projected_annual_tax=p.projected_annual_tax, month=p.month, basic=p.basic,
         other_retirement=p.other_retirement, projected_taxable_income=p.projected_taxable_income,
-        inputs=p.inputs | {"month_label": month_label(p.run.fiscal_year, p.month)}, trace=p.trace,
+        share=f"{p.share_num}/{p.share_den}" if p.share_den != 1 else None,
+        projected_tax_without_cit=p.projected_tax_without_cit,
+        inputs=p.inputs | {"month_label": month_label(p.run.fiscal_year, p.month, db.get(Company, company_id).pay_calendar)},
+        trace=p.trace,
     )

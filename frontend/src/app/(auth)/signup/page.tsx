@@ -44,6 +44,12 @@ export default function Signup() {
           <ErrorNotice error={error} />
           <Field label="Company name"><input name="company_name" required /></Field>
           <Field label="Company PAN" hint="Optional. Printed on TDS sheets."><input name="company_pan" inputMode="numeric" /></Field>
+          <Field label="You run payroll by" hint="Can be changed until the first payroll is created.">
+            <select name="pay_calendar" defaultValue="bs">
+              <option value="bs">Nepali months (Shrawan to Ashadh)</option>
+              <option value="ad">English months (July is split between fiscal years)</option>
+            </select>
+          </Field>
           <Field label="Your name"><input name="name" autoComplete="name" required /></Field>
           <Field label="Email"><input name="email" type="email" autoComplete="email" required /></Field>
           <Field label="Password" hint="At least 8 characters.">

@@ -44,6 +44,23 @@ def contributions_csv(company_id: int, fy: str, include_drafts: bool = False,
     return Response(buf.getvalue(), media_type="text/csv", headers={"Content-Disposition": f'attachment; filename="{name}"'})
 
 
+@router.get("/reports/tds/{fy}.csv")
+def tds_ird_csv(company_id: int, fy: str, include_drafts: bool = False,
+                _: Membership = Depends(viewer), db: Session = Depends(get_db)):
+    """Salary TDS per employee per period with PAN, laid out like the IRD TDS detail sheet."""
+    fiscal_year = fy_from_path(fy)
+    r = contributions_report(db, company_id, fiscal_year, include_drafts)
+    buf = io.StringIO()
+    w = csv.writer(buf)
+    w.writerow(["s.n.", "PAN", "Name", *[m["month_label"] for m in r["months"]], "TOTAL"])
+    for n, e in enumerate(r["employees"], start=1):
+        w.writerow([n, e["pan"] or "", e["name"], *[e["months"].get(m["month"], {}).get("tds", "0.00") for m in r["months"]],
+                    e["totals"]["tds"]])
+    w.writerow(["", "", "Total", *[m["tds"] for m in r["months"]], r["totals"]["tds"]])
+    name = f"tds-ird-{fiscal_year.replace('/', '-')}.csv"
+    return Response(buf.getvalue(), media_type="text/csv", headers={"Content-Disposition": f'attachment; filename="{name}"'})
+
+
 # Declared after the .csv route: "{fy}" would otherwise also match "2083-84.csv".
 @router.get("/reports/contributions/{fy}")
 def contributions(company_id: int, fy: str, include_drafts: bool = False,

@@ -24,6 +24,7 @@ class SignupIn(BaseModel):
     password: str = Field(min_length=8)
     company_name: str = Field(min_length=1)
     company_pan: str | None = None
+    pay_calendar: Literal["bs", "ad"] = "bs"
 
 
 class LoginIn(BaseModel):
@@ -53,12 +54,24 @@ class MeOut(BaseModel):
 class CompanyIn(BaseModel):
     name: str = Field(min_length=1)
     pan: str | None = None
+    pay_calendar: Literal["bs", "ad"] = "bs"
 
 
 class CompanyOut(ORM):
     id: int
     name: str
     pan: str | None
+    pay_calendar: str
+
+
+class PeriodOut(BaseModel):
+    index: int
+    label: str
+    start: date
+    end: date
+    run_id: int | None = None
+    status: RunStatus | None = None
+    source: str | None = None
 
 
 class MemberIn(BaseModel):
@@ -134,6 +147,9 @@ class TaxProfileIn(BaseModel):
     approved_pension: bool = False
     remote_area: Literal["A", "B", "C", "D", "E"] | None = None
     income_only_from_employment: bool = True
+    prior_income: Decimal = Field(default=Decimal(0), ge=0)
+    prior_retirement: Decimal = Field(default=Decimal(0), ge=0)
+    prior_tds: Decimal = Field(default=Decimal(0), ge=0)
     life_insurance_premium: Decimal = Field(default=Decimal(0), ge=0)
     health_insurance_premium: Decimal = Field(default=Decimal(0), ge=0)
     building_insurance_premium: Decimal = Field(default=Decimal(0), ge=0)
@@ -159,6 +175,7 @@ class Component(BaseModel):
 class SalaryStructureIn(BaseModel):
     effective_from: date
     components: list[Component] = Field(min_length=1)
+    cit_mode: Literal["fixed", "fill_cap"] = "fixed"
     cit_monthly: Decimal = Field(default=Decimal(0), ge=0)
     other_retirement_monthly: Decimal = Field(default=Decimal(0), ge=0)
 
@@ -167,6 +184,7 @@ class SalaryStructureOut(ORM):
     id: int
     effective_from: date
     components: list[Component]
+    cit_mode: str
     cit_monthly: Decimal
     other_retirement_monthly: Decimal
 
@@ -179,6 +197,26 @@ class EmployeeDetail(EmployeeOut):
 # --- payroll ---
 class RunIn(BaseModel):
     payment_date: date
+    # Required for English-month payroll (July belongs to two fiscal years); optional otherwise.
+    fiscal_year: str | None = None
+    period: int | None = Field(default=None, ge=1, le=13)
+
+
+class ImportRow(BaseModel):
+    employee_id: int
+    gross: Decimal = Field(ge=0)
+    basic: Decimal | None = Field(default=None, ge=0)
+    ssf_total: Decimal | None = Field(default=None, ge=0)
+    ssf_employee: Decimal | None = Field(default=None, ge=0)
+    ssf_employer: Decimal | None = Field(default=None, ge=0)
+    cit: Decimal = Field(default=Decimal(0), ge=0)
+    other_retirement: Decimal = Field(default=Decimal(0), ge=0)
+    tds: Decimal = Field(default=Decimal(0), ge=0)
+
+
+class ImportIn(BaseModel):
+    gross_includes_employer_ssf: bool = True
+    rows: list[ImportRow] = Field(min_length=1)
 
 
 class AdjustmentIn(BaseModel):
@@ -214,6 +252,8 @@ class PayslipSummary(ORM):
     tds: Decimal
     net_pay: Decimal
     projected_annual_tax: Decimal
+    share: str | None = None  # e.g. "15/31" when only part of the month is paid
+    projected_tax_without_cit: Decimal = Decimal(0)
 
 
 class PayslipDetail(PayslipSummary):
@@ -239,8 +279,11 @@ class RunOut(ORM):
     fiscal_year: str
     month: int
     month_label: str
+    period_start: date
+    period_end: date
     payment_date: date
     status: RunStatus
+    source: str
     rule_set: str | None
     rule_review_status: str | None
     warnings: list[str]

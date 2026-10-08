@@ -12,6 +12,7 @@ from .models import (
     MonthInput,
     MonthResult,
     PostedMonth,
+    PriorEmployment,
 )
 from .rules import RuleFileError, RuleSet, load_rule_file, rules_for_date
 from .tds import PayrollSequenceError, compute_month
@@ -30,6 +31,7 @@ __all__ = [
     "MonthResult",
     "PayrollSequenceError",
     "PostedMonth",
+    "PriorEmployment",
     "RuleFileError",
     "RuleSet",
     "compute_annual_tax",

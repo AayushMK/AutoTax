@@ -105,3 +105,15 @@
   profile: {filing: couple, gender: female}
   figures: {gross_income: 1200000, basic: 1200000}
   expect: {rebate: 0, total_tax: 116000}
+
+- name: "2081/82 company-sheet layout: CTC gross, SSF + CIT filled to 5 lakh, life insurance"
+  rules: "2081-82"
+  working: >
+    Same structure as a typical company tax sheet (synthetic figures): basic 12L → SSF 31% = 3,72,000
+    (11% 1,32,000 + 20% 2,40,000); CIT tops up to the 5,00,000 cap = 1,28,000.
+    assessable 27,00,000 + 2,40,000 = 29,40,000; − 5,00,000 − 40,000 = 24,00,000;
+    SST waived; 20,000 + 60,000 + 3,00,000 + 4,00,000 × 36% (1,44,000) = 5,24,000
+  profile: {ssf_enrolled: true}
+  figures: {gross_income: 2700000, basic: 1200000, ssf_employee: 132000, ssf_employer: 240000, cit: 128000}
+  reliefs: {life_insurance_premium: 40000}
+  expect: {assessable_income: 2940000, retirement_deduction: 500000, taxable_income: 2400000, total_tax: 524000}

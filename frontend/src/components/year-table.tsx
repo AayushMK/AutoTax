@@ -30,6 +30,8 @@ export function YearTable({ st, payslipHref }: { st: AnnualStatement; payslipHre
                 <td>
                   <Link href={payslipHref(m.payslip_id, m.run_id!)}>{m.month_label}</Link>
                   {m.status === "draft" && <span className="tag needs_review" style={{ marginLeft: "0.5rem" }}>draft</span>}
+                  {m.source === "imported" && <span className="tag" style={{ marginLeft: "0.5rem" }} title="Entered from payroll done before AutoTax">imported</span>}
+                  {m.share && <span className="faint small" style={{ marginLeft: "0.4rem" }}>{m.share} of the month</span>}
                 </td>
                 <td className="num"><Num v={m.gross} /></td>
                 <td className="num"><Num v={m.ssf_employee} /></td>
@@ -71,6 +73,9 @@ export function YearFigures({ st }: { st: AnnualStatement }) {
       <div><dt>Tax paid so far</dt><dd><Num v={st.totals.tds} /></dd></div>
       {st.projected_annual_tax && (
         <div><dt>Tax for the whole year, projected</dt><dd><Num v={st.projected_annual_tax} /></dd></div>
+      )}
+      {st.cit_tax_saving && st.cit_tax_saving !== "0.00" && (
+        <div><dt>Tax saved by CIT this year</dt><dd><Num v={st.cit_tax_saving} /></dd></div>
       )}
     </dl>
   );

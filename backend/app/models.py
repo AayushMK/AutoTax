@@ -57,6 +57,9 @@ class Company(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(200))
     pan: Mapped[str | None] = mapped_column(String(20))
+    # "bs": Nepali months (12 periods). "ad": English months (13 periods, July split between years).
+    # Fixed once payroll exists, so past periods keep their meaning.
+    pay_calendar: Mapped[str] = mapped_column(String(2), default="bs", server_default="bs")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 
@@ -129,6 +132,10 @@ class TaxProfile(Base):
     approved_pension: Mapped[bool] = mapped_column(Boolean, default=False)
     remote_area: Mapped[str | None] = mapped_column(String(1))
     income_only_from_employment: Mapped[bool] = mapped_column(Boolean, default=True)
+    # Previous employer(s) earlier in this fiscal year, from their salary certificate.
+    prior_income: Mapped[Decimal] = mapped_column(Money, default=0, server_default="0")
+    prior_retirement: Mapped[Decimal] = mapped_column(Money, default=0, server_default="0")
+    prior_tds: Mapped[Decimal] = mapped_column(Money, default=0, server_default="0")
     life_insurance_premium: Mapped[Decimal] = mapped_column(Money, default=0)
     health_insurance_premium: Mapped[Decimal] = mapped_column(Money, default=0)
     building_insurance_premium: Mapped[Decimal] = mapped_column(Money, default=0)
@@ -147,6 +154,8 @@ class SalaryStructure(Base):
     # [{"kind": "basic", "amount": "1500.00", "currency": "USD", "description": ""}]
     components: Mapped[list] = mapped_column(JSON)
     cit_monthly: Mapped[Decimal] = mapped_column(Money, default=0)
+    # "fixed": cit_monthly every month. "fill_cap": CIT tops up SSF to the retirement deduction limit.
+    cit_mode: Mapped[str] = mapped_column(String(10), default="fixed", server_default="fixed")
     other_retirement_monthly: Mapped[Decimal] = mapped_column(Money, default=0)
     employee: Mapped[Employee] = relationship(back_populates="salary_structures")
 
@@ -175,8 +184,10 @@ class PayrollRun(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     company_id: Mapped[int] = mapped_column(ForeignKey("companies.id", ondelete="CASCADE"), index=True)
     fiscal_year: Mapped[str] = mapped_column(String(7))
-    month: Mapped[int] = mapped_column(Integer)  # 1 = Shrawan … 12 = Ashadh
+    month: Mapped[int] = mapped_column(Integer)  # pay period: 1–12 (Nepali months) or 1–13 (English months)
     payment_date: Mapped[date] = mapped_column(Date)
+    # "computed" by the engine, or "imported": figures entered from payroll done outside the app.
+    source: Mapped[str] = mapped_column(String(10), default="computed", server_default="computed")
     status: Mapped[RunStatus] = mapped_column(Enum(RunStatus, native_enum=False, length=20), default=RunStatus.DRAFT)
     rule_set: Mapped[str | None] = mapped_column(String(40))
     rule_review_status: Mapped[str | None] = mapped_column(String(20))
@@ -214,6 +225,8 @@ class Payslip(Base):
     run_id: Mapped[int] = mapped_column(ForeignKey("payroll_runs.id", ondelete="CASCADE"), index=True)
     employee_id: Mapped[int] = mapped_column(ForeignKey("employees.id"), index=True)
     month: Mapped[int] = mapped_column(Integer)
+    share_num: Mapped[int] = mapped_column(Integer, default=1, server_default="1")  # part of a month paid
+    share_den: Mapped[int] = mapped_column(Integer, default=1, server_default="1")
     gross: Mapped[Decimal] = mapped_column(Money)
     basic: Mapped[Decimal] = mapped_column(Money)
     recurring_income: Mapped[Decimal] = mapped_column(Money)
@@ -226,6 +239,7 @@ class Payslip(Base):
     net_pay: Mapped[Decimal] = mapped_column(Money)
     projected_annual_tax: Mapped[Decimal] = mapped_column(Money)
     projected_taxable_income: Mapped[Decimal] = mapped_column(Money)
+    projected_tax_without_cit: Mapped[Decimal] = mapped_column(Money, default=0, server_default="0")
     inputs: Mapped[dict] = mapped_column(JSON)  # lines, FX rates used, profile snapshot
     trace: Mapped[list] = mapped_column(JSON)
     run: Mapped[PayrollRun] = relationship(back_populates="payslips")

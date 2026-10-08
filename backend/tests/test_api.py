@@ -147,7 +147,7 @@ def test_months_must_be_finalized_in_order(client):
     client.post(f"/api/companies/{cid}/payroll-runs", headers=h, json={"payment_date": str(SHRAWAN_15)})
     run3 = client.post(f"/api/companies/{cid}/payroll-runs", headers=h, json={"payment_date": str(ASHWIN_15)}).json()
     r = client.post(f"/api/companies/{cid}/payroll-runs/{run3['id']}/finalize", headers=h, json={"acknowledge_unverified": True})
-    assert r.status_code == 422 and "month 1" in r.json()["detail"]["message"]
+    assert r.status_code == 422 and "Shrawan 2083" in r.json()["detail"]["message"]
     dup = client.post(f"/api/companies/{cid}/payroll-runs", headers=h, json={"payment_date": str(SHRAWAN_15)})
     assert dup.status_code == 422
 

@@ -97,7 +97,7 @@ def add_structure(company_id: int, employee_id: int, body: SalaryStructureIn, m:
     s = SalaryStructure(
         employee_id=e.id, effective_from=body.effective_from,
         components=[c.model_dump(mode="json") for c in body.components],
-        cit_monthly=body.cit_monthly, other_retirement_monthly=body.other_retirement_monthly,
+        cit_mode=body.cit_mode, cit_monthly=body.cit_monthly, other_retirement_monthly=body.other_retirement_monthly,
     )
     db.add(s)
     try:

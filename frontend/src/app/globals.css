@@ -95,7 +95,7 @@ p { margin: 0; max-width: 72ch; }
 .btn.seal { background: var(--moss); border-color: var(--moss); }
 .btn.small { padding: 0.25rem 0.6rem; font-size: var(--step--1); }
 
-.field { display: grid; gap: 0.3rem; }
+.field { display: grid; gap: 0.3rem; align-content: start; }
 .field > span { font-size: var(--step--1); font-weight: 600; color: var(--ink-soft); }
 .field small { color: var(--ink-faint); font-size: var(--step--1); }
 input, select, textarea {
@@ -130,6 +130,7 @@ input[type="checkbox"] { width: 1.05rem; height: 1.05rem; accent-color: var(--in
 .sheet > h2, .sheet > h3 { margin-bottom: 0.9rem; }
 
 .stack { display: grid; gap: 1.25rem; }
+.stack > * { min-width: 0; } /* let wide tables scroll inside their sheet */
 .row { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
 .spread { display: flex; gap: 1rem; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; }
 

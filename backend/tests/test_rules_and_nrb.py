@@ -12,7 +12,7 @@ from app.fx.nrb import NRB_URL, fetch_rates
 
 def test_every_rule_file_loads_and_years_do_not_overlap():
     sets = load_all()
-    assert [r.fiscal_year for r in sets] == ["2082/83", "2083/84"]
+    assert [r.fiscal_year for r in sets] == ["2081/82", "2082/83", "2083/84"]
     for a, b in zip(sets, sets[1:]):
         assert a.effective_to < b.effective_from
 

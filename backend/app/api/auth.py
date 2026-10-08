@@ -17,7 +17,7 @@ def signup(body: SignupIn, db: Session = Depends(get_db)):
     if db.scalar(select(User).where(func.lower(User.email) == body.email.lower())):
         raise HTTPException(status.HTTP_409_CONFLICT, "an account with this email already exists")
     user = User(email=body.email.lower(), name=body.name, password_hash=hash_password(body.password))
-    company = Company(name=body.company_name, pan=body.company_pan)
+    company = Company(name=body.company_name, pan=body.company_pan, pay_calendar=body.pay_calendar)
     db.add_all([user, company])
     db.flush()
     db.add(Membership(user_id=user.id, company_id=company.id, role=Role.ADMIN))

@@ -3,7 +3,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.db import get_db
-from app.models import AuditLog, Company, Membership, Role, User
+from app.models import AuditLog, Company, Membership, PayrollRun, Role, User
 from app.security import admin, current_user, viewer
 from app.services import audit
 
@@ -14,7 +14,7 @@ router = APIRouter(tags=["companies"])
 
 @router.post("/companies", response_model=CompanyOut, status_code=201)
 def create_company(body: CompanyIn, user: User = Depends(current_user), db: Session = Depends(get_db)):
-    c = Company(name=body.name, pan=body.pan)
+    c = Company(name=body.name, pan=body.pan, pay_calendar=body.pay_calendar)
     db.add(c)
     db.flush()
     db.add(Membership(user_id=user.id, company_id=c.id, role=Role.ADMIN))
@@ -26,6 +26,22 @@ def create_company(body: CompanyIn, user: User = Depends(current_user), db: Sess
 @router.get("/companies/{company_id}", response_model=CompanyOut)
 def get_company(company_id: int, m: Membership = Depends(viewer)):
     return m.company
+
+
+@router.put("/companies/{company_id}", response_model=CompanyOut)
+def update_company(company_id: int, body: CompanyIn, m: Membership = Depends(admin), db: Session = Depends(get_db)):
+    c = m.company
+    if body.pay_calendar != c.pay_calendar and db.scalar(
+        select(func.count()).select_from(PayrollRun).where(PayrollRun.company_id == company_id)
+    ):
+        raise HTTPException(status.HTTP_409_CONFLICT,
+                            "the payroll calendar can't change once payroll exists: past periods would change meaning")
+    before = {"name": c.name, "pan": c.pan, "pay_calendar": c.pay_calendar}
+    c.name, c.pan, c.pay_calendar = body.name, body.pan, body.pay_calendar
+    audit.record(db, company_id=company_id, user_id=m.user_id, action="company.update", entity="company",
+                 entity_id=company_id, data={"before": before, "after": body.model_dump()})
+    db.commit()
+    return c
 
 
 @router.get("/companies/{company_id}/members", response_model=list[MemberOut])

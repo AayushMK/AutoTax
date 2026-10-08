@@ -6,6 +6,7 @@ from dataclasses import dataclass, field
 from datetime import date
 from decimal import Decimal
 from enum import StrEnum
+from fractions import Fraction
 from typing import Literal
 
 from .money import ZERO
@@ -43,8 +44,10 @@ class EmployeeProfile:
     approved_pension: bool = False  # contributes to an approved pension fund (SST waiver)
     remote_area: Literal["A", "B", "C", "D", "E"] | None = None
     income_only_from_employment: bool = True
-    first_month: int = 1  # FY month index 1=Shrawan .. 12=Ashadh (mid-year joiners)
-    last_month: int = 12  # mid-year leavers
+    # Pay-period indexes within the FY: 1..12 for Nepali months, 1..13 for English months
+    # (13 because July is split between two fiscal years). Mid-year joiners / leavers.
+    first_month: int = 1
+    last_month: int = 12
 
 
 @dataclass(frozen=True)
@@ -58,6 +61,15 @@ class AnnualReliefs:
 
 
 @dataclass(frozen=True)
+class PriorEmployment:
+    """Earlier employer(s) in the same fiscal year, from their salary certificate."""
+
+    income: Decimal = ZERO  # employment income incl. employer retirement contributions
+    retirement: Decimal = ZERO  # SSF + CIT + approved-fund contributions already made
+    tds: Decimal = ZERO  # tax already withheld
+
+
+@dataclass(frozen=True)
 class AnnualFigures:
     """Annual totals in NPR (actual or projected) fed to the annual tax computation."""
 
@@ -66,7 +78,7 @@ class AnnualFigures:
     ssf_employee: Decimal = ZERO
     ssf_employer: Decimal = ZERO
     cit: Decimal = ZERO
-    other_retirement: Decimal = ZERO  # EPF / approved retirement funds
+    other_retirement: Decimal = ZERO  # EPF / approved retirement funds (incl. previous employer's)
 
 
 @dataclass
@@ -87,11 +99,18 @@ class AnnualTaxResult:
 
 @dataclass(frozen=True)
 class MonthInput:
-    month: int  # FY month index 1..12
-    lines: list[IncomeLine]
-    cit: Decimal = ZERO  # employee's CIT contribution this month (NPR)
+    month: int  # pay-period index within the FY
+    lines: list[IncomeLine]  # recurring lines are FULL-month amounts; one-offs are paid as given
+    cit: Decimal = ZERO  # monthly CIT (NPR) in "fixed" mode; ignored in "fill_cap" mode
     other_retirement: Decimal = ZERO
     retirement_recurring: bool = True
+    # Share of a full month this period pays (split July, mid-month joiner/leaver), e.g. 16/31.
+    share: Fraction = Fraction(1)
+    share_note: str = ""
+    # Shares of this employee's later periods in the FY (None: 1 each up to profile.last_month).
+    remaining_shares: tuple[Fraction, ...] | None = None
+    # "fill_cap": CIT tops up SSF + other funds to the retirement deduction limit, spread over the year.
+    cit_mode: Literal["fixed", "fill_cap"] = "fixed"
 
 
 @dataclass(frozen=True)
@@ -118,3 +137,4 @@ class MonthResult:
     projected_annual: AnnualFigures
     annual: AnnualTaxResult
     trace: Trace
+    tax_without_cit: Decimal = ZERO  # same projection with no CIT at all: shows what CIT saves

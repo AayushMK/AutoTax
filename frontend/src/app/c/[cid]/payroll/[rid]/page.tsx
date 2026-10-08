@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { Suspense, useState } from "react";
 
 import { ErrorNotice, Field, Loading, Num } from "@/components/bits";
+import { ImportForm } from "@/components/import-form";
 import { UnverifiedList } from "@/components/rule-status";
 import { useCompany } from "@/components/shell";
 import { Stamp } from "@/components/stamp";
@@ -31,12 +32,15 @@ function RunPage() {
   const [actionError, setActionError] = useState<unknown>(null);
   const [confirming, setConfirming] = useState<ApiError | null>(null);
   const [ack, setAck] = useState(false);
+  const [importing, setImporting] = useState(false);
 
   if (error) return <ErrorNotice error={error} />;
   if (!run) return <Loading what="payroll run" />;
 
   const draft = run.status === "draft";
   const editable = draft && canEdit;
+  const imported = run.source === "imported";
+  const showImport = editable && (importing || (imported && run.payslips.length === 0));
   const names = new Map(employees.data?.map((e) => [e.id, `${e.code} ${e.name}`]));
 
   async function act(kind: "compute" | "finalize", acknowledge = false) {
@@ -68,6 +72,7 @@ function RunPage() {
           <p>
             Paid on {date(run.payment_date)}, fiscal year {run.fiscal_year}.
             {run.rule_set && <> Calculated with {run.rule_set}.</>}
+            {imported && <> Figures entered from payroll done before AutoTax.</>}
           </p>
         </div>
         {run.status === "finalized" ? (
@@ -75,9 +80,13 @@ function RunPage() {
         ) : (
           editable && (
             <div className="row">
-              <button className="btn quiet" disabled={busy !== null} onClick={() => act("compute")}>
-                {busy === "compute" ? "Calculating…" : run.computed_at ? "Recalculate" : "Calculate payroll"}
-              </button>
+              {imported ? (
+                <button className="btn quiet" disabled={busy !== null || importing} onClick={() => setImporting(true)}>Edit figures</button>
+              ) : (
+                <button className="btn quiet" disabled={busy !== null} onClick={() => act("compute")}>
+                  {busy === "compute" ? "Calculating…" : run.computed_at ? "Recalculate" : "Calculate payroll"}
+                </button>
+              )}
               <button className="btn seal" disabled={busy !== null || !run.computed_at} onClick={() => act("finalize")}
                 title={run.computed_at ? undefined : "Calculate first"}>
                 {busy === "finalize" ? "Finalizing…" : "Finalize month"}
@@ -116,7 +125,12 @@ function RunPage() {
         </p>
       )}
 
-      {draft && run.adjustments.length + (editable ? 1 : 0) > 0 && (
+      {showImport && (
+        <ImportForm run={run} path={path} employees={employees.data ?? []} onCancel={() => setImporting(false)}
+          onSaved={(r) => { setData(r); setImporting(false); }} />
+      )}
+
+      {draft && !imported && !importing && run.adjustments.length + (editable ? 1 : 0) > 0 && (
         <Adjustments run={run} path={path} employees={employees.data ?? []} names={names} editable={editable} onChange={reloadRun} />
       )}
 
@@ -130,7 +144,14 @@ function RunPage() {
           )}
         </div>
         {draft && !run.computed_at && run.payslips.length === 0 && (
-          <div className="empty"><p>Nothing calculated yet. Add any one-off payments, then calculate.</p></div>
+          <div className="empty">
+            <p>Nothing calculated yet. Add any one-off payments, then calculate.</p>
+            {editable && !importing && (
+              <button className="btn quiet small" onClick={() => setImporting(true)}>
+                This month was paid before AutoTax: enter its figures instead
+              </button>
+            )}
+          </div>
         )}
         {draft && !run.computed_at && run.payslips.length > 0 && (
           <p className="notice small" style={{ marginBottom: "0.75rem" }}>Inputs changed since the last calculation. Recalculate before finalizing.</p>
@@ -155,6 +176,7 @@ function RunPage() {
                     <td>
                       <Link href={`/c/${companyId}/payroll/${run.id}/payslips/${p.id}`}>{p.employee_name}</Link>{" "}
                       <span className="faint small figure">{p.employee_code}</span>
+                      {p.share && <span className="tag" style={{ marginLeft: "0.4rem" }} title="Paid for part of the month">{p.share} of the month</span>}
                     </td>
                     <td className="num"><Num v={p.gross} /></td>
                     <td className="num"><Num v={p.ssf_employee} /></td>
