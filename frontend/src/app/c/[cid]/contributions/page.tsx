@@ -57,10 +57,9 @@ export default function Contributions() {
 
       <section className="sheet">
         <div className="row" style={{ marginBottom: "1rem", justifyContent: "space-between" }}>
-          <div className="row" role="tablist" aria-label="Contribution">
+          <div className="seg" role="tablist" aria-label="Show">
             {VIEWS.map((v) => (
-              <button key={v.key} role="tab" aria-selected={view === v.key}
-                className={`btn small ${view === v.key ? "" : "quiet"}`} onClick={() => setView(v.key)}>
+              <button key={v.key} type="button" role="tab" aria-selected={view === v.key} onClick={() => setView(v.key)}>
                 {v.label}
               </button>
             ))}

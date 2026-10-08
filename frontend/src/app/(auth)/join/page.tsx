@@ -10,7 +10,7 @@ import type { Role } from "@/lib/types";
 import { useData } from "@/lib/use-data";
 
 import styles from "../auth.module.css";
-import { Intro } from "../intro";
+import { Brand, Intro } from "../intro";
 
 interface InviteInfo {
   company_id: number;
@@ -54,14 +54,16 @@ function Join() {
   const i = info.data;
   return (
     <div className={styles.wrap}>
-      <Intro />
       <div className={styles.formSide}>
+        <Brand />
+        <div className={styles.formWrap}>
         <div className={styles.form}>
           {!token && <p className="notice block">This page needs the invite link HR sent you.</p>}
           {info.loading && <Loading what="invite" />}
           <ErrorNotice error={info.error} />
           {i && (
             <form className={styles.form} onSubmit={submit}>
+              <p className={styles.eyebrow}>You’re invited</p>
               <h1>Join {i.company_name}</h1>
               <p className="muted">
                 {i.role === "employee"
@@ -86,7 +88,9 @@ function Join() {
             </form>
           )}
         </div>
+        </div>
       </div>
+      <Intro />
     </div>
   );
 }
