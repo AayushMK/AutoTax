@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import io
 import json
+import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -66,7 +67,11 @@ def _current_params(rules: RuleSet) -> str:
     )
 
 
-def extract(path: Path, rules: RuleSet, provider: Provider | None = None, log=print) -> Extraction:
+def _progress(msg: str) -> None:
+    print(msg, file=sys.stderr, flush=True)
+
+
+def extract(path: Path, rules: RuleSet, provider: Provider | None = None, log=_progress) -> Extraction:
     provider = provider or get_provider()
     if provider is None:
         raise RuntimeError("no extraction provider: set GEMINI_API_KEY (free) or ANTHROPIC_API_KEY")

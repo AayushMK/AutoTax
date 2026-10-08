@@ -59,12 +59,17 @@ class GeminiProvider:
     pages_per_chunk = 30
     max_chunk_bytes = 14 * 1024 * 1024  # inline request limit is 20 MB after base64 (+33%)
     max_attempts = 4  # per model, before falling back to the next one
+    request_timeout_ms = 300_000
     max_models = 3
 
     def __init__(self, model: str | None = None, client=None):
         from google import genai
+        from google.genai import types
 
-        self.client = client or genai.Client(api_key=_gemini_key())
+        # Without a timeout one stalled request can hang the whole run.
+        self.client = client or genai.Client(
+            api_key=_gemini_key(), http_options=types.HttpOptions(timeout=self.request_timeout_ms)
+        )
         pinned = model or os.environ.get("GEMINI_MODEL")
         if pinned:
             self.models = [pinned]
