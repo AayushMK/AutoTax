@@ -90,10 +90,10 @@
   height: 32px; padding: 0 8px; border-radius: var(--radius);
   color: var(--text-subtle); white-space: nowrap; text-decoration: none;
 }
-.navItem svg { color: var(--text-subtle); flex: none; }
+.navItem svg { color: var(--fg, var(--text-subtle)); flex: none; }
 .navItem:hover { background: var(--bg-hover); color: var(--text); text-decoration: none; }
 .navItem[aria-current="page"] { background: var(--bg-selected); color: var(--text-selected); font-weight: 550; }
-.navItem[aria-current="page"] svg { color: var(--text-selected); }
+.navItem[aria-current="page"] svg { color: var(--fg, var(--text-selected)); }
 .navItem[aria-current="page"]::before {
   content: ""; position: absolute; left: -8px; top: 8px; bottom: 8px; width: 2px;
   border-radius: 1px; background: var(--text-selected);

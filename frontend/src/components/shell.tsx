@@ -45,36 +45,36 @@ export function useCompany(): CompanyCtx {
   return c;
 }
 
-type NavItem = { href: string; label: string; icon: LucideIcon };
+type NavItem = { href: string; label: string; icon: LucideIcon; hue: string };
 type NavGroup = { label: string | null; items: NavItem[] };
 
 function navFor(role: Role | null, hasOwnRecord: boolean): NavGroup[] {
   if (role === null) return [];
-  const mine: NavItem = { href: "/my", label: "My pay", icon: Wallet };
+  const mine: NavItem = { href: "/my", label: "My pay", icon: Wallet, hue: "green" };
   if (role === "employee") return [{ label: null, items: [mine] }];
   const groups: NavGroup[] = [
-    { label: null, items: [{ href: "", label: "Overview", icon: LayoutDashboard }] },
+    { label: null, items: [{ href: "", label: "Overview", icon: LayoutDashboard, hue: "gray" }] },
     {
       label: "Payroll",
       items: [
-        { href: "/employees", label: "Employees", icon: Users },
-        { href: "/payroll", label: "Payroll", icon: Banknote },
+        { href: "/employees", label: "Employees", icon: Users, hue: "blue" },
+        { href: "/payroll", label: "Payroll", icon: Banknote, hue: "green" },
       ],
     },
     {
       label: "Reports",
       items: [
-        { href: "/contributions", label: "SSF, CIT & TDS", icon: Landmark },
-        { href: "/fx", label: "Exchange rates", icon: ArrowLeftRight },
+        { href: "/contributions", label: "SSF, CIT & TDS", icon: Landmark, hue: "purple" },
+        { href: "/fx", label: "Exchange rates", icon: ArrowLeftRight, hue: "orange" },
       ],
     },
     {
       label: "Admin",
       items: [
         ...(role === "admin"
-          ? [{ href: "/team", label: "Logins", icon: KeyRound }, { href: "/settings", label: "Company", icon: Building2 }]
+          ? [{ href: "/team", label: "Logins", icon: KeyRound, hue: "pink" }, { href: "/settings", label: "Company", icon: Building2, hue: "brown" }]
           : []),
-        { href: "/audit", label: "Activity", icon: History },
+        { href: "/audit", label: "Activity", icon: History, hue: "yellow" },
       ],
     },
   ];
@@ -263,7 +263,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
                   const active = n.href === "" ? pathname === base : pathname.startsWith(href);
                   const Icon = n.icon;
                   return (
-                    <Link key={n.href} href={href} className={styles.navItem} aria-current={active ? "page" : undefined}>
+                    <Link key={n.href} href={href} className={`${styles.navItem} hue-${n.hue}`} aria-current={active ? "page" : undefined}>
                       <Icon size={16} aria-hidden="true" />
                       <span>{n.label}</span>
                     </Link>

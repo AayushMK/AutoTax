@@ -8,6 +8,7 @@ import { ErrorNotice, Field, Loading } from "@/components/bits";
 import { useCompany } from "@/components/shell";
 import { api } from "@/lib/api";
 import { date } from "@/lib/format";
+import { hueFor, initials } from "@/lib/hue";
 import type { Employee } from "@/lib/types";
 import { useData } from "@/lib/use-data";
 
@@ -18,6 +19,7 @@ export default function Employees() {
   const [adding, setAdding] = useState(false);
   const [saveError, setSaveError] = useState<unknown>(null);
   const [query, setQuery] = useState("");
+  const [view, setView] = useState<"cards" | "table">("cards");
 
   async function add(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -75,16 +77,42 @@ export default function Employees() {
         )}
         {data && data.length > 0 && (
           <>
-            {data.length > 8 && (
+            <div className="spread" style={{ marginBottom: 16, alignItems: "center" }}>
               <input
                 type="search"
                 placeholder="Find by name or code"
                 aria-label="Find employee"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                style={{ marginBottom: "0.75rem", width: "min(100%, 22rem)" }}
+                style={{ width: "min(100%, 22rem)" }}
               />
-            )}
+              <div className="seg" role="tablist" aria-label="Show as">
+                <button type="button" role="tab" aria-selected={view === "cards"} onClick={() => setView("cards")}>Cards</button>
+                <button type="button" role="tab" aria-selected={view === "table"} onClick={() => setView("table")}>Table</button>
+              </div>
+            </div>
+            {view === "cards" ? (
+              <div className="cardgrid">
+                {shown!.map((e) => (
+                  <Link key={e.id} href={`/c/${companyId}/employees/${e.id}`} className={`person hue-${hueFor(e.id)}`}>
+                    <span className="person__head">
+                      <span className="avatar-hue" aria-hidden="true">{initials(e.name)}</span>
+                      <span style={{ minWidth: 0 }}>
+                        <span className="person__name" style={{ display: "block" }}>{e.name}</span>
+                        <span className="person__sub figure">{e.code}{e.pan ? `, PAN ${e.pan}` : ""}</span>
+                      </span>
+                    </span>
+                    <span className="tags">
+                      {e.left_on ? (
+                        <span className="tag">Left {date(e.left_on)}</span>
+                      ) : (
+                        <span className="tag hue">Since {date(e.joined_on)}</span>
+                      )}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            ) : (
             <div className="table-scroll">
               <table className="ledger">
                 <thead>
@@ -103,6 +131,7 @@ export default function Employees() {
                 </tbody>
               </table>
             </div>
+            )}
           </>
         )}
       </section>

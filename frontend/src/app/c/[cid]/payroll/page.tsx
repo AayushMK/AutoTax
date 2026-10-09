@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { ErrorNotice, Field, Loading } from "@/components/bits";
+import { MonthGrid } from "@/components/month-grid";
 import { RunTable } from "@/components/run-table";
 import { useCompany } from "@/components/shell";
 import { api } from "@/lib/api";
@@ -27,6 +28,8 @@ export default function Payroll() {
         </div>
       </header>
 
+      <YearGrid companyId={companyId} runs={data} canStart={canEdit} />
+
       {canEdit && company.data && <StartRun company={company.data} />}
 
       <section className="sheet">
@@ -37,6 +40,25 @@ export default function Payroll() {
         {data && data.length > 0 && <RunTable runs={data} base={`/c/${companyId}`} />}
       </section>
     </div>
+  );
+}
+
+function YearGrid({ companyId, runs, canStart }: { companyId: number; runs: Run[] | null; canStart: boolean }) {
+  const rules = useData<RulesStatus>("/rules/status");
+  const years = [...new Set([...(runs ?? []).map((r) => r.fiscal_year), ...(rules.data?.all ?? []).map((r) => r.fiscal_year)])].sort().reverse();
+  const [picked, setPicked] = useState<string | null>(null);
+  const fy = picked ?? runs?.[0]?.fiscal_year ?? rules.data?.current?.fiscal_year ?? null;
+  if (!fy) return null;
+  return (
+    <section className="sheet">
+      <div className="spread" style={{ marginBottom: 16 }}>
+        <h2>FY {fy}</h2>
+        <select aria-label="Fiscal year" value={fy} onChange={(e) => setPicked(e.target.value)}>
+          {years.map((y) => <option key={y} value={y}>FY {y}</option>)}
+        </select>
+      </div>
+      <MonthGrid companyId={companyId} fiscalYear={fy} canStart={canStart} />
+    </section>
   );
 }
 

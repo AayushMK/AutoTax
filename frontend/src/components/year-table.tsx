@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 
+import { money } from "@/lib/format";
 import type { AnnualStatement } from "@/lib/types";
 
 import { Num } from "./bits";
@@ -78,5 +79,38 @@ export function YearFigures({ st }: { st: AnnualStatement }) {
         <div><dt>Tax saved by CIT this year</dt><dd><Num v={st.cit_tax_saving} /></dd></div>
       )}
     </dl>
+  );
+}
+
+/** The year as month tiles: net pay and tax per month, coloured by status. */
+export function YearMonths({ st, payslipHref }: { st: AnnualStatement; payslipHref: (payslipId: number, runId: number) => string }) {
+  return (
+    <div className="monthgrid">
+      {st.months.map((m) => {
+        if (!m.payslip_id) {
+          return (
+            <div key={m.month} className="month month--empty">
+              <span className="month__name">{m.month_label}</span>
+              <span className="month__status">Not paid yet</span>
+            </div>
+          );
+        }
+        const kind = m.status === "draft" ? "draft" : m.source === "imported" ? "imported" : "done";
+        return (
+          <Link key={m.month} href={payslipHref(m.payslip_id, m.run_id!)} className={`month month--${kind}`}>
+            <span className="month__name">{m.month_label}</span>
+            <span className="month__status">
+              {kind === "draft" ? "Draft" : kind === "imported" ? "Imported" : "Paid"}
+              {m.share && ` (${m.share} of the month)`}
+            </span>
+            <span className="month__fig">
+              Net <strong>{money(m.net_pay)}</strong>
+              <br />
+              TDS {money(m.tds)}, SSF {money(m.ssf_employee)}
+            </span>
+          </Link>
+        );
+      })}
+    </div>
   );
 }

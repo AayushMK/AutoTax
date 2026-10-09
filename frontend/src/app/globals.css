@@ -258,3 +258,154 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ==========================================================================
+   Colour + grids, after notion.com: soft tinted tiles, coloured icon chips,
+   bento layouts. Each hue has a foreground (text/icon) and a background tint.
+   ========================================================================== */
+:root {
+  --n-gray-fg: #787774;   --n-gray-bg: #F1F1EF;
+  --n-brown-fg: #9F6B53;  --n-brown-bg: #F4EEEE;
+  --n-orange-fg: #D9730D; --n-orange-bg: #FBECDD;
+  --n-yellow-fg: #B7791F; --n-yellow-bg: #FBF3DB;
+  --n-green-fg: #448361;  --n-green-bg: #EDF3EC;
+  --n-blue-fg: #337EA9;   --n-blue-bg: #E7F3F8;
+  --n-purple-fg: #9065B0; --n-purple-bg: #F6F3F9;
+  --n-pink-fg: #C14C8A;   --n-pink-bg: #FAF1F5;
+  --n-red-fg: #D44C47;    --n-red-bg: #FDEBEC;
+  --warm: #F6F5F4;        /* Notion's warm off-white for section tiles */
+}
+:root[data-theme="dark"] {
+  --n-gray-fg: #9B9B9B;   --n-gray-bg: #2F2F2F;
+  --n-brown-fg: #BA856F;  --n-brown-bg: #4A3228;
+  --n-orange-fg: #E7894A; --n-orange-bg: #5C3B23;
+  --n-yellow-fg: #D9B95C; --n-yellow-bg: #564328;
+  --n-green-fg: #6CB28F;  --n-green-bg: #243D30;
+  --n-blue-fg: #5E9FD0;   --n-blue-bg: #143A4E;
+  --n-purple-fg: #A984D1; --n-purple-bg: #3C2D49;
+  --n-pink-fg: #D96FA6;   --n-pink-bg: #4E2C3C;
+  --n-red-fg: #E6766F;    --n-red-bg: #522E2A;
+  --warm: #252527;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --n-gray-fg: #9B9B9B;   --n-gray-bg: #2F2F2F;
+    --n-brown-fg: #BA856F;  --n-brown-bg: #4A3228;
+    --n-orange-fg: #E7894A; --n-orange-bg: #5C3B23;
+    --n-yellow-fg: #D9B95C; --n-yellow-bg: #564328;
+    --n-green-fg: #6CB28F;  --n-green-bg: #243D30;
+    --n-blue-fg: #5E9FD0;   --n-blue-bg: #143A4E;
+    --n-purple-fg: #A984D1; --n-purple-bg: #3C2D49;
+    --n-pink-fg: #D96FA6;   --n-pink-bg: #4E2C3C;
+    --n-red-fg: #E6766F;    --n-red-bg: #522E2A;
+    --warm: #252527;
+  }
+}
+
+/* Hue classes set --fg/--tint for any coloured component below. */
+.hue-gray   { --fg: var(--n-gray-fg);   --tint: var(--n-gray-bg); }
+.hue-brown  { --fg: var(--n-brown-fg);  --tint: var(--n-brown-bg); }
+.hue-orange { --fg: var(--n-orange-fg); --tint: var(--n-orange-bg); }
+.hue-yellow { --fg: var(--n-yellow-fg); --tint: var(--n-yellow-bg); }
+.hue-green  { --fg: var(--n-green-fg);  --tint: var(--n-green-bg); }
+.hue-blue   { --fg: var(--n-blue-fg);   --tint: var(--n-blue-bg); }
+.hue-purple { --fg: var(--n-purple-fg); --tint: var(--n-purple-bg); }
+.hue-pink   { --fg: var(--n-pink-fg);   --tint: var(--n-pink-bg); }
+.hue-red    { --fg: var(--n-red-fg);    --tint: var(--n-red-bg); }
+
+/* Stat tiles pick up a colour each, in order. */
+.figures > div { --fg: var(--n-blue-fg); --tint: var(--n-blue-bg); background: var(--tint); border-color: transparent; }
+.figures > div:nth-child(5n+2) { --fg: var(--n-green-fg); --tint: var(--n-green-bg); }
+.figures > div:nth-child(5n+3) { --fg: var(--n-orange-fg); --tint: var(--n-orange-bg); }
+.figures > div:nth-child(5n+4) { --fg: var(--n-purple-fg); --tint: var(--n-purple-bg); }
+.figures > div:nth-child(5n+5) { --fg: var(--n-pink-fg); --tint: var(--n-pink-bg); }
+.figures dt { color: var(--fg); }
+.figures dd { color: var(--text); }
+
+/* Icon chip: a small rounded square in the tile's colour */
+.chip-icon {
+  width: 32px; height: 32px; flex: none; border-radius: 8px;
+  display: grid; place-items: center; color: var(--fg, var(--text-subtle)); background: var(--tint, var(--bg-hover));
+}
+.chip-icon svg { width: 18px; height: 18px; }
+
+/* ---- Bento grid --------------------------------------------------------- */
+.bento { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
+.bento > * { min-width: 0; }
+.span-3 { grid-column: span 3; } .span-4 { grid-column: span 4; } .span-5 { grid-column: span 5; }
+.span-6 { grid-column: span 6; } .span-7 { grid-column: span 7; } .span-8 { grid-column: span 8; }
+.span-12 { grid-column: span 12; }
+
+.tile {
+  position: relative; display: flex; flex-direction: column; gap: 10px;
+  padding: 20px; border-radius: 12px; min-width: 0;
+  background: var(--tint, var(--warm)); color: var(--text);
+}
+a.tile { text-decoration: none; transition: transform .15s var(--ease), box-shadow .15s; }
+a.tile:hover { text-decoration: none; transform: translateY(-2px); box-shadow: var(--overlay); }
+.tile--plain { background: var(--bg); border: 1px solid var(--border); }
+.tile__label { font-size: 12px; line-height: 16px; font-weight: 650; color: var(--fg, var(--text-subtle)); }
+.tile__value { font-size: 24px; line-height: 28px; font-weight: 700; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.tile__title { font-size: 20px; line-height: 24px; font-weight: 700; letter-spacing: -0.01em; }
+.tile__meta { color: var(--text-subtle); font-size: 13px; line-height: 18px; }
+.tile__foot { margin-top: auto; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.arrow { font-weight: 650; color: var(--fg, var(--link)); }
+
+/* Bold accent tile (like Notion's saturated cards) */
+.tile--accent { background: var(--primary); color: var(--on-primary); }
+.tile--accent .tile__label, .tile--accent .tile__meta, .tile--accent .arrow { color: var(--on-primary); opacity: .9; }
+
+/* Quick-link cards: a row of equal tiles with an arrow */
+.linkgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); gap: 12px; }
+.linkcard {
+  display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 12px;
+  border: 1px solid var(--border); background: var(--bg); color: var(--text); text-decoration: none;
+  transition: border-color .15s, background-color .15s;
+}
+.linkcard:hover { text-decoration: none; background: var(--tint, var(--bg-hover)); border-color: transparent; }
+.linkcard strong { font-weight: 650; }
+.linkcard span { color: var(--text-subtle); font-size: 13px; line-height: 18px; }
+
+/* ---- Month grid (a fiscal year as tiles) -------------------------------- */
+.monthgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(168px, 100%), 1fr)); gap: 12px; }
+.month {
+  --fg: var(--n-gray-fg); --tint: var(--warm);
+  display: flex; flex-direction: column; gap: 6px; padding: 14px 16px; border-radius: 12px; min-height: 108px;
+  background: var(--tint); color: var(--text); text-decoration: none; border: 1px solid transparent;
+}
+a.month:hover { text-decoration: none; border-color: var(--fg); }
+.month--done { --fg: var(--n-green-fg); --tint: var(--n-green-bg); }
+.month--draft { --fg: var(--n-orange-fg); --tint: var(--n-orange-bg); }
+.month--imported { --fg: var(--n-purple-fg); --tint: var(--n-purple-bg); }
+.month--empty { background: transparent; border: 1px dashed var(--border-bold); }
+.month__name { font-weight: 650; }
+.month__status { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 650; color: var(--fg); }
+.month__status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.month__fig { margin-top: auto; font-size: 13px; color: var(--text-subtle); font-variant-numeric: tabular-nums; }
+.month__fig strong { color: var(--text); font-weight: 650; }
+
+/* ---- People cards ------------------------------------------------------- */
+.cardgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr)); gap: 12px; }
+.person {
+  display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 12px;
+  border: 1px solid var(--border); background: var(--bg); color: var(--text); text-decoration: none;
+}
+a.person:hover { text-decoration: none; border-color: var(--fg, var(--border-bold)); background: var(--tint, var(--bg-sunken)); }
+.person__head { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.person__name { font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.person__sub { font-size: 12px; color: var(--text-subtlest); }
+.avatar-hue {
+  width: 36px; height: 36px; flex: none; border-radius: 50%;
+  display: grid; place-items: center; font-size: 13px; font-weight: 700;
+  background: var(--tint); color: var(--fg);
+}
+.tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.tag.hue { color: var(--fg); background: var(--tint); }
+
+@media (max-width: 860px) {
+  .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .span-3, .span-4 { grid-column: span 1; }
+  .span-5, .span-6, .span-7, .span-8, .span-12 { grid-column: span 2; }
+  .tile { padding: 16px; }
+  .tile__value { font-size: 18px; line-height: 24px; }
+}
