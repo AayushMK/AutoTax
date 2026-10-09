@@ -5,6 +5,17 @@
   position: relative; min-height: 100vh; min-height: 100dvh; overflow: hidden;
   display: flex; flex-direction: column; background: var(--bg);
 }
+/* Graph paper across the page, cleared behind the form */
+.wrap::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: center center;
+  -webkit-mask-image: radial-gradient(ellipse 34% 48% at 50% 48%, transparent 45%, #000 100%);
+  mask-image: radial-gradient(ellipse 34% 48% at 50% 48%, transparent 45%, #000 100%);
+}
 
 .topbar { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; }
 .brand { display: flex; align-items: center; gap: 8px; color: var(--text); text-decoration: none; }

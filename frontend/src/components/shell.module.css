@@ -101,7 +101,17 @@
 .scrim { display: none; }
 
 /* ---- Main ---- */
-.main { grid-area: main; min-width: 0; padding: 20px 32px 48px; }
+.main { grid-area: main; min-width: 0; padding: 20px 32px 48px; position: relative; isolation: isolate; }
+/* Faint graph paper behind the page title, fading out downward */
+.main::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 240px; z-index: -1; pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
+  mask-image: linear-gradient(to bottom, #000, transparent);
+}
 .inner { width: 100%; max-width: var(--content-max); margin: 0 auto; }
 
 @media (max-width: 860px) {

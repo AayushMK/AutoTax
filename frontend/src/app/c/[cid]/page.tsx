@@ -40,7 +40,11 @@ export default function Overview() {
 
       <ErrorNotice error={runs.error ?? rules.error} />
 
-      <section className="bento" aria-label="At a glance">
+      <section className="bento gridframe" aria-label="At a glance">
+        <span className="corner corner--tl" aria-hidden="true" />
+        <span className="corner corner--tr" aria-hidden="true" />
+        <span className="corner corner--bl" aria-hidden="true" />
+        <span className="corner corner--br" aria-hidden="true" />
         {draft ? (
           <Link href={`${base}/payroll/${draft.id}`} className="tile tile--accent span-7">
             <span className="tile__label">Payroll in progress</span>
