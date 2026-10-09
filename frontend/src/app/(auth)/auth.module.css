@@ -1,66 +1,87 @@
-/* Sign-in pages, after PharmaSFO: form on the left, a calm teal panel on the right. */
+/* Sign-in pages, Notion style: a centred column, a big bold headline with a
+   coloured pill, plain inputs, one blue button, and playful tilted tiles around. */
+
 .wrap {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  min-height: 100vh; min-height: 100dvh; background: var(--bg);
+  position: relative; min-height: 100vh; min-height: 100dvh; overflow: hidden;
+  display: flex; flex-direction: column; background: var(--bg);
 }
 
-/* ---- Form side ---- */
-.formSide { display: flex; flex-direction: column; padding: 24px 32px; }
-.brand { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; }
+.topbar { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; }
+.brand { display: flex; align-items: center; gap: 8px; color: var(--text); text-decoration: none; }
 .brand:hover { text-decoration: none; }
 .brandMark {
-  width: 32px; height: 32px; border-radius: var(--radius-md); display: grid; place-items: center;
-  background: var(--primary); color: var(--on-primary); font-size: 16px; font-weight: 700;
+  width: 28px; height: 28px; border-radius: 7px; display: grid; place-items: center;
+  background: var(--text); color: var(--bg); font-size: 15px; font-weight: 800;
 }
-.brandName { font-size: 16px; font-weight: 650; }
+.brandName { font-size: 16px; font-weight: 700; }
 .brandSub { font-size: 13px; color: var(--text-subtlest); }
-.formWrap { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 0; }
-.form { width: 100%; max-width: 380px; display: grid; gap: 16px; }
-.form h1 { font-size: 28px; line-height: 32px; }
-.eyebrow { font-size: 12px; font-weight: 650; letter-spacing: .02em; color: var(--text-selected); margin: 0 0 -8px; }
-.sub { color: var(--text-subtle); margin: -6px 0 8px; }
-.form input { height: 40px; }
-.form :global(.btn) { height: 40px; width: 100%; }
-.switch { margin-top: 8px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-subtle); }
-.foot { font-size: 12px; color: var(--text-subtlest); }
+.topLink { font-size: 14px; font-weight: 550; color: var(--text); }
 
-/* ---- Showcase panel ---- */
-.intro {
-  position: relative; overflow: hidden;
-  background: var(--banner-bg); border-left: 1px solid var(--border);
-  display: flex; flex-direction: column; justify-content: center; gap: 28px;
-  padding: 56px clamp(32px, 6vw, 88px);
-}
-.intro::before, .intro::after {
-  content: ""; position: absolute; border-radius: 50%; background: var(--ill-1); pointer-events: none;
-}
-.intro::before { width: 420px; height: 420px; right: -160px; top: -170px; opacity: .7; }
-.intro::after { width: 220px; height: 220px; left: -90px; bottom: -110px; opacity: .55; }
-.intro > * { position: relative; }
+.center { position: relative; z-index: 2; flex: 1; display: grid; place-items: center; padding: 24px 16px 56px; }
+.form { width: 100%; max-width: 340px; display: grid; gap: 14px; }
 
-.pitch { font-size: 22px; line-height: 28px; font-weight: 650; max-width: 26ch; }
-.points { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; max-width: 440px; }
-.points li { display: flex; gap: 12px; align-items: flex-start; color: var(--text-subtle); }
-.points strong { display: block; color: var(--text); font-weight: 650; }
-.ptIcon {
-  width: 32px; height: 32px; flex: none; border-radius: var(--radius-md);
-  display: grid; place-items: center; background: var(--bg); color: var(--text-selected);
-  border: 1px solid var(--border-selected);
+.headline {
+  margin: 0 0 4px; font-size: 40px; line-height: 44px; font-weight: 800; letter-spacing: -0.03em; text-align: center;
+}
+.pill {
+  display: inline-flex; align-items: center; gap: 10px; padding: 0 16px 4px 14px; border-radius: 999px;
+  background: var(--n-blue-bg); color: var(--text); white-space: nowrap;
+}
+.pill::before { content: ""; width: 12px; height: 12px; margin-top: 4px; border-radius: 50%; background: #2383E2; }
+.sub { margin: 0 0 12px; text-align: center; font-size: 16px; color: var(--text-subtle); }
+
+.form label > span { font-size: 12px; font-weight: 600; color: var(--text-subtle); }
+.form input {
+  height: 40px; border-radius: 6px; border-color: var(--border-bold); background: var(--bg);
+  box-shadow: 0 1px 2px rgba(15, 15, 15, .04);
+}
+.form input:focus { border-color: #2383E2; box-shadow: 0 0 0 3px rgba(35, 131, 226, .18); }
+.form select { height: 40px; border-radius: 6px; border-color: var(--border-bold); }
+.form :global(.btn) {
+  height: 40px; width: 100%; border-radius: 6px; font-weight: 600;
+  background: #2383E2; color: #fff; border-color: transparent;
+}
+.form :global(.btn:hover) { background: #0F6BC7; color: #fff; }
+.form :global(.btn:disabled) { background: var(--bg-hover); color: var(--text-subtlest); }
+.switch { margin: 6px 0 0; text-align: center; font-size: 14px; color: var(--text-subtle); }
+.fine { margin: 10px auto 0; max-width: 300px; text-align: center; font-size: 12px; line-height: 16px; color: var(--text-subtlest); }
+
+/* ---- Floating tiles (decorative) ---- */
+.float {
+  position: absolute; z-index: 1; display: grid; gap: 4px; padding: 12px 14px; border-radius: 12px;
+  background: var(--tint); color: var(--text); min-width: 150px;
+  box-shadow: 0 1px 2px rgba(15, 15, 15, .06), 0 8px 24px -12px rgba(15, 15, 15, .18);
+  transform: rotate(var(--r, 0deg));
+  animation: drift 7s ease-in-out infinite alternate;
+}
+.float b { font-size: 18px; line-height: 22px; font-weight: 750; font-variant-numeric: tabular-nums; }
+.float small { font-size: 12px; line-height: 16px; font-weight: 600; color: var(--fg); }
+.float i { font-style: normal; font-size: 12px; color: var(--text-subtle); }
+.dot { display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 50%; background: var(--fg); }
+
+.f1 { --r: -6deg; top: 16%; left: 7%; }
+.f2 { --r: 5deg; top: 54%; left: 4%; animation-delay: -2s; }
+.f3 { --r: -3deg; bottom: 9%; left: 15%; animation-delay: -4s; }
+.f4 { --r: 6deg; top: 13%; right: 8%; animation-delay: -1s; }
+.f5 { --r: -5deg; top: 47%; right: 5%; animation-delay: -3s; }
+.f6 { position: absolute; z-index: 1; bottom: 10%; right: 13%; transform: rotate(4deg); }
+
+@keyframes drift {
+  from { translate: 0 0; }
+  to { translate: 0 -8px; }
 }
 
-/* A worked payslip, the way the app shows every number. */
-.sum {
-  max-width: 420px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg);
-  padding: 12px 16px; font-variant-numeric: tabular-nums;
+@media (max-width: 1080px) {
+  .f2, .f5 { display: none; }
 }
-.sum div { display: flex; justify-content: space-between; gap: 16px; padding: 6px 0; border-bottom: 1px solid var(--border); }
-.sum div span:last-child { font-weight: 550; }
-.sum .total { border-bottom: 0; border-top: 1px solid var(--border-bold); font-weight: 650; }
-.sum .total span { font-weight: 650; }
-.sum cite { display: block; font-style: normal; font-size: 12px; color: var(--text-subtlest); padding-top: 6px; }
-
 @media (max-width: 860px) {
-  .wrap { grid-template-columns: 1fr; }
-  .intro { display: none; }
-  .formSide { padding: 16px; }
+  .float, .f6 { display: none; }
+  .headline { font-size: 32px; line-height: 36px; }
+  .topbar { padding: 12px 16px; }
 }
+@media (prefers-reduced-motion: reduce) {
+  .float { animation: none; }
+}
+
+.switch a, .fine a { color: #2383E2; font-weight: 550; }
+:global([data-theme="dark"]) .switch a { color: #529CCA; }

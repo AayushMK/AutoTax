@@ -9,7 +9,7 @@ import { api, setToken } from "@/lib/api";
 import type { Me } from "@/lib/types";
 
 import styles from "../auth.module.css";
-import { Brand, Intro } from "../intro";
+import { AuthFrame, Headline } from "../intro";
 
 export default function Signup() {
   const router = useRouter();
@@ -36,14 +36,9 @@ export default function Signup() {
   }
 
   return (
-    <div className={styles.wrap}>
-      <div className={styles.formSide}>
-        <Brand />
-        <div className={styles.formWrap}>
+    <AuthFrame topLink={{ href: "/login", label: "Sign in" }}>
         <form className={styles.form} onSubmit={submit}>
-          <p className={styles.eyebrow}>New company</p>
-          <h1>Set up your company</h1>
-          <p className={styles.sub}>You’ll be its HR admin and can invite your team.</p>
+          <Headline before="Payroll," pill="sorted." after="" sub="Set up your company. You’ll be its HR admin." />
           <ErrorNotice error={error} />
           <Field label="Company name"><input name="company_name" required /></Field>
           <Field label="Company PAN" hint="Optional. Printed on TDS sheets."><input name="company_pan" inputMode="numeric" /></Field>
@@ -61,9 +56,6 @@ export default function Signup() {
           <button className="btn" disabled={busy}>{busy ? "Creating…" : "Create company"}</button>
           <p className={styles.switch}>Already have an account? <Link href="/login">Sign in</Link></p>
         </form>
-        </div>
-      </div>
-      <Intro />
-    </div>
+    </AuthFrame>
   );
 }

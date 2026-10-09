@@ -10,7 +10,7 @@ import { homeFor } from "@/lib/home";
 import type { Me } from "@/lib/types";
 
 import styles from "../auth.module.css";
-import { Brand, Intro } from "../intro";
+import { AuthFrame, Headline } from "../intro";
 
 export default function Login() {
   const router = useRouter();
@@ -34,23 +34,16 @@ export default function Login() {
   }
 
   return (
-    <div className={styles.wrap}>
-      <div className={styles.formSide}>
-        <Brand />
-        <div className={styles.formWrap}>
-        <form className={styles.form} onSubmit={submit}>
-          <p className={styles.eyebrow}>Payroll and salary TDS</p>
-          <h1>Sign in</h1>
-          <p className={styles.sub}>Use the email your company’s HR set up for you.</p>
-          <ErrorNotice error={error} />
-          <Field label="Email"><input name="email" type="email" autoComplete="email" required /></Field>
-          <Field label="Password"><input name="password" type="password" autoComplete="current-password" required /></Field>
-          <button className="btn" disabled={busy}>{busy ? "Signing in…" : "Sign in"}</button>
-          <p className={styles.switch}>New company? <Link href="/signup">Set up your company</Link></p>
-        </form>
-        </div>
-      </div>
-      <Intro />
-    </div>
+    <AuthFrame topLink={{ href: "/signup", label: "Set up a company" }}>
+      <form className={styles.form} onSubmit={submit}>
+        <Headline before="Salary tax," pill="worked out." after="" sub="Sign in to your AutoTax account" />
+        <ErrorNotice error={error} />
+        <Field label="Email"><input name="email" type="email" autoComplete="email" placeholder="you@company.com" required /></Field>
+        <Field label="Password"><input name="password" type="password" autoComplete="current-password" required /></Field>
+        <button className="btn" disabled={busy}>{busy ? "Signing in…" : "Continue"}</button>
+        <p className={styles.switch}>New here? <Link href="/signup">Set up your company</Link></p>
+        <p className={styles.fine}>Employees: use the invite link HR sent you to set your password the first time.</p>
+      </form>
+    </AuthFrame>
   );
 }
