@@ -19,6 +19,16 @@ export function setToken(token: string | null) {
   }
 }
 
+/**
+ * Sign out with a full page load. Next keeps pages you've visited alive in memory, so a
+ * client-side navigation would bring back the old login form (still "Signing in…", with the
+ * password filled in) and the previous user's data. A reload drops all of it.
+ */
+export function signOut() {
+  setToken(null);
+  window.location.replace("/login");
+}
+
 export class ApiError extends Error {
   status: number;
   problems: string[];

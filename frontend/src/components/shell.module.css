@@ -25,6 +25,7 @@
 .ibtn:hover { background: var(--bg-hover); color: var(--text); }
 .ibtn[aria-expanded="true"] { background: var(--bg-selected); color: var(--text-selected); }
 .menuBtn { display: none; }
+.railBtn { display: inline-flex; }
 
 .brand {
   display: flex; align-items: center; gap: 8px; min-width: 0;
@@ -100,6 +101,26 @@
 }
 .scrim { display: none; }
 
+/* ---- Collapsed: an icon rail (desktop) ---- */
+.app { transition: grid-template-columns .2s var(--ease); }
+.sidebar { transition: width .2s var(--ease); }
+@media (min-width: 861px) {
+  .collapsed { grid-template-columns: 57px minmax(0, 1fr); }
+  .collapsed .sidebar { width: 57px; overflow: visible; }
+  .collapsed .nav { padding-left: 12px; padding-right: 12px; }
+  .collapsed .navLabel { height: 1px; margin: 8px 0; padding: 0; font-size: 0; background: var(--border); overflow: hidden; }
+  .collapsed .nav > div:first-child .navLabel { display: none; }
+  .collapsed .navItem { width: 32px; padding: 0; justify-content: center; }
+  .collapsed .navItem span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .collapsed .navItem[aria-current="page"]::before { left: -12px; }
+  /* Name on hover, since the label is hidden */
+  .collapsed .navItem:hover::after, .collapsed .navItem:focus-visible::after {
+    content: attr(data-tip); position: absolute; left: calc(100% + 10px); top: 6px; z-index: 60;
+    white-space: nowrap; padding: 2px 8px; border-radius: 3px;
+    background: var(--text); color: var(--bg); font-size: 12px; line-height: 16px; font-weight: 400;
+  }
+}
+
 /* ---- Main ---- */
 .main { grid-area: main; min-width: 0; padding: 20px 32px 48px; position: relative; isolation: isolate; }
 /* Faint graph paper behind the page title, fading out downward */
@@ -127,6 +148,7 @@
   .app { grid-template-columns: minmax(0, 1fr); grid-template-areas: "top" "main"; }
   .topbar { padding: 0 8px; }
   .menuBtn { display: inline-flex; min-width: 40px; height: 40px; }
+  .railBtn { display: none; }
   .brandSub, .userName, .companyName { display: none; }
   .company { max-width: 40vw; }
   .sidebar {

@@ -19,6 +19,7 @@ export default function Login() {
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
     const f = new FormData(e.currentTarget);
     setBusy(true);
     setError(null);
@@ -27,6 +28,8 @@ export default function Login() {
       setToken(token);
       const me = await api<Me>("/auth/me");
       router.replace(homeFor(me));
+      form.reset(); // don't leave the password in a page Next may keep in memory
+      setBusy(false);
     } catch (err) {
       setError(err);
       setBusy(false);

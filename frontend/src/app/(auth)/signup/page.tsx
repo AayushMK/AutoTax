@@ -18,6 +18,7 @@ export default function Signup() {
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
     const f = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
     setBusy(true);
     setError(null);
@@ -29,6 +30,8 @@ export default function Signup() {
       setToken(token);
       const me = await api<Me>("/auth/me");
       router.replace(`/c/${me.memberships[0].company_id}`);
+      form.reset(); // don't leave the password in a page Next may keep in memory
+      setBusy(false);
     } catch (err) {
       setError(err);
       setBusy(false);

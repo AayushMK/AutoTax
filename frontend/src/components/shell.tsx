@@ -12,6 +12,7 @@ import {
   Menu,
   Monitor,
   Moon,
+  PanelLeft,
   Sun,
   Users,
   Wallet,
@@ -21,7 +22,7 @@ import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
-import { getToken, setToken } from "@/lib/api";
+import { getToken, signOut } from "@/lib/api";
 import { ROLE_LABEL } from "@/lib/format";
 import type { Me, Role } from "@/lib/types";
 import { useData } from "@/lib/use-data";
@@ -114,6 +115,38 @@ function useTheme(): [Theme, (t: Theme) => void] {
   return [theme, setTheme];
 }
 
+/** Sidebar collapsed to an icon rail, remembered on this device. Ctrl/⌘ + [ toggles it. */
+function useCollapsed(): [boolean, () => void] {
+  const [collapsed, setCollapsed] = useState(false);
+  useEffect(() => {
+    try {
+      if (localStorage.getItem("autotax-sidebar") === "collapsed") setCollapsed(true); // eslint-disable-line react-hooks/set-state-in-effect
+    } catch {
+      /* storage unavailable */
+    }
+  }, []);
+  const toggle = () =>
+    setCollapsed((c) => {
+      try {
+        localStorage.setItem("autotax-sidebar", c ? "open" : "collapsed");
+      } catch {
+        /* storage unavailable: lasts for this page only */
+      }
+      return !c;
+    });
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "[") {
+        e.preventDefault();
+        toggle();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  });
+  return [collapsed, toggle];
+}
+
 /** Small popover menu that closes on outside click or Escape. */
 function Popover({ label, trigger, children }: {
   label: string;
@@ -155,6 +188,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { data: me, error } = useData<Me>("/auth/me");
   const [theme, setTheme] = useTheme();
+  const [collapsed, toggleCollapsed] = useCollapsed();
   const [drawerAt, setDrawerAt] = useState<string | null>(null);
   const drawer = drawerAt === pathname; // navigating closes the drawer
 
@@ -186,12 +220,17 @@ export function Shell({ children }: { children: React.ReactNode }) {
 
   return (
     <Ctx.Provider value={ctx}>
-      <div className={`${styles.app} ${drawer ? styles.navOpen : ""}`}>
+      <div className={`${styles.app} ${drawer ? styles.navOpen : ""} ${collapsed ? styles.collapsed : ""}`}>
         <header className={styles.topbar}>
           <div className={styles.topLeft}>
             <button type="button" className={`${styles.ibtn} ${styles.menuBtn}`} aria-label="Open menu"
               aria-expanded={drawer} aria-controls="app-sidebar" onClick={() => setDrawerAt(drawer ? null : pathname)}>
               <Menu size={20} />
+            </button>
+            <button type="button" className={`${styles.ibtn} ${styles.railBtn}`} onClick={toggleCollapsed}
+              aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"} aria-expanded={!collapsed} aria-controls="app-sidebar"
+              title={`${collapsed ? "Expand" : "Collapse"} sidebar (Ctrl [)`}>
+              <PanelLeft size={18} />
             </button>
             <Link href={isEmployee ? `${base}/my` : base} className={styles.brand}>
               <span className={styles.brandMark} aria-hidden="true">A</span>
@@ -201,7 +240,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
               </span>
             </Link>
             {me && me.memberships.length > 1 ? (
-              <select className={styles.company} aria-label="Company" value={companyId}
+              <select className={styles.company} aria-label="Company" value={Number.isFinite(companyId) ? companyId : ""}
                 onChange={(e) => {
                   const m = me.memberships.find((x) => x.company_id === Number(e.target.value));
                   router.push(m?.role === "employee" ? `/c/${e.target.value}/my` : `/c/${e.target.value}`);
@@ -244,7 +283,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
                   </div>
                   <hr className={styles.menuSep} />
                   <button type="button" role="menuitem" className={styles.menuItem}
-                    onClick={() => { setToken(null); router.replace("/login"); }}>
+                    onClick={signOut}>
                     <LogOut size={16} />Sign out
                   </button>
                 </>
@@ -263,7 +302,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
                   const active = n.href === "" ? pathname === base : pathname.startsWith(href);
                   const Icon = n.icon;
                   return (
-                    <Link key={n.href} href={href} className={`${styles.navItem} hue-${n.hue}`} aria-current={active ? "page" : undefined}>
+                    <Link key={n.href} href={href} className={`${styles.navItem} hue-${n.hue}`} aria-current={active ? "page" : undefined}
+                      data-tip={n.label}>
                       <Icon size={16} aria-hidden="true" />
                       <span>{n.label}</span>
                     </Link>

@@ -38,6 +38,7 @@ function Join() {
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
     const f = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
     setBusy(true);
     try {
@@ -45,6 +46,8 @@ function Join() {
       setToken(session);
       const { company_id, role } = info.data!;
       router.replace(role === "employee" ? `/c/${company_id}/my` : `/c/${company_id}`);
+      form.reset(); // don't leave the password in a page Next may keep in memory
+      setBusy(false);
     } catch (err) {
       setError(err);
       setBusy(false);
