@@ -112,6 +112,15 @@
   -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
   mask-image: linear-gradient(to bottom, #000, transparent);
 }
+/* Below the grid band the page continues as dots, fading in where the squares fade out */
+.main::after {
+  content: ""; position: absolute; inset: 120px 0 0 0; z-index: -1; pointer-events: none;
+  background-image: radial-gradient(var(--grid-dot) 1px, transparent 1.3px);
+  background-size: var(--grid-size) var(--grid-size);
+  background-position: -12px -12px; /* half a cell: dots sit on the grid lines' intersections */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 160px);
+  mask-image: linear-gradient(to bottom, transparent, #000 160px);
+}
 .inner { width: 100%; max-width: var(--content-max); margin: 0 auto; }
 
 @media (max-width: 860px) {

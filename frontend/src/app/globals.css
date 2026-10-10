@@ -1,6 +1,6 @@
 /* ==========================================================================
    AutoTax: same calm, "Jira-calm" design language as PharmaSFO
-   (teal primary, white ground, 1px hairlines, no resting shadows, Public Sans,
+   (blue primary, white ground, 1px hairlines, no resting shadows, Public Sans,
    weights 400 / 550 / 650). Light by default; dark with data-theme="dark" or
    when the device prefers dark and the user hasn't forced light.
    The tax-rules seal (components/stamp) keeps its own ink colours on purpose.
@@ -8,19 +8,19 @@
 
 :root {
   --bg: #FFFFFF; --bg-sunken: #F7F8F9; --bg-hover: #F1F2F4; --bg-pressed: #E4E5E8;
-  --bg-selected: #E7F5F3; --bg-selected-hover: #D5EEEA; --border-selected: #B9E3DD;
-  --text: #292A2E; --text-subtle: #505258; --text-subtlest: #6B6E76; --text-selected: #0F766E; --link: #0F766E;
+  --bg-selected: #E8F1FC; --bg-selected-hover: #D6E6FA; --border-selected: #BBD4F5;
+  --text: #292A2E; --text-subtle: #505258; --text-subtlest: #6B6E76; --text-selected: #1A66CC; --link: #1A66CC;
   --border: #E2E3E6; --border-bold: #C9CBD0; --border-input: #8C8F97;
-  --primary: #0F766E; --primary-hover: #115E59; --primary-pressed: #134E4A; --on-primary: #FFFFFF; --focus: #0F766E;
+  --primary: #1A66CC; --primary-hover: #1557B0; --primary-pressed: #11478F; --on-primary: #FFFFFF; --focus: #1A66CC;
   --overlay: 0 8px 16px -4px rgba(9,30,66,.18), 0 0 1px rgba(9,30,66,.31);
   --scrim: rgba(9,15,30,.45);
-  --banner-bg: #EEF8F6; --warn-bg: #FDF4DF; --warn-border: #F3DDA8;
+  --banner-bg: #EEF5FD; --warn-bg: #FDF4DF; --warn-border: #F3DDA8;
   --lz-neutral-bg: #E9EAED; --lz-neutral-fg: #44464C;
   --lz-success-bg: #E6F4D7; --lz-success-fg: #3B6D11;
   --lz-warning-bg: #FBEDCF; --lz-warning-fg: #764600;
   --lz-danger-bg: #FCE3E0;  --lz-danger-fg: #A3291F;
-  --lz-info-bg: #E7F5F3;    --lz-info-fg: #0F766E;
-  --ill-1: #CCEFEA;
+  --lz-info-bg: #E8F1FC;    --lz-info-fg: #1A66CC;
+  --ill-1: #D3E5FB;
   /* The seal (tax-rules stamp) */
   --seal: #B3261E; --moss: #4E6B4A;
 
@@ -37,38 +37,38 @@
 
 :root[data-theme="dark"] {
   --bg: #1F2023; --bg-sunken: #18191B; --bg-hover: #2A2B2F; --bg-pressed: #35373C;
-  --bg-selected: #12312E; --bg-selected-hover: #173D39; --border-selected: #1F5A53;
-  --text: #D7D8DC; --text-subtle: #B0B2B8; --text-subtlest: #90939B; --text-selected: #5EEAD4; --link: #2CC5B3;
+  --bg-selected: #14294A; --bg-selected-hover: #1A3460; --border-selected: #24497E;
+  --text: #D7D8DC; --text-subtle: #B0B2B8; --text-subtlest: #90939B; --text-selected: #8DB8F2; --link: #6AA5EE;
   --border: #34363B; --border-bold: #4A4D54; --border-input: #73767E;
-  --primary: #2CC5B3; --primary-hover: #5EEAD4; --primary-pressed: #99F6E4; --on-primary: #04201D; --focus: #2CC5B3;
+  --primary: #5B9BEA; --primary-hover: #84B4F0; --primary-pressed: #A9CBF5; --on-primary: #06172E; --focus: #5B9BEA;
   --overlay: 0 8px 16px -4px rgba(0,0,0,.5), 0 0 1px rgba(255,255,255,.18);
   --scrim: rgba(0,0,0,.55);
-  --banner-bg: #10292A; --warn-bg: #2E2511; --warn-border: #57421A;
+  --banner-bg: #0F2238; --warn-bg: #2E2511; --warn-border: #57421A;
   --lz-neutral-bg: #33353A; --lz-neutral-fg: #C6C8CD;
   --lz-success-bg: #22361A; --lz-success-fg: #A8DD7A;
   --lz-warning-bg: #3D2E10; --lz-warning-fg: #F2C46B;
   --lz-danger-bg: #42201D;  --lz-danger-fg: #F8A499;
-  --lz-info-bg: #12312E;    --lz-info-fg: #5EEAD4;
-  --ill-1: #183F3B;
+  --lz-info-bg: #14294A;    --lz-info-fg: #8DB8F2;
+  --ill-1: #183457;
   --seal: #F28B82; --moss: #9CC490;
   color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #1F2023; --bg-sunken: #18191B; --bg-hover: #2A2B2F; --bg-pressed: #35373C;
-    --bg-selected: #12312E; --bg-selected-hover: #173D39; --border-selected: #1F5A53;
-    --text: #D7D8DC; --text-subtle: #B0B2B8; --text-subtlest: #90939B; --text-selected: #5EEAD4; --link: #2CC5B3;
+    --bg-selected: #14294A; --bg-selected-hover: #1A3460; --border-selected: #24497E;
+    --text: #D7D8DC; --text-subtle: #B0B2B8; --text-subtlest: #90939B; --text-selected: #8DB8F2; --link: #6AA5EE;
     --border: #34363B; --border-bold: #4A4D54; --border-input: #73767E;
-    --primary: #2CC5B3; --primary-hover: #5EEAD4; --primary-pressed: #99F6E4; --on-primary: #04201D; --focus: #2CC5B3;
+    --primary: #5B9BEA; --primary-hover: #84B4F0; --primary-pressed: #A9CBF5; --on-primary: #06172E; --focus: #5B9BEA;
     --overlay: 0 8px 16px -4px rgba(0,0,0,.5), 0 0 1px rgba(255,255,255,.18);
     --scrim: rgba(0,0,0,.55);
-    --banner-bg: #10292A; --warn-bg: #2E2511; --warn-border: #57421A;
+    --banner-bg: #0F2238; --warn-bg: #2E2511; --warn-border: #57421A;
     --lz-neutral-bg: #33353A; --lz-neutral-fg: #C6C8CD;
     --lz-success-bg: #22361A; --lz-success-fg: #A8DD7A;
     --lz-warning-bg: #3D2E10; --lz-warning-fg: #F2C46B;
     --lz-danger-bg: #42201D;  --lz-danger-fg: #F8A499;
-    --lz-info-bg: #12312E;    --lz-info-fg: #5EEAD4;
-    --ill-1: #183F3B;
+    --lz-info-bg: #14294A;    --lz-info-fg: #8DB8F2;
+    --ill-1: #183457;
     --seal: #F28B82; --moss: #9CC490;
     color-scheme: dark;
   }
@@ -374,7 +374,7 @@ a.tile:hover { text-decoration: none; transform: translateY(-2px); box-shadow: v
   background: var(--tint); color: var(--text); text-decoration: none; border: 1px solid transparent;
 }
 a.month:hover { text-decoration: none; border-color: var(--fg); }
-.month--done { --fg: var(--n-green-fg); --tint: var(--n-green-bg); }
+.month--done { --fg: var(--n-blue-fg); --tint: var(--n-blue-bg); }
 .month--draft { --fg: var(--n-orange-fg); --tint: var(--n-orange-bg); }
 .month--imported { --fg: var(--n-purple-fg); --tint: var(--n-purple-bg); }
 .month--empty { background: transparent; border: 1px dashed var(--border-bold); }

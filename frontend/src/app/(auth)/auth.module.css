@@ -17,7 +17,7 @@
   mask-image: radial-gradient(ellipse 34% 48% at 50% 48%, transparent 45%, #000 100%);
 }
 
-.topbar { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; }
+.topbar { position: relative; z-index: 60; display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; }
 .brand { display: flex; align-items: center; gap: 8px; color: var(--text); text-decoration: none; }
 .brand:hover { text-decoration: none; }
 .brandMark {
@@ -28,8 +28,8 @@
 .brandSub { font-size: 13px; color: var(--text-subtlest); }
 .topLink { font-size: 14px; font-weight: 550; color: var(--text); }
 
-.center { position: relative; z-index: 2; flex: 1; display: grid; place-items: center; padding: 24px 16px 56px; }
-.form { width: 100%; max-width: 340px; display: grid; gap: 14px; }
+.center { position: relative; z-index: 50; flex: 1; display: grid; place-items: center; padding: 24px 16px 56px; pointer-events: none; }
+.form { width: 100%; max-width: 340px; display: grid; gap: 14px; pointer-events: auto; }
 
 .headline {
   margin: 0 0 4px; font-size: 40px; line-height: 44px; font-weight: 800; letter-spacing: -0.03em; text-align: center;
@@ -38,7 +38,7 @@
   display: inline-flex; align-items: center; gap: 10px; padding: 0 16px 4px 14px; border-radius: 999px;
   background: var(--n-blue-bg); color: var(--text); white-space: nowrap;
 }
-.pill::before { content: ""; width: 12px; height: 12px; margin-top: 4px; border-radius: 50%; background: #2383E2; }
+.pill::before { content: ""; width: 12px; height: 12px; margin-top: 4px; border-radius: 50%; background: var(--primary); }
 .sub { margin: 0 0 12px; text-align: center; font-size: 16px; color: var(--text-subtle); }
 
 .form label > span { font-size: 12px; font-weight: 600; color: var(--text-subtle); }
@@ -46,13 +46,13 @@
   height: 40px; border-radius: 6px; border-color: var(--border-bold); background: var(--bg);
   box-shadow: 0 1px 2px rgba(15, 15, 15, .04);
 }
-.form input:focus { border-color: #2383E2; box-shadow: 0 0 0 3px rgba(35, 131, 226, .18); }
+.form input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent); }
 .form select { height: 40px; border-radius: 6px; border-color: var(--border-bold); }
 .form :global(.btn) {
   height: 40px; width: 100%; border-radius: 6px; font-weight: 600;
-  background: #2383E2; color: #fff; border-color: transparent;
+  background: var(--primary); color: var(--on-primary); border-color: transparent;
 }
-.form :global(.btn:hover) { background: #0F6BC7; color: #fff; }
+.form :global(.btn:hover) { background: var(--primary-hover); color: var(--on-primary); }
 .form :global(.btn:disabled) { background: var(--bg-hover); color: var(--text-subtlest); }
 .switch { margin: 6px 0 0; text-align: center; font-size: 14px; color: var(--text-subtle); }
 .fine { margin: 10px auto 0; max-width: 300px; text-align: center; font-size: 12px; line-height: 16px; color: var(--text-subtlest); }
@@ -62,8 +62,18 @@
   position: absolute; z-index: 1; display: grid; gap: 4px; padding: 12px 14px; border-radius: 12px;
   background: var(--tint); color: var(--text); min-width: 150px;
   box-shadow: 0 1px 2px rgba(15, 15, 15, .06), 0 8px 24px -12px rgba(15, 15, 15, .18);
-  transform: rotate(var(--r, 0deg));
   animation: drift 7s ease-in-out infinite alternate;
+}
+
+/* Drag to move: offset (--dx, --dy) on top of each tile's tilt */
+.draggable {
+  transform: translate(var(--dx, 0px), var(--dy, 0px)) rotate(var(--r, 0deg));
+  cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none;
+  transition: box-shadow .15s, scale .15s;
+}
+.dragging {
+  cursor: grabbing; animation-play-state: paused; scale: 1.04;
+  box-shadow: 0 2px 4px rgba(15, 15, 15, .08), 0 18px 40px -12px rgba(15, 15, 15, .32);
 }
 .float b { font-size: 18px; line-height: 22px; font-weight: 750; font-variant-numeric: tabular-nums; }
 .float small { font-size: 12px; line-height: 16px; font-weight: 600; color: var(--fg); }
@@ -75,7 +85,7 @@
 .f3 { --r: -3deg; bottom: 9%; left: 15%; animation-delay: -4s; }
 .f4 { --r: 6deg; top: 13%; right: 8%; animation-delay: -1s; }
 .f5 { --r: -5deg; top: 47%; right: 5%; animation-delay: -3s; }
-.f6 { position: absolute; z-index: 1; bottom: 10%; right: 13%; transform: rotate(4deg); }
+.f6 { --r: 4deg; position: absolute; z-index: 1; bottom: 10%; right: 13%; border-radius: 6px; }
 
 @keyframes drift {
   from { translate: 0 0; }
@@ -94,5 +104,4 @@
   .float { animation: none; }
 }
 
-.switch a, .fine a { color: #2383E2; font-weight: 550; }
-:global([data-theme="dark"]) .switch a { color: #529CCA; }
+.switch a, .fine a { color: var(--link); font-weight: 550; }
