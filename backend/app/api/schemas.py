@@ -124,6 +124,11 @@ class EmployeeIn(BaseModel):
     name: str = Field(min_length=1)
     pan: str | None = None
     email: EmailStr | None = None
+    department: str | None = Field(default=None, max_length=120)
+    designation: str | None = Field(default=None, max_length=120)
+    cit_number: str | None = Field(default=None, max_length=40)
+    ssf_number: str | None = Field(default=None, max_length=40)
+    bank_account: str | None = Field(default=None, max_length=60)
     joined_on: date
     left_on: date | None = None
 
@@ -134,6 +139,11 @@ class EmployeeOut(ORM):
     name: str
     pan: str | None
     email: str | None
+    department: str | None = None
+    designation: str | None = None
+    cit_number: str | None = None
+    ssf_number: str | None = None
+    bank_account: str | None = None
     joined_on: date
     left_on: date | None
 
@@ -256,13 +266,42 @@ class PayslipSummary(ORM):
     projected_tax_without_cit: Decimal = Decimal(0)
 
 
+class PayslipEmployee(BaseModel):
+    code: str
+    name: str
+    pan: str | None
+    department: str | None
+    designation: str | None
+    cit_number: str | None
+    ssf_number: str | None
+    bank_account: str | None
+    joined_on: date
+    marital_status: str  # from the tax profile: unmarried / married (couple)
+
+
 class PayslipDetail(PayslipSummary):
     month: int
+    month_label: str
+    fiscal_year: str
+    payment_date: date
+    run_status: RunStatus
     basic: Decimal
     other_retirement: Decimal
     projected_taxable_income: Decimal
+    employee: PayslipEmployee
+    tds_starts: str | None = None  # label of the period withholding starts, when TDS is deferred
     inputs: dict
     trace: list[dict]
+
+
+class TdsPolicyIn(BaseModel):
+    start_period: int = Field(ge=1, le=13)
+
+
+class TdsPolicyOut(BaseModel):
+    fiscal_year: str
+    start_period: int
+    start_label: str
 
 
 class Totals(BaseModel):

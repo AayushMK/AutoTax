@@ -106,6 +106,12 @@ class Employee(Base):
     name: Mapped[str] = mapped_column(String(200))
     pan: Mapped[str | None] = mapped_column(String(20))
     email: Mapped[str | None] = mapped_column(String(255))
+    # Shown on payslips; the employee sees only their own.
+    department: Mapped[str | None] = mapped_column(String(120))
+    designation: Mapped[str | None] = mapped_column(String(120))
+    cit_number: Mapped[str | None] = mapped_column(String(40))
+    ssf_number: Mapped[str | None] = mapped_column(String(40))
+    bank_account: Mapped[str | None] = mapped_column(String(60))
     joined_on: Mapped[date] = mapped_column(Date)
     left_on: Mapped[date | None] = mapped_column(Date)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
@@ -158,6 +164,21 @@ class SalaryStructure(Base):
     cit_mode: Mapped[str] = mapped_column(String(10), default="fixed", server_default="fixed")
     other_retirement_monthly: Mapped[Decimal] = mapped_column(Money, default=0)
     employee: Mapped[Employee] = relationship(back_populates="salary_structures")
+
+
+class TdsPolicy(Base):
+    """When the company starts withholding salary TDS in a fiscal year.
+
+    Some companies withhold nothing for the first months and spread the year's tax over the
+    remaining months instead. The year's TDS still adds up to the annual liability.
+    """
+
+    __tablename__ = "tds_policies"
+    __table_args__ = (UniqueConstraint("company_id", "fiscal_year"),)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    company_id: Mapped[int] = mapped_column(ForeignKey("companies.id", ondelete="CASCADE"), index=True)
+    fiscal_year: Mapped[str] = mapped_column(String(7))
+    start_period: Mapped[int] = mapped_column(Integer, default=1)  # first pay period with TDS withheld
 
 
 class FxRateRow(Base):

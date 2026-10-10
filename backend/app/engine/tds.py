@@ -133,7 +133,11 @@ def compute_month(
     withheld = prior.tds + sum((m.tds for m in history), ZERO)
     balance = max(ZERO, annual.total_tax - withheld)
     places = int(rules.value("rounding.tds_places"))
-    if later_total == 0:
+    if not current.withhold_tds and later_total != 0:
+        tds = ZERO
+        detail = f"not withheld this month{': ' + current.withhold_note if current.withhold_note else ''}; " \
+                 f"the year's {fmt(annual.total_tax)} is spread over the months when withholding starts"
+    elif later_total == 0:
         tds = round_money(balance, places)
         detail = f"final period: {fmt(annual.total_tax)} − withheld {fmt(withheld)}"
     else:

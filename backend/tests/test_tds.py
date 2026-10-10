@@ -216,3 +216,33 @@ def test_mid_month_joiner_is_prorated(fy8384):
     history, _ = run_periods(p, fy8384, shares, lines)
     assert history[0].gross_income == D(60000)  # 1,24,000 × 15/31
     assert sum(m.tds for m in history) == actual_annual(p, fy8384, history).total_tax
+
+
+def test_tds_deferred_until_later_month_still_reconciles(fy8384):
+    """Company starts withholding in month 4: months 1–3 have no TDS, the rest catch up exactly."""
+    p = EmployeeProfile("defer", ssf_enrolled=True)
+    history, results = [], []
+    for m in range(1, 13):
+        mi = MonthInput(m, [IncomeLine(IncomeKind.BASIC, D(150000)), IncomeLine(IncomeKind.ALLOWANCE, D(100000))],
+                        withhold_tds=m >= 4, withhold_note="company starts TDS in Kartik")
+        res = compute_month(p, AnnualReliefs(), fy8384, history, mi)
+        history.append(res.posted)
+        results.append(res)
+    assert [r.tds for r in results[:3]] == [D(0)] * 3
+    assert "not withheld" in str(results[0].trace) and "Kartik" in str(results[0].trace)
+    assert all(r.tds > 0 for r in results[3:])
+    assert sum(m.tds for m in history) == actual_annual(p, fy8384, history).total_tax
+    # 9 withholding months share the year's tax evenly (salary is flat)
+    assert max(r.tds for r in results[3:11]) - min(r.tds for r in results[3:11]) <= D("0.01")
+
+
+def test_leaver_before_withholding_starts_settles_in_last_month(fy8384):
+    p = EmployeeProfile("leaver", last_month=2)
+    history, results = [], []
+    for m in (1, 2):
+        res = compute_month(p, AnnualReliefs(), fy8384, history,
+                            MonthInput(m, [IncomeLine(IncomeKind.BASIC, D(400000))], withhold_tds=False))
+        history.append(res.posted)
+        results.append(res)
+    assert results[0].tds == 0 and results[1].tds > 0
+    assert sum(m.tds for m in history) == actual_annual(p, fy8384, history).total_tax

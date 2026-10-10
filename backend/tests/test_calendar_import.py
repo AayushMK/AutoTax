@@ -98,3 +98,30 @@ def test_ird_tds_csv(client):
     lines = client.get(f"/api/companies/{cid}/reports/tds/2083-84.csv", headers=h).text.splitlines()
     assert lines[0].startswith("s.n.,PAN,Name,Shrawan 2083") and lines[0].endswith("TOTAL")
     assert lines[1].split(",")[2] == "Emp E001" and lines[-1].split(",")[2] == "Total"
+
+
+def test_tds_start_policy_and_payslip_details(client):
+    h, cid = signup(client)
+    eid = add_employee(client, h, cid, "E001", basic="200000")
+    client.put(f"/api/companies/{cid}/employees/{eid}", headers=h, json={
+        "code": "E001", "name": "Emp E001", "joined_on": "2025-01-01", "department": "Web Development",
+        "designation": "Developer", "cit_number": "CIT-1", "ssf_number": "SSF-1", "bank_account": "ACC-1"}).raise_for_status()
+    # Only an HR admin may set it; withholding starts in Ashwin (period 3)
+    assert client.put(f"/api/companies/{cid}/tds-policy/2083-84", headers=h, json={"start_period": 3}).json()["start_label"] == "Ashwin 2083"
+    tds = []
+    for paid in ("2026-08-15", "2026-09-16", "2026-10-17"):
+        r = client.post(f"/api/companies/{cid}/payroll-runs", headers=h, json={"payment_date": paid}).json()
+        tds.append(Decimal(finalize(client, h, cid, r["id"])["payslips"][0]["tds"]))
+        last_run, slip_id = r["id"], None
+    assert tds[0] == tds[1] == 0 and tds[2] > 0
+    run = client.get(f"/api/companies/{cid}/payroll-runs/{last_run}", headers=h).json()
+    slip = client.get(f"/api/companies/{cid}/payroll-runs/{last_run}/payslips/{run['payslips'][0]['id']}", headers=h).json()
+    assert slip["employee"]["department"] == "Web Development" and slip["employee"]["bank_account"] == "ACC-1"
+    assert slip["month_label"] == "Ashwin 2083" and slip["tds_starts"] == "Ashwin 2083"
+    # Month 1's payslip explains why nothing was withheld
+    run1 = client.get(f"/api/companies/{cid}/payroll-runs", headers=h).json()[-1]
+    s1 = client.get(f"/api/companies/{cid}/payroll-runs/{run1['id']}", headers=h).json()["payslips"][0]
+    d1 = client.get(f"/api/companies/{cid}/payroll-runs/{run1['id']}/payslips/{s1['id']}", headers=h).json()
+    assert d1["inputs"]["tds_withheld"] is False and "Ashwin 2083" in d1["inputs"]["tds_note"]
+    st = client.get(f"/api/companies/{cid}/employees/{eid}/annual/2083-84", headers=h).json()
+    assert st["tds_start_label"] == "Ashwin 2083"

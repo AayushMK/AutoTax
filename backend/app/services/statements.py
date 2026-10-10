@@ -46,6 +46,9 @@ def annual_statement(db: Session, company_id: int, employee: Employee, fiscal_ye
     Employees see finalized periods only; HR can include the current draft, flagged as such.
     """
     labels = {p.index: p.label for p in periods(fiscal_year, db.get(Company, company_id).pay_calendar)}
+    from .payroll import tds_start_period  # local: payroll imports this module's neighbours
+
+    tds_start = tds_start_period(db, company_id, fiscal_year)
     rows = {m: None for m in labels}
     latest = None
     for slip, run in _payslips(db, company_id, fiscal_year, employee.id, include_drafts):
@@ -72,6 +75,7 @@ def annual_statement(db: Session, company_id: int, employee: Employee, fiscal_ye
         "months": months,
         "totals": totals,
         "months_paid": len(filled),
+        "tds_start_label": labels[tds_start] if tds_start > 1 else None,
         "projected_annual_tax": projected,
         "tds_remaining": None if projected is None else max(ZERO, projected - totals["tds"]),
         # What-if from the latest computed payslip: tax with no CIT at all, and what CIT saves.

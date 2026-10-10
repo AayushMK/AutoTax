@@ -7,9 +7,10 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.db import get_db
-from app.models import Company, Employee, Membership, Payslip, PayrollRun, RunStatus
+from app.models import Employee, Membership, Payslip, PayrollRun, RunStatus
 from app.security import self_service
-from app.services.calendar import fiscal_year_of, month_label
+from app.services.calendar import fiscal_year_of
+from app.services.payslips import payslip_detail
 from app.services.statements import annual_statement, money_json
 
 from .employees import fy_from_path
@@ -45,13 +46,4 @@ def my_payslip(company_id: int, payslip_id: int, m: Membership = Depends(self_se
     # Same answer for "someone else's" and "doesn't exist": never confirm other payslips exist.
     if p is None or p.employee_id != m.employee_id or p.run.company_id != company_id or p.run.status != RunStatus.FINALIZED:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "payslip not found")
-    return PayslipDetail(
-        id=p.id, employee_id=p.employee_id, employee_code=p.employee.code, employee_name=p.employee.name,
-        gross=p.gross, ssf_employee=p.ssf_employee, ssf_employer=p.ssf_employer, cit=p.cit, tds=p.tds,
-        net_pay=p.net_pay, projected_annual_tax=p.projected_annual_tax, month=p.month, basic=p.basic,
-        other_retirement=p.other_retirement, projected_taxable_income=p.projected_taxable_income,
-        share=f"{p.share_num}/{p.share_den}" if p.share_den != 1 else None,
-        projected_tax_without_cit=p.projected_tax_without_cit,
-        inputs=p.inputs | {"month_label": month_label(p.run.fiscal_year, p.month, db.get(Company, company_id).pay_calendar)},
-        trace=p.trace,
-    )
+    return PayslipDetail(**payslip_detail(db, p))

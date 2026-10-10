@@ -3,11 +3,12 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.db import get_db
-from app.models import AuditLog, Company, Membership, PayrollRun, Role, User
+from app.models import AuditLog, Company, Membership, PayrollRun, Role, TdsPolicy, User
+from app.services.calendar import period, periods
 from app.security import admin, current_user, viewer
 from app.services import audit
 
-from .schemas import AuditOut, CompanyIn, CompanyOut, MemberIn, MemberOut
+from .schemas import AuditOut, CompanyIn, CompanyOut, MemberIn, MemberOut, TdsPolicyIn, TdsPolicyOut
 
 router = APIRouter(tags=["companies"])
 
@@ -90,6 +91,35 @@ def remove_member(company_id: int, user_id: int, m: Membership = Depends(admin),
     db.delete(target)
     db.commit()
     return Response(status_code=204)
+
+
+def _policy_out(c: Company, fiscal_year: str, start: int) -> TdsPolicyOut:
+    return TdsPolicyOut(fiscal_year=fiscal_year, start_period=start, start_label=period(fiscal_year, start, c.pay_calendar).label)
+
+
+@router.get("/companies/{company_id}/tds-policy/{fy}", response_model=TdsPolicyOut)
+def get_tds_policy(company_id: int, fy: str, m: Membership = Depends(viewer), db: Session = Depends(get_db)):
+    fiscal_year = fy.replace("-", "/")
+    p = db.scalar(select(TdsPolicy).where(TdsPolicy.company_id == company_id, TdsPolicy.fiscal_year == fiscal_year))
+    return _policy_out(m.company, fiscal_year, p.start_period if p else 1)
+
+
+@router.put("/companies/{company_id}/tds-policy/{fy}", response_model=TdsPolicyOut)
+def set_tds_policy(company_id: int, fy: str, body: TdsPolicyIn, m: Membership = Depends(admin), db: Session = Depends(get_db)):
+    """Start withholding TDS in a later month; earlier months withhold nothing and the rest catch up."""
+    fiscal_year = fy.replace("-", "/")
+    if body.start_period > len(periods(fiscal_year, m.company.pay_calendar)):
+        raise HTTPException(status.HTTP_422_UNPROCESSABLE_CONTENT, "that month isn't in this fiscal year")
+    p = db.scalar(select(TdsPolicy).where(TdsPolicy.company_id == company_id, TdsPolicy.fiscal_year == fiscal_year))
+    if p is None:
+        p = TdsPolicy(company_id=company_id, fiscal_year=fiscal_year)
+        db.add(p)
+    before = p.start_period
+    p.start_period = body.start_period
+    audit.record(db, company_id=company_id, user_id=m.user_id, action="tds_policy.set", entity="company", entity_id=company_id,
+                 data={"fiscal_year": fiscal_year, "before": before, "start_period": body.start_period})
+    db.commit()
+    return _policy_out(m.company, fiscal_year, body.start_period)
 
 
 @router.get("/companies/{company_id}/audit", response_model=list[AuditOut])

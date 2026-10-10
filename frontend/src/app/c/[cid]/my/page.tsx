@@ -46,6 +46,12 @@ export default function MyPay() {
 
       {st.data && (
         <>
+          {st.data.tds_start_label && (
+            <p className="notice">
+              Your company starts withholding remuneration tax (TDS) in <strong>{st.data.tds_start_label}</strong>. Until then
+              nothing is deducted; from then on, this year’s tax is spread over the remaining months.
+            </p>
+          )}
           <section>
             <YearFigures st={st.data} />
             <p className="small muted" style={{ marginTop: "1rem" }}>

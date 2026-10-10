@@ -12,8 +12,9 @@ Everything goes through the real API in-process (same validation, tax engine and
 app). Foreign-currency pay uses the real NRB rates for each payment date, fetched live.
 All people, PANs and emails are fictitious.
 
-Logins created:  HR admin  demo@example.com / demo-pass-1
-                 Employee  bikash@example.com / bikash-pass-1   (Bikash Thapa, E-001)
+Logins created:  HR admin  demo@example.com / demo-pass-1     (both companies)
+                 Employee  bikash@example.com / bikash-pass-1   (Bikash Thapa, Himal Software)
+                 Employee  prakash@example.com / prakash-pass-1 (Prakash Shrestha, Everest Digital)
 """
 
 from __future__ import annotations
@@ -97,6 +98,15 @@ EMPLOYEES = [
      [(date(2019, 4, 15), [comp("basic", "110000"), comp("allowance", "12000")], "15000")]),
 ]
 
+HIMAL_ROLES = {
+    "E-001": ("Engineering", "Backend Engineer"), "E-002": ("Engineering", "Engineering Manager"),
+    "E-003": ("Operations", "Accountant"), "E-004": ("Design", "UX Designer"),
+    "E-005": ("Engineering", "Mobile Engineer"), "E-006": ("Management", "Head of Delivery"),
+    "E-007": ("Quality Assurance", "QA Engineer"), "E-008": ("Support", "Support Specialist"),
+    "E-009": ("Engineering", "Frontend Engineer"), "E-010": ("Operations", "Office Assistant"),
+    "E-011": ("Consulting", "Security Consultant"), "E-012": ("Engineering", "Principal Engineer"),
+}
+
 CHAITRA_BONUS = {"E-001": comp("bonus", "500", "USD", "annual performance bonus"),
                  "E-006": comp("bonus", "80000", note="annual performance bonus"),
                  "E-012": comp("bonus", "60000", note="annual performance bonus")}
@@ -155,7 +165,8 @@ def seed_himal(c, cid: int) -> None:
     for code, name, pan, joined, left, profile, structures in EMPLOYEES:
         e = c.post(f"{api}/employees", json={
             "code": code, "name": name, "pan": pan, "joined_on": str(joined), "left_on": str(left) if left else None,
-            "email": f"{name.split()[0].lower()}@example.com"})
+            "email": f"{name.split()[0].lower()}@example.com", "department": HIMAL_ROLES[code][0],
+            "designation": HIMAL_ROLES[code][1], **fake_numbers(code)})
         e.raise_for_status()
         ids[code] = eid = e.json()["id"]
         for fy in ("2082-83", "2083-84"):
@@ -223,21 +234,31 @@ def seed_himal(c, cid: int) -> None:
 
 EVEREST = {"name": "Everest Digital Pvt. Ltd.", "pan": "601122334", "pay_calendar": "ad"}
 EV_EMPLOYEES = [
-    # code, name, pan, joined, profile, components, cit_mode, cit_monthly
-    ("EV-01", "Prakash Shrestha", "401234567", date(2021, 4, 1),
+    # code, name, pan, joined, department, designation, profile, components, cit_mode, cit_monthly
+    ("EV-01", "Prakash Shrestha", "401234567", date(2021, 4, 1), "Web Development", "Senior Web Developer",
      {"ssf_enrolled": True, "life_insurance_premium": "40000"},
-     [comp("basic", "750", "USD"), comp("allowance", "1350", "USD")], "fill_cap", "0"),  # SSF under 5L: CIT tops it up
-    ("EV-02", "Sabina Karki", "402345678", date(2022, 9, 5),
+     [comp("basic", "750", "USD"), comp("allowance", "900", "USD", "Dearness allowance"),
+      comp("allowance", "450", "USD", "Monthly allowance")], "fill_cap", "0"),  # SSF under 5L: CIT tops it up
+    ("EV-02", "Sabina Karki", "402345678", date(2022, 9, 5), "Quality Assurance", "QA Lead",
      {"gender": "female", "ssf_enrolled": True, "health_insurance_premium": "20000"},
-     [comp("basic", "180000"), comp("allowance", "40000")], "fill_cap", "0"),
-    ("EV-03", "Arjun Lama", "403456789", date(2023, 3, 1),
-     {}, [comp("basic", "140000"), comp("allowance", "10000")], "fixed", "10000"),
-    ("EV-04", "Nisha Rana", "404567890", date(2025, 11, 10),  # joins mid-November from another employer
+     [comp("basic", "180000"), comp("allowance", "40000", note="Dearness allowance")], "fill_cap", "0"),
+    ("EV-03", "Arjun Lama", "403456789", date(2023, 3, 1), "Operations", "Office Manager",
+     {}, [comp("basic", "140000"), comp("allowance", "10000", note="Monthly allowance")], "fixed", "10000"),
+    ("EV-04", "Nisha Rana", "404567890", date(2025, 11, 10), "Design", "Product Designer",  # joins mid-November
      {"gender": "female", "ssf_enrolled": True,
       "prior_income": "450000", "prior_retirement": "45000", "prior_tds": "22000"},
-     [comp("basic", "160000"), comp("allowance", "20000")], "fill_cap", "0"),
+     [comp("basic", "160000"), comp("allowance", "20000", note="Dearness allowance")], "fill_cap", "0"),
 ]
 IMPORTED_USD_RATE = Decimal("140.25")  # rate the old payroll used; computed months use NRB rates
+# Everest withholds no TDS for the first months of each year, then spreads the year's tax.
+EV_TDS_START = {"2082-83": 4, "2083-84": 5}  # October 2025, November 2026
+EV_LOGIN = ("EV-01", "prakash@example.com", "prakash-pass-1")
+
+
+def fake_numbers(code: str) -> dict:
+    """Clearly fictitious CIT / SSF / bank numbers for the demo."""
+    n = "".join(ch for ch in code if ch.isdigit()).rjust(3, "0")
+    return {"cit_number": f"CIT-DEMO-{n}", "ssf_number": f"SSF-DEMO-{n}", "bank_account": f"0000-DEMO-{n}"}
 
 
 def seed_everest(c) -> None:
@@ -246,31 +267,51 @@ def seed_everest(c) -> None:
     cid = r.json()["id"]
     api = f"/api/companies/{cid}"
     ids = {}
-    for code, name, pan, joined, profile, comps, cit_mode, cit in EV_EMPLOYEES:
+    for code, name, pan, joined, dept, title, profile, comps, cit_mode, cit in EV_EMPLOYEES:
         e = c.post(f"{api}/employees", json={"code": code, "name": name, "pan": pan, "joined_on": str(joined),
-                                             "email": f"{name.split()[0].lower()}@example.com"})
+                                             "email": f"{name.split()[0].lower()}@example.com",
+                                             "department": dept, "designation": title, **fake_numbers(code)})
         e.raise_for_status()
         ids[code] = e.json()["id"]
-        c.put(f"{api}/employees/{ids[code]}/tax-profiles/2082-83", json=profile).raise_for_status()
+        for fy in ("2082-83", "2083-84"):
+            c.put(f"{api}/employees/{ids[code]}/tax-profiles/{fy}", json=profile).raise_for_status()
         c.post(f"{api}/employees/{ids[code]}/salary-structures", json={
             "effective_from": str(joined), "components": comps, "cit_mode": cit_mode, "cit_monthly": cit}).raise_for_status()
-
-    periods = c.get(f"{api}/payroll-runs/periods/2082-83").json()
-    print(f"{EVEREST['name']} (English months): {len(periods)} periods in FY 2082/83")
+    for fy, start in EV_TDS_START.items():
+        c.put(f"{api}/tds-policy/{fy}", json={"start_period": start}).raise_for_status()
 
     def paid_on(p) -> str:  # salary is paid on the last day of the English month
         end = date.fromisoformat(p["end"])
         nxt = date(end.year + (end.month == 12), end.month % 12 + 1, 1)
         return str(nxt - timedelta(days=1))
 
-    for p in periods:
+    def dashain(rid: int, on: date, note: str) -> None:
+        """One month's basic + dearness allowance, for everyone in service."""
+        for code, _, _, joined, _, _, _, comps, _, _ in EV_EMPLOYEES:
+            if joined > on:
+                continue
+            base = [x for x in comps if x["kind"] == "basic" or x["description"] == "Dearness allowance"]
+            amount = sum(Decimal(x["amount"]) for x in base)
+            c.post(f"{api}/payroll-runs/{rid}/adjustments", json={"employee_id": ids[code], **comp(
+                "dashain", f"{amount}", base[0]["currency"], "Dashain allowance")}).raise_for_status()
+
+    def finalize(rid: int) -> None:
+        fin = c.post(f"{api}/payroll-runs/{rid}/finalize", json={"acknowledge_unverified": True})
+        if fin.status_code != 200:
+            sys.exit(f"run {rid}: {fin.status_code} {fin.text}")
+        d = fin.json()
+        print(f"  {d['month_label']:<20} {d['source']:<9} {len(d['payslips'])} payslips  TDS {d['totals']['tds']:>11}  "
+              f"CIT {d['totals']['cit']:>10}")
+
+    print(f"{EVEREST['name']} (English months), TDS from October 2025 and November 2026")
+    for p in c.get(f"{api}/payroll-runs/periods/2082-83").json():
         run = c.post(f"{api}/payroll-runs", json={"payment_date": paid_on(p), "fiscal_year": "2082-83", "period": p["index"]})
         run.raise_for_status()
         rid = run.json()["id"]
-        if p["index"] <= 3:  # July–September: paid in the old payroll, no TDS withheld
+        if p["index"] <= 3:  # July–September 2025: paid in the old payroll, no TDS withheld
             share = Decimal(15) / Decimal(31) if p["index"] == 1 else Decimal(1)
             rows = []
-            for code, _, _, joined, profile, comps, cit_mode, _ in EV_EMPLOYEES:
+            for code, _, _, joined, _, _, profile, comps, cit_mode, _ in EV_EMPLOYEES:
                 if joined > date.fromisoformat(p["end"]):
                     continue
                 npr = lambda x: Decimal(x["amount"]) * (IMPORTED_USD_RATE if x["currency"] == "USD" else 1)  # noqa: E731
@@ -282,18 +323,25 @@ def seed_everest(c) -> None:
                 rows.append({"employee_id": ids[code], "gross": f"{ctc:.2f}", "basic": f"{basic:.2f}",
                              "ssf_total": f"{ssf:.2f}", "cit": f"{cit:.2f}", "tds": "0"})
             c.put(f"{api}/payroll-runs/{rid}/import", json={"gross_includes_employer_ssf": True, "rows": rows}).raise_for_status()
-        elif p["index"] == 4:  # October: Dashain
-            for code, _, _, joined, _, comps, _, _ in EV_EMPLOYEES:
-                basic = next(x for x in comps if x["kind"] == "basic")
-                if joined <= date(2025, 10, 1):
-                    c.post(f"{api}/payroll-runs/{rid}/adjustments", json={"employee_id": ids[code], **comp(
-                        "dashain", basic["amount"], basic["currency"], "Dashain 2082")}).raise_for_status()
-        fin = c.post(f"{api}/payroll-runs/{rid}/finalize", json={"acknowledge_unverified": True})
-        if fin.status_code != 200:
-            sys.exit(f"{p['label']}: {fin.status_code} {fin.text}")
-        d = fin.json()
-        print(f"  {d['month_label']:<20} {d['source']:<9} {len(d['payslips'])} payslips  TDS {d['totals']['tds']:>11}  "
-              f"CIT {d['totals']['cit']:>10}")
+        elif p["index"] == 4:  # October 2025: Dashain
+            dashain(rid, date(2025, 10, 1), "Dashain 2082")
+        finalize(rid)
+
+    # FY 2083/84 so far: July 17–31, August, September 2026 (Dashain paid with September), no TDS yet.
+    for p in c.get(f"{api}/payroll-runs/periods/2083-84").json()[:3]:
+        run = c.post(f"{api}/payroll-runs", json={"payment_date": paid_on(p), "fiscal_year": "2083-84", "period": p["index"]})
+        run.raise_for_status()
+        rid = run.json()["id"]
+        if p["index"] == 3:
+            dashain(rid, date(2026, 9, 1), "Dashain 2083")
+        finalize(rid)
+
+    code, email, password = EV_LOGIN
+    inv = c.post(f"{api}/invites", json={"email": email, "role": "employee", "employee_id": ids[code]})
+    inv.raise_for_status()
+    c.post(f"/api/auth/invites/{inv.json()['token']}/accept",
+           json={"name": "Prakash Shrestha", "password": password}).raise_for_status()
+    print(f"Everest employee login: {email} / {password}")
 
 
 if __name__ == "__main__":

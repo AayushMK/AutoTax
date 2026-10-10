@@ -20,9 +20,9 @@ export function Floats() {
     <div aria-hidden="true">
       {tile(1, styles.f1, "blue", <><small>NRB buying rate</small><b>USD 1 = 152.41</b><i>14 Aug 2026</i></>)}
       {tile(2, styles.f2, "green", <><small>SSF, 31% of basic</small><b>11% + 20%</b><i>employee + employer</i></>)}
-      {tile(3, styles.f3, "purple", <><small><span className={styles.dot} />Shrawan 2083</small><b>Net 2,08,415.53</b><i>TDS 35,774.82</i></>)}
-      {tile(4, styles.f4, "orange", <><small>TDS this month</small><b>35,774.82</b><i>spread over the rest of the year</i></>)}
-      {tile(5, styles.f5, "pink", <><small>CIT</small><b>Up to 5 lakh</b><i>with SSF, or a third of income</i></>)}
+      {tile(3, styles.f3, "purple", <><small><span className={styles.dot} />Payslip ready</small><b>Bhadra 2083</b><i>addition, deduction, net</i></>)}
+      {tile(4, styles.f4, "orange", <><small>IRD TDS sheet</small><b>Ready to download</b><i>PAN, name, every month</i></>)}
+      {tile(5, styles.f5, "pink", <><small>Your calendar</small><b>Nepali or English months</b><i>July split at Shrawan 1</i></>)}
       <Draggable className={styles.f6} onGrab={() => setLast(6)} onTop={last === 6}>
         <Stamp tone="moss" title="Finalized" note="Shrawan 2083" />
       </Draggable>

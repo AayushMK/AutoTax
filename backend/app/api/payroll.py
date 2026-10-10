@@ -11,6 +11,7 @@ from app.models import Company, Membership, Payslip, PayrollRun, RunAdjustment, 
 from app.security import accountant, viewer
 from app.services import audit, payroll
 from app.services.calendar import period, periods
+from app.services.payslips import payslip_detail
 
 from .employees import get_employee
 from .schemas import (
@@ -213,10 +214,7 @@ def payslip(company_id: int, run_id: int, payslip_id: int, _: Membership = Depen
     p = db.get(Payslip, payslip_id)
     if p is None or p.run_id != r.id:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "payslip not found")
-    return PayslipDetail(
-        **summary(p), month=p.month, basic=p.basic, other_retirement=p.other_retirement,
-        projected_taxable_income=p.projected_taxable_income, inputs=p.inputs, trace=p.trace,
-    )
+    return PayslipDetail(**payslip_detail(db, p))
 
 
 @router.get("/{run_id}/tds.csv")

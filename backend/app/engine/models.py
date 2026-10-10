@@ -111,6 +111,10 @@ class MonthInput:
     remaining_shares: tuple[Fraction, ...] | None = None
     # "fill_cap": CIT tops up SSF + other funds to the retirement deduction limit, spread over the year.
     cit_mode: Literal["fixed", "fill_cap"] = "fixed"
+    # Company policy can start withholding TDS later in the year; months before that withhold 0
+    # and the year's tax is spread over the months that follow. The last period always settles.
+    withhold_tds: bool = True
+    withhold_note: str = ""
 
 
 @dataclass(frozen=True)

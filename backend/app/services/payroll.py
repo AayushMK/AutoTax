@@ -41,7 +41,7 @@ from app.engine.gate import (
 )
 from app.engine.money import D, ZERO, round_money
 from app.engine.trace import Trace
-from app.models import Company, Employee, Payslip, PayrollRun, RunAdjustment, RunStatus, SalaryStructure, TaxProfile
+from app.models import Company, Employee, Payslip, PayrollRun, RunAdjustment, RunStatus, SalaryStructure, TaxProfile, TdsPolicy
 
 from . import audit, fx_store
 from .calendar import Period, fy_bounds, period, period_of, periods, service_periods, share
@@ -59,6 +59,12 @@ class RulesNotAcknowledged(PayrollError):
     def __init__(self, err: UnverifiedRulesError):
         super().__init__(str(err), err.params)
         self.rule_set = err.rule_set.version_id
+
+
+def tds_start_period(db: Session, company_id: int, fiscal_year: str) -> int:
+    """First pay period in which the company withholds TDS this fiscal year (1 = from the start)."""
+    p = db.scalar(select(TdsPolicy).where(TdsPolicy.company_id == company_id, TdsPolicy.fiscal_year == fiscal_year))
+    return p.start_period if p else 1
 
 
 def run_period(db: Session, run: PayrollRun) -> Period:
@@ -110,12 +116,17 @@ def compute_run(db: Session, run: PayrollRun, user_id: int) -> PayrollRun:
     currencies |= {a.currency for a in run.adjustments}
     fx = fx_store.table_for(db, run.company_id, currencies, run.payment_date)
 
+    start = tds_start_period(db, company.id, run.fiscal_year)
+    withholding = (run.month >= start, "" if run.month >= start else
+                   f"the company starts withholding TDS in {period(run.fiscal_year, start, company.pay_calendar).label}")
+
     run.payslips.clear()
     db.flush()
     problems: list[str] = []
     for emp in employees:
         try:
-            run.payslips.append(_compute_employee(db, run, company.pay_calendar, emp, adjustments.get(emp.id, []), rules, fx))
+            run.payslips.append(_compute_employee(db, run, company.pay_calendar, emp, adjustments.get(emp.id, []), rules, fx,
+                                                  withholding))
         except (PayrollError, PayrollSequenceError, FxRateMissing, ValueError) as e:
             problems.append(f"{emp.code} {emp.name}: {e}")
     if problems:
@@ -254,7 +265,7 @@ def _employees_in_service(db: Session, run: PayrollRun, cal: str) -> list[Employ
     return out
 
 
-def _compute_employee(db, run, cal, emp, adjustments, rules, fx) -> Payslip:
+def _compute_employee(db, run, cal, emp, adjustments, rules, fx, withholding=(True, "")) -> Payslip:
     first, last = service_periods(run.fiscal_year, emp.joined_on, emp.left_on, cal)
     ps = periods(run.fiscal_year, cal)
     cur = ps[run.month - 1]
@@ -299,6 +310,7 @@ def _compute_employee(db, run, cal, emp, adjustments, rules, fx) -> Payslip:
     month_input = MonthInput(
         month=run.month, lines=lines, cit=structure.cit_monthly, other_retirement=structure.other_retirement_monthly,
         share=share_now, share_note=f"{days} of {cur.month_days} days", remaining_shares=remaining, cit_mode=structure.cit_mode,
+        withhold_tds=withholding[0], withhold_note=withholding[1],
     )
     res = compute_month(profile, reliefs, rules, history, month_input, fx, prior)
 
@@ -324,6 +336,7 @@ def _compute_employee(db, run, cal, emp, adjustments, rules, fx) -> Payslip:
             "lines": [{"kind": str(line.kind), "amount": str(line.amount), "currency": line.currency,
                        "recurring": line.recurring, "description": line.description} for line in lines],
             "cit_mode": structure.cit_mode, "cit_monthly": str(structure.cit_monthly),
+            "tds_withheld": withholding[0] or not remaining, "tds_note": withholding[1],
             "other_retirement": str(structure.other_retirement_monthly),
             "fx": fx_used,
             "structure_id": structure.id,

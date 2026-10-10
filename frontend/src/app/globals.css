@@ -473,3 +473,14 @@ a.person:hover { text-decoration: none; border-color: var(--fg, var(--border-bol
   -webkit-mask-image: radial-gradient(ellipse 70% 90% at 50% 50%, #000 40%, transparent 100%);
   mask-image: radial-gradient(ellipse 70% 90% at 50% 50%, #000 40%, transparent 100%);
 }
+
+/* ---------- Print: just the payslip ---------- */
+@media print {
+  @page { margin: 14mm; }
+  body { background: #fff; color: #000; }
+  .no-print, header[class*="topbar"], aside[class*="sidebar"], nextjs-portal { display: none !important; }
+  main[class*="main"] { padding: 0 !important; }
+  main[class*="main"]::before, main[class*="main"]::after { display: none !important; }
+  div[class*="app"] { display: block !important; }
+  .sheet { border: 0 !important; padding: 0 !important; }
+}

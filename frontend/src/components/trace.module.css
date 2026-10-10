@@ -51,3 +51,40 @@
   .cite { grid-column: 1; }
   .headline div { min-width: 0; }
 }
+
+/* ---- The payslip document ---- */
+.slip { padding: 28px 32px; display: grid; gap: 24px; }
+.slipHead { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+.slipTitle { font-size: 24px; line-height: 28px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 4px; }
+.slipNet { display: grid; justify-items: end; padding: 10px 16px; border-radius: 10px; background: var(--n-blue-bg); color: var(--n-blue-fg); }
+.slipNet span { font-size: 12px; font-weight: 650; }
+.slipNet strong { font-size: 22px; line-height: 28px; color: var(--text); font-variant-numeric: tabular-nums; }
+
+/* Employee details: two columns of label / value rows with hairlines */
+.details {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; margin: 0;
+  border-top: 1px solid var(--border);
+}
+.details > div { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.details dt { color: var(--text-subtle); }
+.details dd { margin: 0; font-weight: 550; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.detailSub { display: block; font-size: 12px; font-weight: 400; color: var(--text-subtlest); }
+
+/* Addition | Deduction */
+.columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
+.col { border: 1px solid var(--border); border-radius: 10px; border-collapse: separate; border-spacing: 0; overflow: hidden; }
+.col thead th { font-size: 14px; color: var(--text); background: var(--bg-sunken); padding: 10px 12px; }
+.col tfoot td { background: var(--bg-sunken); }
+.netRow {
+  display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-radius: 10px;
+  background: var(--n-blue-bg); font-size: 16px; font-weight: 650;
+}
+.netRow strong { font-size: 20px; font-variant-numeric: tabular-nums; }
+.slipNotes { display: grid; gap: 8px; }
+.workingSummary { cursor: pointer; font-size: 16px; font-weight: 650; }
+
+@media (max-width: 860px) {
+  .slip { padding: 16px; }
+  .details, .columns { grid-template-columns: 1fr; }
+  .details > div { grid-template-columns: 130px minmax(0, 1fr); }
+}

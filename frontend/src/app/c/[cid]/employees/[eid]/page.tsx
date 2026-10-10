@@ -52,6 +52,8 @@ function EmployeePage() {
         <div className="notice">Next: fill in the tax profile below, then add the salary structure.</div>
       )}
 
+      <DetailsForm emp={emp} path={path} onSaved={reload} />
+
       {activeFy && (
         <TaxProfileForm
           key={activeFy + emp.tax_profiles.length}
@@ -138,6 +140,62 @@ function PortalAccess({ emp }: { emp: EmployeeDetail }) {
         <p className="muted">No login yet. An HR admin can invite them.</p>
       ) : null}
     </section>
+  );
+}
+
+function DetailsForm({ emp, path, onSaved }: { emp: EmployeeDetail; path: string; onSaved: () => void }) {
+  const { canEdit } = useCompany();
+  const [error, setError] = useState<unknown>(null);
+  const [saved, setSaved] = useState(false);
+
+  async function save(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const f = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
+    const opt = (k: string) => (f[k]?.trim() ? f[k].trim() : null);
+    try {
+      await api(path, {
+        method: "PUT",
+        json: {
+          code: f.code, name: f.name, joined_on: f.joined_on, left_on: opt("left_on"), pan: opt("pan"), email: opt("email"),
+          department: opt("department"), designation: opt("designation"), cit_number: opt("cit_number"),
+          ssf_number: opt("ssf_number"), bank_account: opt("bank_account"),
+        },
+      });
+      setError(null);
+      setSaved(true);
+      onSaved();
+    } catch (err) {
+      setError(err);
+    }
+  }
+
+  return (
+    <form className="sheet" onSubmit={save} onChange={() => setSaved(false)}>
+      <h2>Employee details</h2>
+      <p className="small muted" style={{ margin: "-6px 0 14px" }}>Printed on payslips. The employee sees only their own.</p>
+      <ErrorNotice error={error} />
+      <fieldset disabled={!canEdit}>
+        <div className="form-grid">
+          <Field label="Employee ID"><input name="code" defaultValue={emp.code} required /></Field>
+          <Field label="Full name"><input name="name" defaultValue={emp.name} required /></Field>
+          <Field label="Department"><input name="department" defaultValue={emp.department ?? ""} /></Field>
+          <Field label="Designation"><input name="designation" defaultValue={emp.designation ?? ""} /></Field>
+          <Field label="PAN no."><input name="pan" inputMode="numeric" defaultValue={emp.pan ?? ""} /></Field>
+          <Field label="SSF no."><input name="ssf_number" defaultValue={emp.ssf_number ?? ""} /></Field>
+          <Field label="CIT no."><input name="cit_number" defaultValue={emp.cit_number ?? ""} /></Field>
+          <Field label="Bank A/c no."><input name="bank_account" defaultValue={emp.bank_account ?? ""} /></Field>
+          <Field label="Email"><input name="email" type="email" defaultValue={emp.email ?? ""} /></Field>
+          <Field label="Joined on"><input name="joined_on" type="date" defaultValue={emp.joined_on} required /></Field>
+          <Field label="Left on" hint="Leave empty while employed"><input name="left_on" type="date" defaultValue={emp.left_on ?? ""} /></Field>
+        </div>
+        {canEdit && (
+          <div className="form-actions">
+            <button className="btn">Save details</button>
+            {saved && <span className="tag verified" role="status">Saved</span>}
+          </div>
+        )}
+      </fieldset>
+    </form>
   );
 }
 

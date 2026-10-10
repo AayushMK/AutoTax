@@ -15,6 +15,11 @@ export interface Employee {
   name: string;
   pan: string | null;
   email: string | null;
+  department: string | null;
+  designation: string | null;
+  cit_number: string | null;
+  ssf_number: string | null;
+  bank_account: string | null;
   joined_on: string;
   left_on: string | null;
 }
@@ -119,6 +124,23 @@ export interface TraceStep {
 
 export interface PayslipDetail extends PayslipSummary {
   month: number;
+  month_label: string;
+  fiscal_year: string;
+  payment_date: string;
+  run_status: "draft" | "finalized";
+  tds_starts: string | null;
+  employee: {
+    code: string;
+    name: string;
+    pan: string | null;
+    department: string | null;
+    designation: string | null;
+    cit_number: string | null;
+    ssf_number: string | null;
+    bank_account: string | null;
+    joined_on: string;
+    marital_status: string;
+  };
   basic: Money;
   other_retirement: Money;
   projected_taxable_income: Money;
@@ -126,6 +148,8 @@ export interface PayslipDetail extends PayslipSummary {
     rule_set: string | null;
     period?: { label: string; start: string; end: string; days_paid: number; month_days: number };
     imported?: boolean;
+    tds_withheld?: boolean;
+    tds_note?: string;
     lines: { kind: string; amount: Money; currency: string; recurring: boolean; description: string }[];
     fx: Record<string, { on: string; buy: string; sell: string; unit: number; source: string; override_reason: string | null }>;
     profile: Record<string, unknown>;
@@ -210,6 +234,7 @@ export interface AnnualStatement {
   months: StatementMonth[];
   totals: Record<"gross" | "ssf_employee" | "ssf_employer" | "ssf_total" | "cit" | "other_retirement" | "tds" | "net_pay", Money>;
   months_paid: number;
+  tds_start_label: string | null;
   projected_annual_tax: Money | null;
   tds_remaining: Money | null;
   projected_tax_without_cit: Money | null;
